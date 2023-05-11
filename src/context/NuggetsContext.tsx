@@ -19,7 +19,7 @@ interface OptionType {
 
 const initialState = {} as INuggetContext;
 
-export const NuggetsContext = React.createContext<any>("");
+export const NuggetsContext = React.createContext<INuggetContext>(initialState);
 
 const NuggetProvider = (props: any) => {
   const [state, setState] = useState<INuggetContext>(initialState);
@@ -90,6 +90,7 @@ const NuggetProvider = (props: any) => {
     <div>
       <NuggetsContext.Provider
         value={{
+          ...state,
           nuggetKind,
           setNuggetKind,
           updateCategoryObject,

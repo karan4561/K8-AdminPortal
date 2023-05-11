@@ -20,12 +20,14 @@ interface OptionType {
 }
 
 function NuggetsLanding() {
-  const { nuggetKind, setNuggetKind } = useContext(NuggetsContext);
+  const { nugget, nuggetKind, setNuggetKind } = useContext(NuggetsContext);
   const nuggetsRef = useRef("");
 
   const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNuggetKind(event.target.value as OptionType["value"]);
   };
+
+  console.log(nugget);
 
   useEffect(() => {
     setNuggetKind(nuggetKind);
