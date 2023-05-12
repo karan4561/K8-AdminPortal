@@ -1,6 +1,7 @@
 import React, { createContext, useState } from "react";
 import { INuggetContext } from "./interface/INuggetsContext";
 import { useEffect } from "react";
+import { ContentObject } from "@/interfaces/INugget";
 
 interface OptionType {
   label:
@@ -24,10 +25,14 @@ export const NuggetsContext = React.createContext<INuggetContext>(initialState);
 const NuggetProvider = (props: any) => {
   const [state, setState] = useState<INuggetContext>(initialState);
   const [nuggetKind, setNuggetKind] = useState<string>("");
+  const [note, setNote] = useState<ContentObject>({
+    kind: "H1",
+    list: [],
+  });
 
   useEffect(() => {
     updateKind(nuggetKind);
-  }, [nuggetKind]);
+  }, [nuggetKind, note]);
 
   function updateCategoryObject(Category: {
     Category: string;
@@ -86,16 +91,38 @@ const NuggetProvider = (props: any) => {
     });
   }
 
+  function updateContentKind(kind: {
+    kind: "H1" | "H2" | "Text" | "UL" | "OL" | "IMG";
+  }) {
+    setState({
+      ...state,
+      nugget: {
+        ...state.nugget,
+        content: [
+          {
+            ...state.content,
+            kind: kind.kind,
+          },
+        ],
+      },
+    });
+  }
+
+  function addListItem(item: { rtx: string }) {}
+
   return (
     <div>
       <NuggetsContext.Provider
         value={{
           ...state,
           nuggetKind,
+          note,
+          setNote,
           setNuggetKind,
           updateCategoryObject,
           updateNuggetInfo,
           updateXPTimer,
+          updateContentKind,
         }}
       >
         {props.children}

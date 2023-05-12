@@ -3,6 +3,8 @@ import { Nugget,ContentObject,CategoryObject,BulletObject,ListItemObject,Questio
 export interface INuggetContext {
     nuggetKind: string;
     setNuggetKind: React.Dispatch<React.SetStateAction<string>>
+    note?: ContentObject;
+    setNote?: any
     content?: ContentObject;
     nugget: Nugget,
     CategoryObj?: CategoryObject,

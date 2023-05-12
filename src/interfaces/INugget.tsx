@@ -44,7 +44,7 @@ export interface ContentObject {
   imgUri?: FileObject;
   imgCaption?: string;
   bullet?: BulletObject;
-  list: ListItemObject[];
+  list?: ListItemObject[];
 }
 
 export interface FileObject {

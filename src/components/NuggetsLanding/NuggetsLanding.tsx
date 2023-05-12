@@ -3,6 +3,7 @@ import { NuggetsContext } from "../../context/NuggetsContext";
 import AddNuggetHeader from "../addNugget/AddNuggetHeader";
 import NuggetInfo from "../NuggetInfo/NuggetInfo";
 import XPTimer from "../XP&Timer/XP&Timer";
+import NoteNugget from "../NoteNugget/NoteNugget";
 
 interface OptionType {
   label:
@@ -21,7 +22,6 @@ interface OptionType {
 
 function NuggetsLanding() {
   const { nugget, nuggetKind, setNuggetKind } = useContext(NuggetsContext);
-  const nuggetsRef = useRef("");
 
   const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNuggetKind(event.target.value as OptionType["value"]);
@@ -31,7 +31,7 @@ function NuggetsLanding() {
 
   useEffect(() => {
     setNuggetKind(nuggetKind);
-    //console.log(nuggetKind);
+    console.log(nuggetKind);
   }, [nuggetKind]);
 
   const options: OptionType[] = [
@@ -72,6 +72,7 @@ function NuggetsLanding() {
           </div>
           <NuggetInfo />
           <XPTimer />
+          {nuggetKind == "Note" && <NoteNugget />}
         </div>
       </div>
     </div>
