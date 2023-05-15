@@ -4,6 +4,7 @@ import AddNuggetHeader from "../addNugget/AddNuggetHeader";
 import NuggetInfo from "../NuggetInfo/NuggetInfo";
 import XPTimer from "../XP&Timer/XP&Timer";
 import NoteNugget from "../NoteNugget/NoteNugget";
+import PreviewHeader from "../Preview/previewHeader";
 
 interface OptionType {
   label:
@@ -75,6 +76,7 @@ function NuggetsLanding() {
           {nuggetKind == "Note" && <NoteNugget />}
         </div>
       </div>
+      <PreviewHeader />
     </div>
   );
 }

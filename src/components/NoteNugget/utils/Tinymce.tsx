@@ -33,7 +33,11 @@ const TinyMCE = (kind: {
   }, []);
 
   useEffect(() => {
-    setNote({ kind: kind, list: content });
+    const timeoutId = setTimeout(
+      () => setNote({ kind: kind, list: content }),
+      2500
+    );
+    return () => clearTimeout(timeoutId);
   }, [content]);
   return (
     <div className="text-editor">

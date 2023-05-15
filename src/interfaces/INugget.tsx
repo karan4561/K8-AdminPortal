@@ -14,7 +14,7 @@ export type Nugget = {
   caption?: string;
   status: "active" | "inactive";
   question: QuestionObject;
-  content?: ContentObject[];
+  content?: Array<ContentObject>;
   categories: CategoryObject;
   updatedAt: Date;
   createdAt: Date;
@@ -44,8 +44,8 @@ export interface ContentObject {
   imgUri?: FileObject;
   imgCaption?: string;
   bullet?: BulletObject;
-  list?: ListItemObject[];
-}
+  list: ListItemObject[];
+};
 
 export interface FileObject {
   _id?: string;

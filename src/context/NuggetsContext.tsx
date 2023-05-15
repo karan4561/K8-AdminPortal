@@ -1,7 +1,7 @@
 import React, { createContext, useState } from "react";
 import { INuggetContext } from "./interface/INuggetsContext";
 import { useEffect } from "react";
-import { ContentObject } from "@/interfaces/INugget";
+import { ContentObject, Nugget } from "@/interfaces/INugget";
 
 interface OptionType {
   label:
@@ -19,19 +19,22 @@ interface OptionType {
 }
 
 const initialState = {} as INuggetContext;
+const initialStateTest = {} as Nugget;
 
 export const NuggetsContext = React.createContext<INuggetContext>(initialState);
 
 const NuggetProvider = (props: any) => {
+  const [test, setTest] = useState<Nugget>(initialStateTest);
   const [state, setState] = useState<INuggetContext>(initialState);
   const [nuggetKind, setNuggetKind] = useState<string>("");
-  const [note, setNote] = useState<ContentObject>({
-    kind: "H1",
-    list: [],
-  });
+  const [note, setNote] = useState<ContentObject>();
 
+  console.log("this is testing file", test);
   useEffect(() => {
     updateKind(nuggetKind);
+    if (note) {
+      addListItem(note);
+    }
   }, [nuggetKind, note]);
 
   function updateCategoryObject(Category: {
@@ -40,28 +43,22 @@ const NuggetProvider = (props: any) => {
     Subject: string;
     Topic?: string;
   }) {
-    setState({
-      ...state,
-      nugget: {
-        ...state.nugget,
-        categories: {
-          categoryId: Category.Category,
-          subjectId: Category.Subject,
-          chapterId: Category.Chapter,
-          topicId: Category.Topic,
-        },
+    setTest((prev) => ({
+      ...prev,
+      categories: {
+        categoryId: Category.Category,
+        subjectId: Category.Subject,
+        chapterId: Category.Chapter,
+        topicId: Category.Topic,
       },
-    });
+    }));
   }
 
   function updateKind(nuggetkind: string) {
-    setState({
-      ...state,
-      nugget: {
-        ...state.nugget,
-        kind: nuggetkind,
-      },
-    });
+    setTest((prev) => ({
+      ...prev,
+      kind: nuggetkind,
+    }));
   }
 
   function updateNuggetInfo(NuggetInfo: {
@@ -69,46 +66,35 @@ const NuggetProvider = (props: any) => {
     sideNote?: string;
     isKnowledgeCap?: boolean;
   }) {
-    setState({
-      ...state,
-      nugget: {
-        ...state.nugget,
-        headerTitle: NuggetInfo.headerTitle,
-        sideNote: NuggetInfo.sideNote,
-        IsKnowledgeCap: NuggetInfo.isKnowledgeCap,
-      },
-    });
+    setTest((prev) => ({
+      ...prev,
+      headerTitle: NuggetInfo.headerTitle,
+      sideNote: NuggetInfo.sideNote,
+      IsKnowledgeCap: NuggetInfo.isKnowledgeCap,
+    }));
   }
 
   function updateXPTimer(XPTimer: { reward: number; timeToReward: number }) {
-    setState({
-      ...state,
-      nugget: {
-        ...state.nugget,
-        reward: XPTimer.reward,
-        timeToReward: XPTimer.timeToReward,
-      },
-    });
+    setTest((prev) => ({
+      ...prev,
+      reward: XPTimer.reward,
+      timeToReward: XPTimer.timeToReward,
+    }));
   }
 
   function updateContentKind(kind: {
     kind: "H1" | "H2" | "Text" | "UL" | "OL" | "IMG";
   }) {
-    setState({
-      ...state,
-      nugget: {
-        ...state.nugget,
-        content: [
-          {
-            ...state.content,
-            kind: kind.kind,
-          },
-        ],
-      },
-    });
+    setTest((prev) => ({ ...prev, kind: kind.kind }));
   }
 
-  function addListItem(item: { rtx: string }) {}
+  function addListItem(note: ContentObject) {
+    console.log("here: ");
+    if (!test.content) setTest((prev) => ({ ...prev, content: [note] }));
+    else {
+      setTest((prev) => ({ ...prev, content: [...prev.content, note] }));
+    }
+  }
 
   return (
     <div>

@@ -29,9 +29,9 @@ export default function () {
     setSelectedValue(selectedOption as OptionType);
   };
   useEffect(() => {
-    updateContentKind?.({
-      kind: selectedValue.value,
-    });
+    // updateContentKind?.({
+    //   kind: selectedValue.value,
+    // });
   }, [selectedValue]);
   // console.log(selectedValue.value,"hii");
 

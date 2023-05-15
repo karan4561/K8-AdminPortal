@@ -5,7 +5,7 @@ export interface INuggetContext {
     setNuggetKind: React.Dispatch<React.SetStateAction<string>>
     note?: ContentObject;
     setNote?: any
-    content?: ContentObject;
+    content: ContentObject[];
     nugget: Nugget,
     CategoryObj?: CategoryObject,
     bullet?: BulletObject,
@@ -21,7 +21,7 @@ export interface INuggetContext {
     updateXPTimer: (XPTimer: {reward: number, timeToReward: number}) => void,
     updateContentKind?: (kind: {kind: 'H1' | 'H2' | 'Text' | 'UL' | 'OL' | 'IMG'}) => void,
     addItemToList?: (list: ListItemObject[], item: {rtx: string})=> void
-    addListItem?: (item: {rtx: string})=> void
+    addListItem?: (note: {note: ContentObject})=> void
     updateImageCaption?: (caption: {imgCaption:string})=>void
     updateVideoNugget?: (videoNugget: {videoCaption:string, videoURI: string})=>void,
     updateTFQuestion?: (question: {question:string,hindi?: string;default?: string;}) =>void,
