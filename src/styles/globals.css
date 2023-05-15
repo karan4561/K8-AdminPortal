@@ -1,4 +1,4 @@
-@import "tailwindcss/base";
+/* @import "tailwindcss/base"; */
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
@@ -174,6 +174,7 @@ h4 {
 }
 
 .subcard-addSection {
+  border: 1px;
   margin-top: 9px;
   background-color: #5a4bda;
   color: #ffffff;
@@ -443,6 +444,14 @@ h4 {
   border-radius: 10px;
   background-color: #fffaf7;
   margin-bottom: 15px;
+  display: flex;
+}
+.scq-option-prev{
+  justify-content: space-between; 
+}
+
+.TFOptionPrev>p{
+  display: flex;
 }
 .TFOptionPrev > div {
   border-radius: 50%;
@@ -488,6 +497,17 @@ h4 {
   line-height: 22px;
   padding: 8px;
 }
+
+.option-editor{
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid black;
+  border-radius: 8px;
+  border-color: #CCCCCC;
+  padding: 5px;
+  margin-top: 7px;
+}
+
 /* .TrueFalseNugget>h4{
     Font-size: 20px;
     Line-height: 30px;

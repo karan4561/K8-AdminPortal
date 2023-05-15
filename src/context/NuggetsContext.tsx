@@ -19,7 +19,7 @@ interface OptionType {
 
 const initialState = {} as INuggetContext;
 
-export const NuggetsContext = React.createContext<any>("");
+export const NuggetsContext = React.createContext<INuggetContext>(initialState);
 
 const NuggetProvider = (props: any) => {
   const [state, setState] = useState<INuggetContext>(initialState);
@@ -85,16 +85,162 @@ const NuggetProvider = (props: any) => {
       },
     });
   }
-
+  function updateTFSolHint(SolHint: {text?:string,hint?:string}){
+    setState({
+      ...state,
+      nugget:{
+        ...state.nugget,
+        question:{
+          ...state.nugget.question,
+          solutions:[
+            {
+              english: {
+                hint: SolHint.hint,
+                text: SolHint.text,
+                otherSolutions: undefined,
+                videoSolutions: undefined,
+              },
+              hindi: {
+                hint:'',
+                text:'',
+                otherSolutions: '',
+                videoSolutions: '',
+              },
+              default: {
+                hint:undefined,
+                text:undefined,
+                otherSolutions: undefined,
+                videoSolutions: undefined,
+              },
+            }
+            ]
+        }
+      }
+    })
+  }
+  function updateTFQuestion(question: {english:string}){
+    setState({
+      ...state,
+      nugget:{
+        ...state.nugget,
+        question:{
+        ...state.nugget.question,
+        content:{
+          ...state.nugget.question?.content,
+          english: question.english
+        }
+        }
+      }
+    })
+  }
+  function updateTFAnswer(Answer:{ answer:string}){
+    setState({
+      ...state,
+      nugget:{
+        ...state.nugget,
+        question:{
+          ...state.nugget.question,
+          answer:{
+            ...state.nugget.question?.answer,
+            english: Answer.answer
+          }
+        }
+      }
+    })
+  }
+  function updateCaption(caption: {caption?:string}){
+    setState({
+      ...state,
+      nugget:{
+        ...state.nugget,
+        caption:caption.caption
+      }
+    })
+  }
+  function updateVideoNugget(videoNugget: {videoCaption?:string, videoURI?: string}){
+    setState({
+      ...state,
+      nugget:{
+        ...state.nugget,
+        caption: videoNugget.videoCaption,
+        videoURI: videoNugget.videoURI
+      }
+    })
+  }
+  function updateFileObj(FileObj: {id?: string;name?: string;baseUrl: string;key: string;type?:| "CONTENT"| "TEST"| "SUBJECTIVE_TEST_SOLUTIONS"| "VIMEO"| "JWPLAYER";organization?: string;size?: number;details?: string;}){
+    setState({
+      ...state,
+      nugget:{
+        ...state.nugget,
+        imageURI:{
+          _id: FileObj.id,
+          name: FileObj.name,
+          baseUrl: FileObj.baseUrl,
+          key: FileObj.key,
+          type: FileObj.type,
+          organization: FileObj.organization,
+          size: FileObj.size,
+          details: FileObj.details
+        }
+      }
+    })
+  }
+  function updateOption(Option :{ option: {text:string}[]}){
+    setState({
+      ...state,
+      nugget:{
+        ...state.nugget,
+        question:{
+          ...state.nugget.question,
+          bilingual_options:{
+            ...state.nugget.question?.bilingual_options,
+            english:Option.option
+          }
+        }
+      }
+    })
+  }
+  function updateCorrectOption(Option: {isCorrect: boolean; index: number}){
+    setState({
+      ...state,
+      nugget:{
+        ...state.nugget,
+        question:{
+          ...state.nugget.question,
+          bilingual_options:{
+            ...state.nugget.question.bilingual_options,
+            english: state.nugget.question.bilingual_options.english.map((option, i) => {
+              if (i === Option.index) {
+                return {
+                  ...option,
+                  isCorrect: Option.isCorrect
+                };
+              }
+              return option;
+            })
+          }
+        }
+      }
+    })
+  }
   return (
     <div>
       <NuggetsContext.Provider
         value={{
+          ...state,
           nuggetKind,
           setNuggetKind,
           updateCategoryObject,
           updateNuggetInfo,
           updateXPTimer,
+          updateTFAnswer,
+          updateTFSolHint,
+          updateTFQuestion,
+          updateCaption,
+          updateVideoNugget,
+          updateFileObj,
+          updateOption,
+          updateCorrectOption
         }}
       >
         {props.children}
