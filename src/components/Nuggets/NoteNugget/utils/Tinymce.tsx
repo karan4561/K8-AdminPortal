@@ -1,13 +1,18 @@
 import React, { useRef, useEffect } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { useState, useContext } from "react";
-import { NuggetsContext } from "../../../context/NuggetsContext";
+import { NuggetsContext } from "../../../../context/NuggetsContext";
 import { listenerCount } from "process";
 
-const TinyMCE = (kind: {
-  kind: "H1" | "H2" | "Text" | "UL" | "OL" | "IMG";
+const TinyMCE = (props: {
+  kind: {
+    kind: "H1" | "H2" | "Text" | "UL" | "OL" | "IMG";
+  };
+  idx: number;
+  idj?: number;
 }) => {
-  const { setNote } = useContext(NuggetsContext);
+  const { bullet, updateContentItem, updateListItem } =
+    useContext(NuggetsContext);
   const editorRef = useRef(null);
   const [content, setContent] = useState("");
 
@@ -33,10 +38,15 @@ const TinyMCE = (kind: {
   }, []);
 
   useEffect(() => {
-    const timeoutId = setTimeout(
-      () => setNote({ kind: kind, list: content }),
-      2500
-    );
+    const timeoutId = setTimeout(() => {
+      if (props.kind == "OL") {
+        updateListItem(props.idx, content, "OL", props.idj);
+      } else if (props.kind == "UL") {
+        updateListItem(props.idx, content, "UL", props.idj);
+      } else {
+        updateContentItem(props.idx, { kind: props.kind, list: content });
+      }
+    }, 1500);
     return () => clearTimeout(timeoutId);
   }, [content]);
   return (

@@ -1,21 +1,22 @@
 import { useEffect, useState, useContext } from "react";
-import OLType from "./OLType";
 import Select from "react-select";
-import { NuggetsContext } from "../../../../context/NuggetsContext";
+import { NuggetsContext } from "../../../../../context/NuggetsContext";
 interface OptionType {
   value: string;
   label: string;
 }
 export default function () {
-  const { nugget, updateOlBullet } = useContext(NuggetsContext);
+  const { bullet, setBullet } = useContext(NuggetsContext);
   const [prefixValue, setPrefixValue] = useState("");
   const [suffixValue, setSuffixValue] = useState("");
 
   const prefixChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPrefixValue(event.target.value);
+    console.log("Prefix VALUE:", prefixValue);
   };
   const suffixChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSuffixValue(event.target.value);
+    console.log("Suffix Value", suffixValue);
   };
   const optionsXP = [
     { label: "1", value: "1" },
@@ -24,16 +25,18 @@ export default function () {
     { label: "I", value: "I" },
   ];
   const [OLType, setOLType] = useState<OptionType>(optionsXP[0]);
-  // const [OType, setOType] = useState<BulletObject>();
   const handleChangeXP = (selectedOption: OptionType) => {
     setOLType(selectedOption);
   };
   useEffect(() => {
-    updateOlBullet({
-      value: OLType.value,
-      prefix: prefixValue,
-      suffix: suffixValue,
-    });
+    if (setBullet) {
+      setBullet({
+        value: OLType.value,
+        prefix: prefixValue,
+        suffix: suffixValue,
+      });
+    }
+    console.log("The Value of Bullet is here:", bullet);
   }, [OLType.value, prefixValue, suffixValue]);
 
   return (

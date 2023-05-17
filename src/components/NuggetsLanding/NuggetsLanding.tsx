@@ -3,7 +3,7 @@ import { NuggetsContext } from "../../context/NuggetsContext";
 import AddNuggetHeader from "../addNugget/AddNuggetHeader";
 import NuggetInfo from "../NuggetInfo/NuggetInfo";
 import XPTimer from "../XP&Timer/XP&Timer";
-import NoteNugget from "../NoteNugget/NoteNugget";
+import NoteNugget from "../Nuggets/NoteNugget/NoteNugget";
 import PreviewHeader from "../Preview/previewHeader";
 
 interface OptionType {

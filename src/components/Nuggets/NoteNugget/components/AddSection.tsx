@@ -7,14 +7,11 @@ import Icon from "../utils/Icon_type";
 import Text from "../utils/AddInputTextEditor";
 import TextEditor from "../utils/Tinymce";
 import BulletColor from "../utils/OL/BulletColor";
-import { NuggetsContext } from "../../../context/NuggetsContext";
 interface OptionType {
   value: "H1" | "H2" | "Text" | "UL" | "OL" | "IMG";
   label: string;
 }
-export default function () {
-  const { updateContentKind } = useContext(NuggetsContext);
-  // console.log(nugget);
+export default function (props: any) {
   const options: OptionType[] = [
     { value: "H1", label: "H1" },
     { value: "H2", label: "H2" },
@@ -28,13 +25,8 @@ export default function () {
   const handleChange = (selectedOption: SingleValue<OptionType>) => {
     setSelectedValue(selectedOption as OptionType);
   };
-  useEffect(() => {
-    // updateContentKind?.({
-    //   kind: selectedValue.value,
-    // });
-  }, [selectedValue]);
-  // console.log(selectedValue.value,"hii");
 
+  console.log("........addsectios-id......", props.id);
   return (
     <>
       <div className="card-header add-section">
@@ -53,15 +45,15 @@ export default function () {
           {(selectedValue?.value == "H1" ||
             selectedValue?.value == "H2" ||
             selectedValue?.value == "Text") && (
-            <TextEditor kind={selectedValue.value} />
+            <TextEditor kind={selectedValue.value} idx={props.id} />
           )}
 
           {selectedValue?.value == "OL" && <OL />}
           {(selectedValue?.value == "OL" || selectedValue?.value == "UL") && (
-            <Text />
+            <Text kind={selectedValue.value} idx={props.id} />
           )}
-          {/* {(selectedValue?.value=="Text") && <Text/>} */}
         </div>
+
         {selectedValue?.value == "IMG" && <ImageType />}
         {selectedValue?.value == "OL" && <BulletColor />}
       </div>

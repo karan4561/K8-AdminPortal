@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from "react";
-import { NuggetsContext } from "../../../../context/NuggetsContext";
+import { NuggetsContext } from "../../../../../context/NuggetsContext";
 export default function BulletColor() {
-  const { nugget, updateBulletColor } = useContext(NuggetsContext);
+  const { setBullet } = useContext(NuggetsContext);
 
   const [selectedColor, setSelectedColor] = useState("#000000");
 
@@ -10,9 +10,9 @@ export default function BulletColor() {
   }
   // console.log(selectedColor,"color");
   useEffect(() => {
-    updateBulletColor({
-      color: selectedColor,
-    });
+    if (setBullet) {
+      setBullet({ color: selectedColor });
+    }
   }, [selectedColor]);
   // console.log(nugget);
 

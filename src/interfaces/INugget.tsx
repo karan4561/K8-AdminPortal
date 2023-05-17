@@ -32,10 +32,10 @@ export interface ListItemObject {
 }
 
 export type BulletObject = {
-  value: string;
-  prefix: string;
-  suffix: string;
-  color: string;
+  value?: string;
+  prefix?: string;
+  suffix?: string;
+  color?: string;
 };
 
 export interface ContentObject {
@@ -44,8 +44,8 @@ export interface ContentObject {
   imgUri?: FileObject;
   imgCaption?: string;
   bullet?: BulletObject;
-  list: ListItemObject[];
-};
+  list: Array<string>;
+}
 
 export interface FileObject {
   _id?: string;
