@@ -9,6 +9,7 @@ import ImageNugget from "../ImageNugget/ImageNugget";
 import VideoNugget from "../VideoNugget/VideoNugget";
 import SccNugget from "../SccNugget/SccNugget";
 import MCQNugget from "../MCQNugget/MCQNugget";
+import LTI from "../LTI/LTI";
 
 interface OptionType {
   label:
@@ -83,6 +84,7 @@ function NuggetsLanding() {
           {(nugget?.kind=="Video") && <VideoNugget/>}
           {(nugget?.kind=="SCQ") && <SccNugget/>}
           {(nugget?.kind=="MCQ") && <MCQNugget/>}
+          {(nugget?.kind=="LTI") && <LTI/>}
 
         </div>
       </div>

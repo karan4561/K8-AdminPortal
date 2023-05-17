@@ -27,5 +27,8 @@ export interface INuggetContext {
     updateTFAnswer: (Answer:{ answer:string}) =>void,
     updateFileObj: (FileObj: {id?: string;name?: string;baseUrl: string;key: string;type?:| "CONTENT"| "TEST"| "SUBJECTIVE_TEST_SOLUTIONS"| "VIMEO"| "JWPLAYER";organization?: string;size?: number;details?: string;})=>void
     updateOption: (Option :{ option: { text: string; }[]})=>void
-    updateCorrectOption : (Option: {isCorrect: boolean; index: number})=>void
+    updateCorrectOption : (Option: {isCorrect: boolean; index: number})=>void,
+    addSCQOption: ()=>void,
+    deleteSCQOption: (Option: {index:number})=>void,
+    updateSCQOption: (Option: {index:number; text:string})=>void,
 }

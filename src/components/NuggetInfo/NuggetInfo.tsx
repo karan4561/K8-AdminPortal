@@ -3,27 +3,36 @@ import Icon from "../../utils/IconType/IconType";
 import { useContext, useState, useEffect } from "react";
 
 export default function NuggetInfo() {
-  const { updateNuggetInfo } = useContext(NuggetsContext);
-  const [headerTitle, setheaderTitle] = useState("");
+  const { updateNuggetInfo,nugget } = useContext(NuggetsContext);
+  // const [headerTitle, setheaderTitle] = useState("");
   const [isChecked, setIsChecked] = useState(false);
   const [sideNote, setsideNote] = useState("");
   const headerTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setheaderTitle(event.target.value);
+    // setheaderTitle(event.target.value);
+    updateNuggetInfo({
+      headerTitle: event.target.value,
+    });
   };
 
   function handleCheckboxChange() {
     setIsChecked(!isChecked);
+    updateNuggetInfo({
+      isKnowledgeCap: !isChecked,
+    });
   }
   const sideNoteChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setsideNote(event.target.value);
-  };
-  useEffect(() => {
     updateNuggetInfo({
-      headerTitle: headerTitle,
-      sideNote: sideNote,
-      isKnowledgeCap: isChecked,
+      sideNote: event.target.value,
     });
-  }, [headerTitle, sideNote, isChecked]);
+  };
+  // useEffect(() => {
+  //   updateNuggetInfo({
+  //     headerTitle: headerTitle,
+  //     sideNote: sideNote,
+  //     isKnowledgeCap: isChecked,
+  //   });
+  // }, [headerTitle, sideNote, isChecked]);
 
   return (
     <>
@@ -35,7 +44,7 @@ export default function NuggetInfo() {
           <input
             className="image-type-input"
             type="text"
-            value={headerTitle}
+            value={nugget?.headerTitle}
             onChange={headerTitleChange}
             placeholder="Header Title"
           />
@@ -44,7 +53,7 @@ export default function NuggetInfo() {
         <input
           type="checkbox"
           id="checkbox"
-          checked={isChecked}
+          checked={nugget?.IsKnowledgeCap}
           onChange={handleCheckboxChange}
         />
         <div className="NuggetInfo-iconHeadertitle sideNote">
@@ -52,7 +61,7 @@ export default function NuggetInfo() {
           <input
             className="image-type-input"
             type="text"
-            value={sideNote}
+            value={nugget?.sideNote}
             onChange={sideNoteChange}
             placeholder="Side Note"
           />
