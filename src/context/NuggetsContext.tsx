@@ -6,16 +6,16 @@ import { Nugget } from "@/interfaces/INugget";
 
 interface OptionType {
   label:
-  | "Video"
-  | "SCQ"
-  | "MCQ"
-  | "Note"
-  | "FIB"
-  | "IMG"
-  | "AUDIOCLIP"
-  | "LTI"
-  | "TrueFalse"
-  | "Audio";
+    | "Video"
+    | "SCQ"
+    | "MCQ"
+    | "Note"
+    | "FIB"
+    | "IMG"
+    | "AUDIOCLIP"
+    | "LTI"
+    | "TrueFalse"
+    | "Audio";
   value: string;
 }
 
@@ -23,10 +23,8 @@ import {
   BulletObject,
   ContentObject,
   ListItemObject,
-  Nugget,
   QuestionObject,
 } from "@/interfaces/INugget";
-
 
 const initialState = {} as INuggetContext;
 const initialStateTest = {} as Nugget;
@@ -39,8 +37,9 @@ interface FIB {
 export const NuggetsContext = React.createContext<INuggetContext>(initialState);
 
 const NuggetProvider = (props: any) => {
+  const [state, setState] = useState<INuggetContext>(initialState);
   const [test, setTest] = useState<Nugget>(initialStateTest);
-  const [nuggetKind, setNuggetKind] = useState<string>("");
+  //const [nuggetKind, setNuggetKind] = useState<string>("");
   const [bullet, setBullet] = useState<BulletObject>();
   const [list, setList] = useState<Array<string>>([""]);
   const [ques, setQues] = useState<QuestionObject>();
@@ -48,10 +47,11 @@ const NuggetProvider = (props: any) => {
   console.log("this is list file", list);
   console.log("this is testing file", test);
   console.log("this is question object", ques);
+  console.log("this is state being tested", state);
 
-  useEffect(() => {
-    updateKind(nuggetKind);
-  }, [nuggetKind]);
+  // useEffect(() => {
+  //   updateKind(nuggetKind);
+  // }, [nuggetKind]);
 
   function updateCategoryObject(Category: {
     Category: string;
@@ -70,8 +70,20 @@ const NuggetProvider = (props: any) => {
     }));
   }
 
-  function updateKind(nuggetkind: string) {
-setTest((prev) => ({
+  function updateNuggetKind(
+    nuggetkind:
+      | "Video"
+      | "SCQ"
+      | "MCQ"
+      | "Note"
+      | "FIB"
+      | "IMG"
+      | "AUDIOCLIP"
+      | "LTI"
+      | "TrueFalse"
+      | "Audio"
+  ) {
+    setTest((prev) => ({
       ...prev,
       kind: nuggetkind,
     }));
@@ -82,24 +94,12 @@ setTest((prev) => ({
     sideNote?: string;
     isKnowledgeCap?: boolean;
   }) {
-
-<!--     setState(prevState => ({
-      ...prevState,
-      nugget: {
-        ...prevState.nugget,
-        headerTitle: NuggetInfo.headerTitle !== undefined ? NuggetInfo.headerTitle : prevState.nugget.headerTitle,
-        sideNote: NuggetInfo.sideNote !== undefined ? NuggetInfo.sideNote : prevState.nugget.sideNote,
-        IsKnowledgeCap: NuggetInfo.isKnowledgeCap !== undefined ? NuggetInfo.isKnowledgeCap : prevState.nugget.IsKnowledgeCap,
-      },
-    })); -->
-
     setTest((prev) => ({
       ...prev,
       headerTitle: NuggetInfo.headerTitle,
       sideNote: NuggetInfo.sideNote,
       IsKnowledgeCap: NuggetInfo.isKnowledgeCap,
     }));
-
   }
 
   function updateXPTimer(XPTimer: { reward: number; timeToReward: number }) {
@@ -184,89 +184,88 @@ setTest((prev) => ({
     }
     setTest(test);
   }
-  function updateTFSolHint(SolHint: { text?: string, hint?: string }) {
-    setState({
-      ...state,
-      nugget: {
-        ...state.nugget,
-        question: {
-          ...state.nugget.question,
-          solutions: [
-            {
-              english: {
-                hint: SolHint.hint,
-                text: SolHint.text,
-                otherSolutions: undefined,
-                videoSolutions: undefined,
-              },
-              hindi: {
-                hint: '',
-                text: '',
-                otherSolutions: '',
-                videoSolutions: '',
-              },
-              default: {
-                hint: undefined,
-                text: undefined,
-                otherSolutions: undefined,
-                videoSolutions: undefined,
-              },
-            }
-          ]
-        }
-      }
-    })
+
+  function updateSolHint(SolHint: { text?: string; hint?: string }) {
+    setTest((prev) => ({
+      ...prev,
+      question: {
+        ...prev.question,
+        solutions: [
+          {
+            english: {
+              hint: SolHint.hint,
+              text: SolHint.text,
+              otherSolutions: undefined,
+              videoSolutions: undefined,
+            },
+            hindi: {
+              hint: "",
+              text: "",
+              otherSolutions: "",
+              videoSolutions: "",
+            },
+            default: {
+              hint: undefined,
+              text: undefined,
+              otherSolutions: undefined,
+              videoSolutions: undefined,
+            },
+          },
+        ],
+      },
+    }));
   }
-  function updateTFQuestion(question: { english: string }) {
-    setState({
-      ...state,
-      nugget: {
-        ...state.nugget,
-        question: {
-          ...state.nugget.question,
-          content: {
-            ...state.nugget.question?.content,
-            english: question.english
-          }
-        }
-      }
-    })
+  function updateQuestion(question: { english: string }) {
+    setTest((prev) => ({
+      ...prev,
+      question: {
+        ...prev.question,
+        content: { ...prev.question.content, english: question.english },
+      },
+    }));
   }
-  function updateTFAnswer(Answer: { answer: string }) {
-    setState({
-      ...state,
-      nugget: {
-        ...state.nugget,
-        question: {
-          ...state.nugget.question,
-          answer: {
-            ...state.nugget.question?.answer,
-            english: Answer.answer
-          }
-        }
-      }
-    })
+  function updateAnswer(Answer: { answer: string }) {
+    setTest((prev) => ({
+      ...prev,
+      question: {
+        ...prev.question,
+        answer: { ...prev.question.answer, english: Answer.answer },
+      },
+    }));
   }
   function updateCaption(caption: { caption?: string }) {
-    setState({
-      ...state,
-      nugget: {
-        ...state.nugget,
-        caption: caption.caption
-      }
-    })
+    setTest({ ...test, caption: caption.caption });
   }
-  function updateVideoNugget(videoNugget: { videoCaption?: string, videoURI?: string }) {
+
+  function updateVideoNugget(videoNugget: {
+    videoCaption?: string;
+    videoURI?: string;
+  }) {
     setState({
       ...state,
       nugget: {
         ...state.nugget,
         caption: videoNugget.videoCaption,
-        videoURI: videoNugget.videoURI
-      }
-    })
+        videoURI: videoNugget.videoURI,
+      },
+    });
   }
-  function updateFileObj(FileObj: { id?: string; name?: string; baseUrl: string; key: string; type?: | "CONTENT" | "TEST" | "SUBJECTIVE_TEST_SOLUTIONS" | "VIMEO" | "JWPLAYER"; organization?: string; size?: number; details?: string; }) {
+
+  function updateFileObj(FileObj: {
+    id?: string;
+    name?: string;
+    baseUrl: string;
+    key: string;
+    type?:
+      | "CONTENT"
+      | "TEST"
+      | "SUBJECTIVE_TEST_SOLUTIONS"
+      | "VIMEO"
+      | "JWPLAYER";
+    organization?: string;
+    size?: number;
+    details?: string;
+  }) {
     setState({
       ...state,
       nugget: {
@@ -279,11 +278,12 @@ setTest((prev) => ({
           type: FileObj.type,
           organization: FileObj.organization,
           size: FileObj.size,
-          details: FileObj.details
-        }
-      }
-    })
+          details: FileObj.details,
+        },
+      },
+    });
   }
+
   function updateOption(Option: { option: { text: string }[] }) {
     setState({
       ...state,
@@ -293,114 +293,114 @@ setTest((prev) => ({
           ...state.nugget.question,
           bilingual_options: {
             ...state.nugget.question?.bilingual_options,
-            english: Option.option
-          }
-        }
-      }
-    })
+            english: Option.option,
+          },
+        },
+      },
+    });
   }
+
   function updateCorrectOption(Option: { isCorrect: boolean; index: number }) {
-    setState({
-      ...state,
-      nugget: {
-        ...state.nugget,
-        question: {
-          ...state.nugget.question,
-          bilingual_options: {
-            ...state.nugget.question.bilingual_options,
-            english: state.nugget.question.bilingual_options.english.map((option, i) => {
-              if (state.nugget.kind === "SCQ") {
-                console.log("scq");
-                if (i === Option.index) {
-                  return {
-                    ...option,
-                    isCorrect: Option.isCorrect
-                  };
-                }
-                else {
-                  return {
-                    ...option,
-                    isCorrect: false
-                  };
-                }
-                // return option;
+    setTest((prev) => ({
+      ...prev,
+      question: {
+        ...prev.question,
+        bilingual_options: {
+          ...prev.question.bilingual_options,
+          english: test.question.bilingual_options!.english.map((option, i) => {
+            if (test.kind === "SCQ") {
+              console.log("scq");
+              if (i === Option.index) {
+                return {
+                  ...option,
+                  isCorrect: Option.isCorrect,
+                };
+              } else {
+                return {
+                  ...option,
+                  isCorrect: false,
+                };
               }
-              else {
-                if (i === Option.index) {
-                  return {
-                    ...option,
-                    isCorrect: Option.isCorrect
-                  };
-                }
-                return option;
+            } else {
+              if (i === Option.index) {
+                return {
+                  ...option,
+                  isCorrect: Option.isCorrect,
+                };
               }
-            })
-          }
-        }
-      }
-    })
+              return option;
+            }
+          }),
+        },
+      },
+    }));
   }
+
   function addSCQOption() {
     const newOption = {
       text: "",
     };
-    setState(prevState => ({
-      ...prevState,
-      nugget: {
-        ...prevState.nugget,
+    if (!test.question.bilingual_options?.english)
+      setTest((prev) => ({
+        ...prev,
         question: {
-          ...prevState.nugget.question,
+          ...prev.question,
           bilingual_options: {
-            ...prevState.nugget.question.bilingual_options,
-            english: [
-              ...(prevState.nugget.question.bilingual_options?.english || []), // Add a conditional check
-              newOption
-            ]
-          }
-        }
-      }
-    }))
+            ...prev.question.bilingual_options,
+            english: [newOption],
+          },
+        },
+      }));
+    else
+      setTest((prev) => ({
+        ...prev,
+        question: {
+          ...prev.question,
+          bilingual_options: {
+            ...prev.question.bilingual_options,
+            english: [...prev.question.bilingual_options?.english, newOption],
+          },
+        },
+      }));
   }
   function deleteSCQOption(Option: { index: number }) {
-    setState(prevState => {
-      // const updatedOptions = [...prevState.nugget.question.bilingual_options.english];
-      // updatedOptions.splice(Option.index, 1);
-      return {
-        ...prevState,
-        nugget: {
-          ...prevState.nugget,
-          question: {
-            ...prevState.nugget.question,
-            bilingual_options: {
-              ...prevState.nugget.question.bilingual_options,
-              english: prevState.nugget.question.bilingual_options.english.filter(
-                (_, i) => i !== Option.index
-              )
-            }
-          }
-        }
-      };
-    });
+    // setState((prevState) => {
+    //   return {
+    //     ...prevState,
+    //     nugget: {
+    //       ...prevState.nugget,
+    //       question: {
+    //         ...prevState.nugget.question,
+    //         bilingual_options: {
+    //           ...prevState.nugget.question.bilingual_options,
+    //           english:
+    //             prevState.nugget.question.bilingual_options.english.filter(
+    //               (_, i) => i !== Option.index
+    //             ),
+    //         },
+    //       },
+    //     },
+    //   };
+    // });
+    test.question.bilingual_options?.english.splice(Option.index, 1);
+    setTest(test);
   }
 
   function updateSCQOption(Option: { index: number; text: string }) {
-    setState(prevState => {
-      const updatedOptions = prevState.nugget.question.bilingual_options?.english
-        ? prevState.nugget.question.bilingual_options.english
+    setTest((prev) => {
+      const updatedOptions = prev.question.bilingual_options?.english
+        ? prev.question.bilingual_options.english
         : [];
       updatedOptions[Option.index] = { text: Option.text };
       return {
-        ...prevState,
-        nugget: {
-          ...prevState.nugget,
-          question: {
-            ...prevState.nugget.question,
-            bilingual_options: {
-              ...prevState.nugget.question.bilingual_options,
-              english: updatedOptions
-            }
-          }
-        }
+        ...prev,
+        question: {
+          ...prev.question,
+          bilingual_options: {
+            ...prev.question.bilingual_options,
+            english: updatedOptions,
+          },
+        },
       };
     });
   }
@@ -410,25 +410,21 @@ setTest((prev) => ({
       <NuggetsContext.Provider
         value={{
           ...state,
-
           test,
           setTest,
-
-          nuggetKind,
+          updateNuggetKind,
           bullet,
           list,
           ques,
           setQues,
           setList,
           setBullet,
-          setNuggetKind,
           updateCategoryObject,
           updateNuggetInfo,
           updateXPTimer,
-
-          updateTFAnswer,
-          updateTFSolHint,
-          updateTFQuestion,
+          updateAnswer,
+          updateSolHint,
+          updateQuestion,
           updateCaption,
           updateVideoNugget,
           updateFileObj,
@@ -436,8 +432,7 @@ setTest((prev) => ({
           updateCorrectOption,
           addSCQOption,
           deleteSCQOption,
-          updateSCQOption
-
+          updateSCQOption,
           updateContentKind,
           addContentItem,
           updateContentItem,
@@ -446,7 +441,6 @@ setTest((prev) => ({
           handleDeleteNoteContent,
           addFIBItem,
           updateFIBItem,
-
         }}
       >
         {props.children}

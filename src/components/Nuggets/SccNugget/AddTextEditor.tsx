@@ -37,7 +37,7 @@
 //   function addSection() {
 //     // const newSectionCount = sectionCount + 1;
 //     const newSections = [...sections, { id: uuid(), text: "" }];
-//     // setSectionCount(newSectionCount); 
+//     // setSectionCount(newSectionCount);
 //     setSections(newSections);
 //   }
 
@@ -46,7 +46,7 @@
 //       // console.log(id,section.id !== id);
 //       return section.id !== id;
 //     });
-//     // const newSectionCount = newSections.length; 
+//     // const newSectionCount = newSections.length;
 //     // setSectionCount(newSectionCount);
 //     setSections(newSections);
 //   }
@@ -102,10 +102,11 @@
 import TextEditor from "../TrueFalseNugget/TextEditor";
 import { useState, useEffect, useContext } from "react";
 import uuid from "react-uuid";
-import { NuggetsContext } from "../../context/NuggetsContext";
+import { NuggetsContext } from "../../../context/NuggetsContext";
 
 function AddTextEditor() {
-  const { nugget, updateSCQOption, deleteSCQOption, addSCQOption } = useContext(NuggetsContext);
+  const { test, updateSCQOption, deleteSCQOption, addSCQOption } =
+    useContext(NuggetsContext);
   // const [sections, setSections] = useState(nugget.question?.bilingual_options?.english || []);
 
   function addSection() {
@@ -128,25 +129,30 @@ function AddTextEditor() {
     updateSCQOption({ index, text: content });
   }
 
-  const sectionElements = nugget.question?.bilingual_options?.english.map((section, index) => {
-    const indexToAlpha = (index = 1) => {
-      const A = "A".charCodeAt(0);
-      let numberToCharacter = (number: number) => {
-        return String.fromCharCode(A + number);
+  const sectionElements = test.question?.bilingual_options?.english.map(
+    (section, index) => {
+      const indexToAlpha = (index = 1) => {
+        const A = "A".charCodeAt(0);
+        let numberToCharacter = (number: number) => {
+          return String.fromCharCode(A + number);
+        };
+        return numberToCharacter(index);
       };
-      return numberToCharacter(index);
-    };
 
-    return (
-      <>
-        <div className="option-editor" key={index}>
-          <p>{indexToAlpha(index)}</p>
-          <TextEditor value={section.text} onUpdate={(content: string) => updateAnswerOption(index, content)} />
-        </div>
-        <button onClick={() => handleDelete(index)}>Delete</button>
-      </>
-    );
-  });
+      return (
+        <>
+          <div className="option-editor" key={index}>
+            <p>{indexToAlpha(index)}</p>
+            <TextEditor
+              value={section.text}
+              onUpdate={(content: string) => updateAnswerOption(index, content)}
+            />
+          </div>
+          <button onClick={() => handleDelete(index)}>Delete</button>
+        </>
+      );
+    }
+  );
 
   return (
     <>

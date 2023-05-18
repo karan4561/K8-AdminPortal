@@ -4,18 +4,18 @@ import AddNuggetHeader from "../addNugget/AddNuggetHeader";
 import NuggetInfo from "../NuggetInfo/NuggetInfo";
 import XPTimer from "../XP&Timer/XP&Timer";
 
-import TrueFalse from "../TrueFalseNugget/TrueFalseNugget";
+import TrueFalse from "../Nuggets/TrueFalseNugget/TrueFalseNugget";
 import Preview from "../Preview/Preview";
-import ImageNugget from "../ImageNugget/ImageNugget";
+import ImageNugget from "../Nuggets/ImageNugget/ImageNugget";
 import VideoNugget from "../VideoNugget/VideoNugget";
-import SccNugget from "../SccNugget/SccNugget";
-import MCQNugget from "../MCQNugget/MCQNugget";
+import SccNugget from "../Nuggets/SccNugget/SccNugget";
+import MCQNugget from "../Nuggets/MCQNugget/MCQNugget";
 import LTI from "../LTI/LTI";
 
 import NoteNugget from "../Nuggets/NoteNugget/NoteNugget";
 import PreviewHeader from "../Preview/previewHeader";
 import FIBNugget from "../Nuggets/FIB/FIBNugget";
-
+import { get, post } from "@/api/api";
 
 interface OptionType {
   label:
@@ -33,20 +33,17 @@ interface OptionType {
 }
 
 function NuggetsLanding() {
-  const { nugget, nuggetKind, setNuggetKind } = useContext(NuggetsContext);
+  const { updateNuggetKind, test } = useContext(NuggetsContext);
 
   const nuggetsRef = useRef("");
 
   const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNuggetKind(event.target.value as OptionType["value"]);
+    updateNuggetKind(event.target.value as OptionType["value"]);
   };
 
-  console.log(nugget);
-
   useEffect(() => {
-    setNuggetKind(nuggetKind);
-    console.log(nuggetKind);
-  }, [nuggetKind]);
+    if (test.kind) updateNuggetKind(test.kind);
+  }, [test.kind]);
 
   const options: OptionType[] = [
     { value: "Video", label: "Video" },
@@ -76,7 +73,7 @@ function NuggetsLanding() {
                     type="radio"
                     name="option"
                     value={op.value}
-                    checked={nuggetKind === op.label}
+                    checked={test.kind === op.label}
                     onChange={handleOptionChange}
                   />
                   {op.label}
@@ -86,24 +83,17 @@ function NuggetsLanding() {
           </div>
           <NuggetInfo />
           <XPTimer />
-
-          {(nugget?.kind=="TrueFalse") && <TrueFalse/>}
-          {(nugget?.kind=="IMG") && <ImageNugget/>}
-          {(nugget?.kind=="Video") && <VideoNugget/>}
-          {(nugget?.kind=="SCQ") && <SccNugget/>}
-          {(nugget?.kind=="MCQ") && <MCQNugget/>}
-          {(nugget?.kind=="LTI") && <LTI/>}
-
+          {test.kind == "Note" && <NoteNugget />}
+          {test.kind == "FIB" && <FIBNugget />}
+          {test.kind == "TrueFalse" && <TrueFalse />}
+          {test.kind == "IMG" && <ImageNugget />}
+          {test.kind == "Video" && <VideoNugget />}
+          {test.kind == "SCQ" && <SccNugget />}
+          {test.kind == "MCQ" && <MCQNugget />}
+          {test.kind == "LTI" && <LTI />}
         </div>
       </div>
-      <Preview/>
-
-          {nuggetKind == "Note" && <NoteNugget />}
-          {nuggetKind == "FIB" && <FIBNugget />}
-        </div>
-      </div>
-      <PreviewHeader />
-
+      <Preview />
     </div>
   );
 }

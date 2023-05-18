@@ -75,12 +75,12 @@ export interface QuestionObject {
       id?: string; //backend
       isCorrect?: boolean;
     }[];
-    hindi: {
+    hindi?: {
       text: string;
       id: string;
       isCorrect: boolean;
     }[];
-    default: {
+    default?: {
       text: string;
       id: string;
       isCorrect: boolean;
@@ -169,7 +169,7 @@ export interface QuestionObject {
   }[];
   answer?: {
     english: string;
-    hindi: string;
-    default: string;
+    hindi?: string;
+    default?: string;
   };
 }

@@ -1,12 +1,14 @@
 import { useState, useContext, useEffect } from "react";
 import Select from "react-select";
 import { NuggetsContext } from "../../context/NuggetsContext";
+import { getCategory, getSubject } from "@/api/filter";
 interface OptionType {
   value: string;
   label: string;
 }
 export default function AddNuggetHeader() {
   const { updateCategoryObject } = useContext(NuggetsContext);
+
   const Subject: OptionType[] = [
     { value: "option1", label: "Option 1" },
     { value: "option2", label: "Option 2" },
@@ -27,6 +29,20 @@ export default function AddNuggetHeader() {
     { value: "option2", label: "Option 2" },
     { value: "option3", label: "Option 3" },
   ];
+
+  const [categoryList, setCategoryList] = useState<OptionType[]>();
+  const [subjectList, setSubjectList] = useState<OptionType[]>();
+
+  useEffect(() => {
+    getCategory().then((data) =>
+      setCategoryList(
+        data.map((obj: any) => {
+          return { value: obj.unique_id, label: obj.name };
+        })
+      )
+    );
+  }, []);
+
   const [categoryValue, setcategoryValue] = useState<OptionType>(Category[0]);
   const [ChapterValue, setChapterValue] = useState<OptionType>(Chapter[0]);
   const [SubjectValue, setSubjectValue] = useState<OptionType>(Subject[0]);
@@ -42,6 +58,13 @@ export default function AddNuggetHeader() {
 
   const CategoryChange = (selectedOption: OptionType) => {
     setcategoryValue(selectedOption);
+    getSubject(selectedOption.value).then((data) =>
+      setSubjectList(
+        data.map((obj: any) => {
+          return { value: obj.unique_id, label: obj.english_name };
+        })
+      )
+    );
   };
 
   const ChapterChange = (selectedOption: OptionType) => {
@@ -70,7 +93,7 @@ export default function AddNuggetHeader() {
             className="AddNuggetCategory"
             value={categoryValue}
             onChange={CategoryChange}
-            options={Category}
+            options={categoryList}
             placeholder="Category"
           />
           {/* <Subject /> */}
@@ -78,7 +101,7 @@ export default function AddNuggetHeader() {
             className="AddNuggetCategory"
             value={SubjectValue}
             onChange={SubjectChange}
-            options={Subject}
+            options={subjectList}
             placeholder="Subject"
           />
           {/* <Chapter /> */}
