@@ -3,6 +3,7 @@ import { NuggetsContext } from "../../context/NuggetsContext";
 import AddNuggetHeader from "../addNugget/AddNuggetHeader";
 import NuggetInfo from "../NuggetInfo/NuggetInfo";
 import XPTimer from "../XP&Timer/XP&Timer";
+
 import TrueFalse from "../TrueFalseNugget/TrueFalseNugget";
 import Preview from "../Preview/Preview";
 import ImageNugget from "../ImageNugget/ImageNugget";
@@ -10,6 +11,11 @@ import VideoNugget from "../VideoNugget/VideoNugget";
 import SccNugget from "../SccNugget/SccNugget";
 import MCQNugget from "../MCQNugget/MCQNugget";
 import LTI from "../LTI/LTI";
+
+import NoteNugget from "../Nuggets/NoteNugget/NoteNugget";
+import PreviewHeader from "../Preview/previewHeader";
+import FIBNugget from "../Nuggets/FIB/FIBNugget";
+
 
 interface OptionType {
   label:
@@ -28,6 +34,7 @@ interface OptionType {
 
 function NuggetsLanding() {
   const { nugget, nuggetKind, setNuggetKind } = useContext(NuggetsContext);
+
   const nuggetsRef = useRef("");
 
   const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,7 +45,7 @@ function NuggetsLanding() {
 
   useEffect(() => {
     setNuggetKind(nuggetKind);
-    //console.log(nuggetKind);
+    console.log(nuggetKind);
   }, [nuggetKind]);
 
   const options: OptionType[] = [
@@ -79,6 +86,7 @@ function NuggetsLanding() {
           </div>
           <NuggetInfo />
           <XPTimer />
+
           {(nugget?.kind=="TrueFalse") && <TrueFalse/>}
           {(nugget?.kind=="IMG") && <ImageNugget/>}
           {(nugget?.kind=="Video") && <VideoNugget/>}
@@ -89,6 +97,13 @@ function NuggetsLanding() {
         </div>
       </div>
       <Preview/>
+
+          {nuggetKind == "Note" && <NoteNugget />}
+          {nuggetKind == "FIB" && <FIBNugget />}
+        </div>
+      </div>
+      <PreviewHeader />
+
     </div>
   );
 }
