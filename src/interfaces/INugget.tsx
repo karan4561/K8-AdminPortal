@@ -72,8 +72,8 @@ export interface QuestionObject {
   bilingual_options?: {
     english: {
       text: string;
-      id: string; //backend
-      isCorrect: boolean;
+      id?: string; //backend
+      isCorrect?: boolean;
     }[];
     hindi: {
       text: string;
