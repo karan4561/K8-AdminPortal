@@ -1,5 +1,8 @@
 import { Nugget,ContentObject,CategoryObject,BulletObject,ListItemObject,QuestionObject } from "src/interfaces/INugget";
-
+interface FIB {
+  value?: string;
+  type: "TEXT" | "BLANK";
+}
 export interface INuggetContext {
     test:Nugget,
     setTest: any,
@@ -16,6 +19,8 @@ export interface INuggetContext {
     kind?:string,
     list?:Array<string>,
     setList?: any,
+    ques?: QuestionObject 
+    setQues?: React.Dispatch<React.SetStateAction<QuestionObject|undefined>>
     // solutionObj: QuestionObject
     // content: ContentObject,
     updateOlBullet?: (bullet: {value:string,prefix: string, suffix: string}) => void,
@@ -37,4 +42,6 @@ export interface INuggetContext {
     addContentItem?: any,
     addListItem?: any,
     updateListItem?: any,
+    addFIBItem: any,
+    updateFIBItem: any,
 }

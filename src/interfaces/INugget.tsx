@@ -64,12 +64,12 @@ export interface FileObject {
 }
 
 export interface QuestionObject {
-  content: {
+  content?: {
     english: string;
     hindi?: string;
     default?: string;
   };
-  bilingual_options: {
+  bilingual_options?: {
     english: {
       text: string;
       id: string; //backend
@@ -86,7 +86,7 @@ export interface QuestionObject {
       isCorrect: boolean;
     }[];
   };
-  lti: {
+  lti?: {
     english: {
       value: string;
       id: string;
@@ -112,62 +112,62 @@ export interface QuestionObject {
       };
     }[];
   };
-  ltiImage: FileObject;
-  fib: {
-    english: {
+  ltiImage?: FileObject;
+  fib?: {
+    english: Array<{
+      value?: string; //content
+      id?: string; // backend
+      type?: string; //blank/text
+      valueArr?: string[]; //backend
+    }>;
+    hindi?: {
       value: string;
       id: string;
       type: string;
       valueArr: string[];
     }[];
-    hindi: {
-      value: string;
-      id: string;
-      type: string;
-      valueArr: string[];
-    }[];
-    default: {
+    default?: {
       value: string;
       id: string;
       type: string;
       valueArr: string[];
     }[];
   };
-  extraOptions: {
+  extraOptions?: {
     english: {
       text: string;
       id: string;
     }[];
-    hindi: {
+    hindi?: {
       text: string;
       id: string;
     }[];
-    default: {
+    default?: {
       text: string;
       id: string;
     }[];
   };
-  solutions: {
+  solutions?: {
     english: {
       hint?: string;
       text?: string;
       otherSolutions?: string;
       videoSolutions?: string;
     };
-    hindi: {
+    hindi?: {
       hint: string;
       text: string;
       otherSolutions: string;
       videoSolutions: string;
     };
-    default: {
+    default?: {
       hint?: string;
       text?: string;
       otherSolutions?: string;
       videoSolutions?: string;
     };
   }[];
-  answer: {
+  answer?: {
     english: string;
     hindi: string;
     default: string;

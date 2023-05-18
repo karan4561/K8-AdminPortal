@@ -6,10 +6,16 @@ import {
   ContentObject,
   ListItemObject,
   Nugget,
+  QuestionObject,
 } from "@/interfaces/INugget";
 
 const initialState = {} as INuggetContext;
 const initialStateTest = {} as Nugget;
+
+interface FIB {
+  value?: string;
+  type: "TEXT" | "BLANK";
+}
 
 export const NuggetsContext = React.createContext<INuggetContext>(initialState);
 
@@ -18,9 +24,12 @@ const NuggetProvider = (props: any) => {
   const [nuggetKind, setNuggetKind] = useState<string>("");
   const [bullet, setBullet] = useState<BulletObject>();
   const [list, setList] = useState<Array<string>>([""]);
+  const [ques, setQues] = useState<QuestionObject>();
 
   console.log("this is list file", list);
   console.log("this is testing file", test);
+  console.log("this is question object", ques);
+
   useEffect(() => {
     updateKind(nuggetKind);
   }, [nuggetKind]);
@@ -91,6 +100,18 @@ const NuggetProvider = (props: any) => {
     console.log("Here is list", list);
   }
 
+  function addFIBItem(note: FIB) {
+    if (!ques?.fib)
+      setQues((prev) => ({ ...prev, fib: { ...prev?.fib, english: [note] } }));
+    else {
+      setQues((prev) => ({
+        ...prev,
+        fib: { ...prev?.fib, english: [...prev?.fib?.english, note] },
+      }));
+    }
+    //console.log("wuhoo");
+  }
+
   function updateContentItem(idx: number, note: ContentObject) {
     console.log("..........idx..........", idx);
     console.log("..........note..........", note);
@@ -119,6 +140,13 @@ const NuggetProvider = (props: any) => {
     }
   }
 
+  function updateFIBItem(idx: number, note: FIB) {
+    if (ques?.fib?.english) {
+      ques.fib.english[idx] = note;
+    }
+    setQues({ ...ques });
+  }
+
   function handleDeleteNoteContent(id: number) {
     if (test.content) {
       test.content.splice(id, 1);
@@ -135,6 +163,8 @@ const NuggetProvider = (props: any) => {
           nuggetKind,
           bullet,
           list,
+          ques,
+          setQues,
           setList,
           setBullet,
           setNuggetKind,
@@ -147,6 +177,8 @@ const NuggetProvider = (props: any) => {
           addListItem,
           updateListItem,
           handleDeleteNoteContent,
+          addFIBItem,
+          updateFIBItem,
         }}
       >
         {props.children}

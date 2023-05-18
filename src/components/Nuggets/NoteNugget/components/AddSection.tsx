@@ -9,7 +9,7 @@ import TextEditor from "../utils/Tinymce";
 import BulletColor from "../utils/OL/BulletColor";
 interface OptionType {
   value: "H1" | "H2" | "Text" | "UL" | "OL" | "IMG";
-  label: string;
+  label: "H1" | "H2" | "Text" | "UL" | "OL" | "Image";
 }
 export default function (props: any) {
   const options: OptionType[] = [
