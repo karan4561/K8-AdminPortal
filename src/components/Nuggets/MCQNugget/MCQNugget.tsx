@@ -76,7 +76,7 @@ function MCQNugget() {
             <br />
             Answer
           </h4>
-          {nugget.question?.bilingual_options?.english.map(
+          {test.question?.bilingual_options?.english.map(
             (arrayData, index) => {
               const indexToAlpha = (index = 1) => {
                 // ASCII value of first character
