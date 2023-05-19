@@ -50,39 +50,45 @@ export default function AddNuggetHeader() {
 
   const TopicChange = (selectedOption: OptionType | null) => {
     setTopicValue(selectedOption);
-  };
-
-  const SubjectChange = (selectedOption: OptionType) => {
-    setSubjectValue(selectedOption);
-  };
-
-  const CategoryChange = (selectedOption: OptionType) => {
-    setcategoryValue(selectedOption);
-    getSubject(selectedOption.value).then((data) =>
-      setSubjectList(
-        data.map((obj: any) => {
-          return { value: obj.unique_id, label: obj.english_name };
-        })
-      )
-    );
-  };
-
-  const ChapterChange = (selectedOption: OptionType) => {
-    setChapterValue(selectedOption);
-  };
-  useEffect(() => {
     updateCategoryObject({
-      Category: categoryValue.value,
-      Chapter: ChapterValue.value,
-      Subject: SubjectValue.value,
-      Topic: TopicValue?.value,
-    });
-  }, [
-    categoryValue.value,
-    ChapterValue.value,
-    SubjectValue.value,
-    TopicValue?.value,
-  ]);
+      Topic: selectedOption?.value
+    })
+  };
+
+  const SubjectChange = (selectedOption: OptionType | null) => {
+    if (selectedOption) {
+      setSubjectValue(selectedOption);
+      updateCategoryObject({
+        Subject: selectedOption.value
+      })
+    }
+  };
+
+  const CategoryChange = (selectedOption: OptionType | null) => {
+    if (selectedOption) {
+      setcategoryValue(selectedOption);
+      updateCategoryObject({
+        Category: selectedOption.value
+      })
+      getSubject(selectedOption.value).then((data) =>
+        setSubjectList(
+          data.map((obj: any) => {
+            return { value: obj.unique_id, label: obj.english_name };
+          })
+        )
+      );
+    }
+  };
+
+  const ChapterChange = (selectedOption: OptionType | null) => {
+    if (selectedOption) {
+      setChapterValue(selectedOption);
+      updateCategoryObject({
+        Chapter: selectedOption.value
+      })
+    }
+    // setChapterValue(selectedOption);
+  };
   return (
     <>
       <div className="card-header AddNugget">

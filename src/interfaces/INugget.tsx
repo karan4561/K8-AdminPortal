@@ -21,9 +21,9 @@ export type Nugget = {
 };
 
 export interface CategoryObject {
-  categoryId: string;
-  subjectId: string;
-  chapterId: string;
+  categoryId?: string;
+  subjectId?: string;
+  chapterId?: string;
   topicId?: string;
 }
 

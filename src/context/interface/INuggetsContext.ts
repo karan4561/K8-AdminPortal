@@ -37,7 +37,7 @@ export interface INuggetContext {
     updateOlBullet?: (bullet: {value:string,prefix: string, suffix: string}) => void,
     updateNuggetInfo: (NuggetInfo: {headerTitle?:string,sideNote?: string, isKnowledgeCap?: boolean}) => void,
     updateBulletColor?: (bulletcolor: {color:string}) => void,
-    updateCategoryObject: (Category: {Category: string,Chapter: string,Subject:string,Topic?:string})=>void,
+    updateCategoryObject: (Category: {Category?: string,Chapter?: string,Subject?:string,Topic?:string})=>void,
     updateKind?: (nuggetkind: string)=>void,
     updateXPTimer: (XPTimer: {reward: number, timeToReward: number}) => void,
     updateContentKind?: (kind: {kind: 'H1' | 'H2' | 'Text' | 'UL' | 'OL' | 'IMG'}) => void,

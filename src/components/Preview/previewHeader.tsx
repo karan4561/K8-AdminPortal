@@ -1,6 +1,7 @@
 import React from "react";
 import { NuggetsContext } from "../../context/NuggetsContext";
 import NoteNugget from "./components/NoteNuggetPrev";
+import SCQPrev from "./SCQPrev";
 import { useContext, useState } from "react";
 import Image from "next/image";
 function PreviewHeader() {
@@ -16,6 +17,7 @@ function PreviewHeader() {
           <h4>{nugget?.headerTitle}</h4>
         </div>
         {nugget?.kind == "Note" && <NoteNugget />}
+        {nugget?.kind == "SCQ" || "MCQ" && <SCQPrev />}
       </div>
     </>
   );
