@@ -17,12 +17,12 @@ function Preview() {
                     {/* {(!!nugget?.headerTitle) && <Image src='/pencil.png' alt='' height={18.33} width={18.33}/>} */}
                     <h4>{test?.headerTitle}</h4>
                 </div>
-                {/* {(test?.kind == 'IMG') && <ImagePrev />}
-                {(test?.kind == 'Video') && <VideoPrev />}
-                {(test?.kind == 'TrueFalse') && <TrueFalsePrev />}
+                {/* {(test?.kind == 'IMG') && <ImagePrev />} */}
+                {/* {(test?.kind == 'Video') && <VideoPrev />} */}
+                {/* {(test?.kind == 'TrueFalse') && <TrueFalsePrev />} */}
                 {(test?.kind == 'SCQ') && <SCQPrev />}
-                {(test?.kind == 'MCQ') && <SCQPrev />} */}
-                {/* {(nugget?.kind=='Note') && <NoteNugget/>} */}
+                {(test?.kind == 'MCQ') && <SCQPrev />}
+                {/* {(test?.kind=='Note') && <NoteNugget/>} */}
             </div>
         </>
     )
