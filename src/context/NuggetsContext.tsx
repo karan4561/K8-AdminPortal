@@ -6,16 +6,16 @@ import { Nugget } from "@/interfaces/INugget";
 
 interface OptionType {
   label:
-    | "Video"
-    | "SCQ"
-    | "MCQ"
-    | "Note"
-    | "FIB"
-    | "IMG"
-    | "AUDIOCLIP"
-    | "LTI"
-    | "TrueFalse"
-    | "Audio";
+  | "Video"
+  | "SCQ"
+  | "MCQ"
+  | "Note"
+  | "FIB"
+  | "IMG"
+  | "AUDIOCLIP"
+  | "LTI"
+  | "TrueFalse"
+  | "Audio";
   value: string;
 }
 
@@ -54,18 +54,18 @@ const NuggetProvider = (props: any) => {
   // }, [nuggetKind]);
 
   function updateCategoryObject(Category: {
-    Category: string;
-    Chapter: string;
-    Subject: string;
+    Category?: string;
+    Chapter?: string;
+    Subject?: string;
     Topic?: string;
   }) {
     setTest((prev) => ({
       ...prev,
       categories: {
-        categoryId: Category.Category,
-        subjectId: Category.Subject,
-        chapterId: Category.Chapter,
-        topicId: Category.Topic,
+        categoryId: Category.Category !== undefined ? Category.Category : prev.categories?.categoryId,
+        subjectId: Category.Subject !== undefined ? Category.Subject : prev.categories?.subjectId,
+        chapterId: Category.Chapter !== undefined ? Category.Chapter : prev.categories?.chapterId,
+        topicId: Category.Topic !== undefined ? Category.Topic : prev.categories?.topicId,
       },
     }));
   }
@@ -257,11 +257,11 @@ const NuggetProvider = (props: any) => {
     baseUrl: string;
     key: string;
     type?:
-      | "CONTENT"
-      | "TEST"
-      | "SUBJECTIVE_TEST_SOLUTIONS"
-      | "VIMEO"
-      | "JWPLAYER";
+    | "CONTENT"
+    | "TEST"
+    | "SUBJECTIVE_TEST_SOLUTIONS"
+    | "VIMEO"
+    | "JWPLAYER";
     organization?: string;
     size?: number;
     details?: string;
@@ -284,21 +284,21 @@ const NuggetProvider = (props: any) => {
     });
   }
 
-  function updateOption(Option: { option: { text: string }[] }) {
-    setState({
-      ...state,
-      nugget: {
-        ...state.nugget,
-        question: {
-          ...state.nugget.question,
-          bilingual_options: {
-            ...state.nugget.question?.bilingual_options,
-            english: Option.option,
-          },
-        },
-      },
-    });
-  }
+  // function updateOption(Option: { option: { text: string }[] }) {
+  //   setState({
+  //     ...state,
+  //     nugget: {
+  //       ...state.nugget,
+  //       question: {
+  //         ...state.nugget.question,
+  //         bilingual_options: {
+  //           ...state.nugget.question?.bilingual_options,
+  //           english: Option.option,
+  //         },
+  //       },
+  //     },
+  //   });
+  // }
 
   function updateCorrectOption(Option: { isCorrect: boolean; index: number }) {
     setTest((prev) => ({
@@ -364,26 +364,23 @@ const NuggetProvider = (props: any) => {
       }));
   }
   function deleteSCQOption(Option: { index: number }) {
-    // setState((prevState) => {
-    //   return {
-    //     ...prevState,
-    //     nugget: {
-    //       ...prevState.nugget,
-    //       question: {
-    //         ...prevState.nugget.question,
-    //         bilingual_options: {
-    //           ...prevState.nugget.question.bilingual_options,
-    //           english:
-    //             prevState.nugget.question.bilingual_options.english.filter(
-    //               (_, i) => i !== Option.index
-    //             ),
-    //         },
-    //       },
-    //     },
-    //   };
-    // });
-    test.question.bilingual_options?.english.splice(Option.index, 1);
-    setTest(test);
+    setTest((prev) => {
+      return {
+        ...prev,
+        question: {
+          ...prev.question,
+          bilingual_options: {
+            ...prev.question.bilingual_options,
+            english:
+              prev.question.bilingual_options?.english.filter(
+                (_, i) => i !== Option.index
+              )
+          }
+        }
+      }
+    })
+    //test.question.bilingual_options?.english.splice(Option.index, 1);
+    // setTest({test});
   }
 
   function updateSCQOption(Option: { index: number; text: string }) {
@@ -428,7 +425,7 @@ const NuggetProvider = (props: any) => {
           updateCaption,
           updateVideoNugget,
           updateFileObj,
-          updateOption,
+          // updateOption,
           updateCorrectOption,
           addSCQOption,
           deleteSCQOption,

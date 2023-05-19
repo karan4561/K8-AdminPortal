@@ -32,6 +32,7 @@ useEffect(() => {
 return (
   <div className="text-editor">
     <Editor
+    value={props.value}
       // onInit={(evt, editor) => (editorRef.current = editor)}
       apiKey={'2gzhpfsdrqpzlgs2servolzz08ba2ww1vypt3mvwuc8x16an'}
       init={{
