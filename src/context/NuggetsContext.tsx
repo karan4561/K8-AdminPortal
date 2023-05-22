@@ -54,9 +54,9 @@ const NuggetProvider = (props: any) => {
   // }, [nuggetKind]);
 
   function updateCategoryObject(Category: {
-    Category?: string;
-    Chapter?: string;
-    Subject?: string;
+    Category: string;
+    Chapter: string;
+    Subject: string;
     Topic?: string;
   }) {
     setTest((prev) => ({
@@ -309,7 +309,6 @@ const NuggetProvider = (props: any) => {
           ...prev.question.bilingual_options,
           english: test.question.bilingual_options!.english.map((option, i) => {
             if (test.kind === "SCQ") {
-              console.log("scq");
               if (i === Option.index) {
                 return {
                   ...option,
@@ -337,21 +336,28 @@ const NuggetProvider = (props: any) => {
   }
 
   function addSCQOption() {
-    const newOption = {
-      text: "",
-    };
-    if (!test.question.bilingual_options?.english)
+    let newOption: { text: string; isCorrect: boolean | undefined; id?: string | undefined; }
+      newOption = {
+        text: "",
+        isCorrect:false
+      };
+    // if(!test.question.bilingual_options?.english){
+    //   const newOption={
+    //     text: "",
+    //     isCorrect:false
+    // }
+    if (!test.question?.bilingual_options?.english)
       setTest((prev) => ({
         ...prev,
         question: {
           ...prev.question,
           bilingual_options: {
-            ...prev.question.bilingual_options,
+            ...prev.question?.bilingual_options,
             english: [newOption],
           },
         },
       }));
-    else
+    else {
       setTest((prev) => ({
         ...prev,
         question: {
@@ -362,6 +368,7 @@ const NuggetProvider = (props: any) => {
           },
         },
       }));
+    }
   }
   function deleteSCQOption(Option: { index: number }) {
     setTest((prev) => {
@@ -388,7 +395,7 @@ const NuggetProvider = (props: any) => {
       const updatedOptions = prev.question.bilingual_options?.english
         ? prev.question.bilingual_options.english
         : [];
-      updatedOptions[Option.index] = { text: Option.text };
+      updatedOptions[Option.index] = { text: Option.text, isCorrect:prev.question.bilingual_options?.english[Option.index].isCorrect };
       return {
         ...prev,
         question: {

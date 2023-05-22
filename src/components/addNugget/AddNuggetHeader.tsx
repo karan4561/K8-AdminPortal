@@ -1,37 +1,32 @@
 import { useState, useContext, useEffect } from "react";
 import Select from "react-select";
 import { NuggetsContext } from "../../context/NuggetsContext";
-import { getCategory, getSubject } from "@/api/filter";
+import { getCategory, getSubject,getChapters, getTopics } from "@/api/filter";
+import { test } from "node:test";
 interface OptionType {
   value: string;
   label: string;
 }
 export default function AddNuggetHeader() {
-  const { updateCategoryObject } = useContext(NuggetsContext);
+  const { test,updateCategoryObject } = useContext(NuggetsContext);
 
   const Subject: OptionType[] = [
     { value: "option1", label: "Option 1" },
-    { value: "option2", label: "Option 2" },
-    { value: "option3", label: "Option 3" },
   ];
   const Category: OptionType[] = [
     { value: "option1", label: "Option 1" },
-    { value: "option2", label: "Option 2" },
-    { value: "option3", label: "Option 3" },
   ];
   const Topic: OptionType[] = [
     { value: "option1", label: "Option 1" },
-    { value: "option2", label: "Option 2" },
-    { value: "option3", label: "Option 3" },
   ];
   const Chapter: OptionType[] = [
     { value: "option1", label: "Option 1" },
-    { value: "option2", label: "Option 2" },
-    { value: "option3", label: "Option 3" },
   ];
 
   const [categoryList, setCategoryList] = useState<OptionType[]>();
   const [subjectList, setSubjectList] = useState<OptionType[]>();
+  const [topicList, setTopicList] = useState<OptionType[]>();
+  const [chapterList, setChapterList] = useState<OptionType[]>();
 
   useEffect(() => {
     getCategory().then((data) =>
@@ -61,9 +56,16 @@ export default function AddNuggetHeader() {
       updateCategoryObject({
         Subject: selectedOption.value
       })
+      getChapters(categoryValue.value,selectedOption.value).then((data) =>
+      setChapterList(
+          data.map((obj: any) => {
+            return { value: obj.unique_id, label: obj.english_name };
+          })
+        )
+      );
     }
   };
-
+  
   const CategoryChange = (selectedOption: OptionType | null) => {
     if (selectedOption) {
       setcategoryValue(selectedOption);
@@ -79,16 +81,25 @@ export default function AddNuggetHeader() {
       );
     }
   };
-
+  
   const ChapterChange = (selectedOption: OptionType | null) => {
     if (selectedOption) {
       setChapterValue(selectedOption);
       updateCategoryObject({
         Chapter: selectedOption.value
       })
+      getTopics(categoryValue.value,SubjectValue.value,selectedOption.value).then((data) =>
+      setTopicList(
+          data.map((obj: any) => {
+            return { value: obj.unique_id, label: obj.english_name };
+          })
+        )
+      );
     }
     // setChapterValue(selectedOption);
   };
+  console.log(chapterList);
+  
   return (
     <>
       <div className="card-header AddNugget">
@@ -115,7 +126,7 @@ export default function AddNuggetHeader() {
             className="AddNuggetCategory"
             value={ChapterValue}
             onChange={ChapterChange}
-            options={Chapter}
+            options={chapterList}
             placeholder="Chapter"
           />
           {/* <Topic /> */}
@@ -123,7 +134,7 @@ export default function AddNuggetHeader() {
             className="AddNuggetCategory"
             value={TopicValue || null}
             onChange={TopicChange}
-            options={Topic}
+            options={topicList}
             placeholder="Topic"
           />
         </div>
