@@ -27,7 +27,7 @@ function SCQPrev() {
                 <h4>Solution</h4>
                 {(!!test.question?.solutions[0]?.english.text) && <p>{parse(test.question.solutions[0]?.english.text)}</p>}
             </div>}
-            {(!!test.question?.solutions[0]?.english.hint) && <div className='Hint-Prev-box'>
+            {(!!test?.question?.solutions[0]?.english.hint) && <div className='Hint-Prev-box'>
                 <h4>Hint</h4>
                 {(!!test?.question?.solutions[0]?.english.hint) && <p>{parse(test?.question.solutions[0]?.english.hint)}</p>}
             </div>}

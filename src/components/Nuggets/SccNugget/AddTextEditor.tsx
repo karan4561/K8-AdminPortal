@@ -8,6 +8,13 @@ function AddTextEditor() {
     useContext(NuggetsContext);
   // const [sections, setSections] = useState(nugget.question?.bilingual_options?.english || []);
 
+  if (!test.question?.bilingual_options?.english) {
+    useEffect(() => {
+      addSCQOption()
+    }, [])
+  }
+  // console.log(test.question?.bilingual_options?.english.length,"len");
+  
   function addSection() {
     // const newSection = { text: "" };
     // setSections([...sections, newSection]);
@@ -25,7 +32,7 @@ function AddTextEditor() {
     // const updatedSections = [...sections];
     // updatedSections[index] = { text: content };
     // setSections(updatedSections);
-    updateSCQOption({ index, text: content });
+    updateSCQOption({ index, text: content, });
   }
 
   const sectionElements = test.question?.bilingual_options?.english.map(
@@ -37,7 +44,6 @@ function AddTextEditor() {
         };
         return numberToCharacter(index);
       };
-
       return (
         <>
           <div className="option-editor" key={index}>

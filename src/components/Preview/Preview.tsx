@@ -12,6 +12,7 @@ function Preview() {
     return (
         <>
             <div className="preview">
+                <div className='prev-sticky'>
                 <h2>Preview</h2>
                 <div className='headerimage-headertitle'>
                     {/* {(!!nugget?.headerTitle) && <Image src='/pencil.png' alt='' height={18.33} width={18.33}/>} */}
@@ -23,6 +24,7 @@ function Preview() {
                 {(test?.kind == 'SCQ') && <SCQPrev />}
                 {(test?.kind == 'MCQ') && <SCQPrev />}
                 {/* {(test?.kind=='Note') && <NoteNugget/>} */}
+                </div>
             </div>
         </>
     )

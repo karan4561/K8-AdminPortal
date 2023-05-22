@@ -350,7 +350,9 @@ h4 {
 
 /* Preview  */
 
-.preview > h2 {
+.prev-sticky{
+  position: sticky;
+  top: 5px;
   text-align: center;
 }
 .headerimage-headertitle {
