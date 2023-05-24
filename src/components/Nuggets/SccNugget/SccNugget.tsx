@@ -5,8 +5,12 @@ import { useState, useContext, useEffect } from "react";
 import AddTextEditor from "./AddTextEditor";
 
 function SccNugget() {
-  const { test, updateQuestion, updateSolHint, updateCorrectOption } =
-    useContext(NuggetsContext);
+  const {
+    nugget: test,
+    updateQuestion,
+    updateSolHint,
+    updateCorrectOption,
+  } = useContext(NuggetsContext);
   const [option, setOption] = useState<number>();
   const [solContent, setSolContent] = useState<string>();
   const [hintContent, setHintContent] = useState<string>();

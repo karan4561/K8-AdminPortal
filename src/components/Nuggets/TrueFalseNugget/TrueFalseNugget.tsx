@@ -8,8 +8,12 @@ interface OptionType {
 function TrueFalseNugget() {
   const [solContent, setSolContent] = useState<string>();
   const [hintContent, setHintContent] = useState<string>();
-  const { test, updateAnswer, updateSolHint, updateQuestion } =
-    useContext(NuggetsContext);
+  const {
+    nugget: test,
+    updateAnswer,
+    updateSolHint,
+    updateQuestion,
+  } = useContext(NuggetsContext);
   const onUpdateQues = (content: string) => {
     if (updateQuestion)
       updateQuestion({

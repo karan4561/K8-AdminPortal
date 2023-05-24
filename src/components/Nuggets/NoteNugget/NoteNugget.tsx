@@ -5,8 +5,11 @@ import { NuggetsContext } from "@/context/NuggetsContext";
 import { ContentObject } from "@/interfaces/INugget";
 
 function NoteNugget() {
-  const { test, addContentItem, handleDeleteNoteContent } =
-    useContext(NuggetsContext);
+  const {
+    nugget: test,
+    addContentItem,
+    handleDeleteNoteContent,
+  } = useContext(NuggetsContext);
 
   const initialContentObject = { kind: "H1", list: [] } as ContentObject;
 

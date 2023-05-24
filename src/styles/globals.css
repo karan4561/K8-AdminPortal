@@ -350,6 +350,11 @@ h4 {
 
 /* Preview  */
 
+.prev-sticky {
+  position: sticky;
+  top: 5px;
+}
+
 .preview > h2 {
   text-align: center;
 }

@@ -16,6 +16,8 @@ import NoteNugget from "../Nuggets/NoteNugget/NoteNugget";
 import PreviewHeader from "../Preview/previewHeader";
 import FIBNugget from "../Nuggets/FIB/FIBNugget";
 import { get, post } from "@/api/api";
+import { Nugget } from "@/interfaces/INugget";
+import { submitNugget } from "@/api/utils";
 
 interface OptionType {
   label:
@@ -32,19 +34,26 @@ interface OptionType {
   value: string;
 }
 
-function NuggetsLanding() {
-  const { updateNuggetKind, test } = useContext(NuggetsContext);
+//NOTE => OL , xyz , OL
 
-  const nuggetsRef = useRef("");
+function NuggetsLanding() {
+  const {
+    updateNuggetKind,
+    nugget: nugget,
+    submit,
+    setSubmit,
+    formErrors,
+    setFormErrors,
+    validateErrors,
+  } = useContext(NuggetsContext);
 
   const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     updateNuggetKind(event.target.value as OptionType["value"]);
   };
-  console.log(test);
-  
+
   useEffect(() => {
-    if (test.kind) updateNuggetKind(test.kind);
-  }, [test.kind]);
+    if (nugget.kind) updateNuggetKind(nugget.kind);
+  }, [nugget.kind]);
 
   const options: OptionType[] = [
     { value: "Video", label: "Video" },
@@ -59,10 +68,28 @@ function NuggetsLanding() {
     { value: "Audio", label: "Audio" },
   ];
 
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    setSubmit(true);
+    if (validateErrors) setFormErrors(validateErrors(nugget));
+
+    console.log("The Errors in the form : ", formErrors);
+
+    console.log("Submit Value: ", submit);
+
+    if (Object && Object.keys(formErrors || {}).length === 0 && submit) {
+      //console.log("Form is Submitted Successfully");
+      submitNugget(nugget);
+    }
+  };
+
+  //defne error type
+  //add error object to nugget (INugget)
+
   return (
     <div className="nugget">
       <div className="create-nugget">
-        <button>Create Nugget</button>
+        <button onClick={handleSubmit}>Create Nugget</button>
         <div className="cards-parent">
           <AddNuggetHeader />
           <div className="card-header NuggetId">
@@ -74,7 +101,7 @@ function NuggetsLanding() {
                     type="radio"
                     name="option"
                     value={op.value}
-                    checked={test.kind === op.label}
+                    checked={nugget.kind === op.label}
                     onChange={handleOptionChange}
                   />
                   {op.label}
@@ -84,18 +111,17 @@ function NuggetsLanding() {
           </div>
           <NuggetInfo />
           <XPTimer />
-          {test.kind == "Note" && <NoteNugget />}
-          {test.kind == "FIB" && <FIBNugget />}
-          {test.kind == "TrueFalse" && <TrueFalse />}
-          {test.kind == "IMG" && <ImageNugget />}
-          {test.kind == "Video" && <VideoNugget />}
-          {test.kind == "SCQ" && <SccNugget />}
-          {test.kind == "MCQ" && <MCQNugget />}
-          {test.kind == "LTI" && <LTI />}
+          {nugget.kind == "Note" && <NoteNugget />}
+          {nugget.kind == "FIB" && <FIBNugget />}
+          {nugget.kind == "TrueFalse" && <TrueFalse />}
+          {nugget.kind == "IMG" && <ImageNugget />}
+          {nugget.kind == "Video" && <VideoNugget />}
+          {nugget.kind == "SCQ" && <SccNugget />}
+          {nugget.kind == "MCQ" && <MCQNugget />}
+          {nugget.kind == "LTI" && <LTI />}
         </div>
       </div>
-      <Preview />
-      
+      {/* <Preview /> */}
     </div>
   );
 }

@@ -18,7 +18,10 @@ export type Nugget = {
   categories: CategoryObject;
   updatedAt: Date;
   createdAt: Date;
+  //error:
 };
+
+export interface ErrorObject {}
 
 export interface CategoryObject {
   categoryId?: string;
@@ -64,12 +67,12 @@ export interface FileObject {
 }
 
 export interface QuestionObject {
-  content?: {
+  content: {
     english: string;
     hindi?: string;
     default?: string;
   };
-  bilingual_options?: {
+  bilingual_options: {
     english: {
       text: string;
       id?: string; //backend
@@ -147,7 +150,7 @@ export interface QuestionObject {
       id: string;
     }[];
   };
-  solutions?: {
+  solutions: {
     english: {
       hint?: string;
       text?: string;

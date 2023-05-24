@@ -6,16 +6,16 @@ import { Nugget } from "@/interfaces/INugget";
 
 interface OptionType {
   label:
-  | "Video"
-  | "SCQ"
-  | "MCQ"
-  | "Note"
-  | "FIB"
-  | "IMG"
-  | "AUDIOCLIP"
-  | "LTI"
-  | "TrueFalse"
-  | "Audio";
+    | "Video"
+    | "SCQ"
+    | "MCQ"
+    | "Note"
+    | "FIB"
+    | "IMG"
+    | "AUDIOCLIP"
+    | "LTI"
+    | "TrueFalse"
+    | "Audio";
   value: string;
 }
 
@@ -27,7 +27,13 @@ import {
 } from "@/interfaces/INugget";
 
 const initialState = {} as INuggetContext;
-const initialStateTest = {} as Nugget;
+const initialStateTest = {
+  question: {
+    bilingual_options: {
+      english: [""],
+    },
+  },
+} as any;
 
 interface FIB {
   value?: string;
@@ -37,21 +43,16 @@ interface FIB {
 export const NuggetsContext = React.createContext<INuggetContext>(initialState);
 
 const NuggetProvider = (props: any) => {
-  const [state, setState] = useState<INuggetContext>(initialState);
-  const [test, setTest] = useState<Nugget>(initialStateTest);
-  //const [nuggetKind, setNuggetKind] = useState<string>("");
+  const [nugget, setNugget] = useState<Nugget>(initialStateTest);
   const [bullet, setBullet] = useState<BulletObject>();
-  const [list, setList] = useState<Array<string>>([""]);
-  const [ques, setQues] = useState<QuestionObject>();
+  const [list, setList] = useState<Array<string>>([""]); //fib
+  const [ques, setQues] = useState<QuestionObject>(); //fib
+  const [submit, setSubmit] = useState<boolean>(false);
+  const [formErrors, setFormErrors] = useState<any>({});
 
-  console.log("this is list file", list);
-  console.log("this is testing file", test);
-  console.log("this is question object", ques);
-  console.log("this is state being tested", state);
+  //check naming
 
-  // useEffect(() => {
-  //   updateKind(nuggetKind);
-  // }, [nuggetKind]);
+  console.log("this is testing file", nugget);
 
   function updateCategoryObject(Category: {
     Category?: string;
@@ -59,13 +60,25 @@ const NuggetProvider = (props: any) => {
     Subject?: string;
     Topic?: string;
   }) {
-    setTest((prev) => ({
+    setNugget((prev) => ({
       ...prev,
       categories: {
-        categoryId: Category.Category !== undefined ? Category.Category : prev.categories?.categoryId,
-        subjectId: Category.Subject !== undefined ? Category.Subject : prev.categories?.subjectId,
-        chapterId: Category.Chapter !== undefined ? Category.Chapter : prev.categories?.chapterId,
-        topicId: Category.Topic !== undefined ? Category.Topic : prev.categories?.topicId,
+        categoryId:
+          Category.Category !== undefined
+            ? Category.Category
+            : prev.categories?.categoryId,
+        subjectId:
+          Category.Subject !== undefined
+            ? Category.Subject
+            : prev.categories?.subjectId,
+        chapterId:
+          Category.Chapter !== undefined
+            ? Category.Chapter
+            : prev.categories?.chapterId,
+        topicId:
+          Category.Topic !== undefined
+            ? Category.Topic
+            : prev.categories?.topicId,
       },
     }));
   }
@@ -83,10 +96,7 @@ const NuggetProvider = (props: any) => {
       | "TrueFalse"
       | "Audio"
   ) {
-    setTest((prev) => ({
-      ...prev,
-      kind: nuggetkind,
-    }));
+    setNugget({ ...initialStateTest, kind: nuggetkind } as Nugget);
   }
 
   function updateNuggetInfo(NuggetInfo: {
@@ -94,7 +104,7 @@ const NuggetProvider = (props: any) => {
     sideNote?: string;
     isKnowledgeCap?: boolean;
   }) {
-    setTest((prev) => ({
+    setNugget((prev) => ({
       ...prev,
       headerTitle: NuggetInfo.headerTitle,
       sideNote: NuggetInfo.sideNote,
@@ -103,7 +113,7 @@ const NuggetProvider = (props: any) => {
   }
 
   function updateXPTimer(XPTimer: { reward: number; timeToReward: number }) {
-    setTest((prev) => ({
+    setNugget((prev) => ({
       ...prev,
       reward: XPTimer.reward,
       timeToReward: XPTimer.timeToReward,
@@ -113,22 +123,22 @@ const NuggetProvider = (props: any) => {
   function updateContentKind(kind: {
     kind: "H1" | "H2" | "Text" | "UL" | "OL" | "IMG";
   }) {
-    setTest((prev) => ({ ...prev, kind: kind.kind }));
+    setNugget((prev) => ({ ...prev, kind: kind.kind }));
   }
 
   function addContentItem(note: ContentObject) {
-    console.log("here: ");
-    if (!test.content) setTest((prev) => ({ ...prev, content: [note] }));
+    //console.log("here: ");
+    if (!nugget.content) setNugget((prev) => ({ ...prev, content: [note] }));
     else {
-      setTest((prev) => ({ ...prev, content: [...prev.content, note] }));
-      test.content.filter((content) => content.list !== undefined);
+      setNugget((prev) => ({ ...prev, content: [...prev.content, note] }));
+      nugget.content.filter((content) => content.list !== undefined);
     }
   }
 
   function addListItem(item: string) {
     //list.push(item);
     setList((prev) => [...prev, item]);
-    console.log("Here is list", list);
+    //console.log("Here is list", list);
   }
 
   function addFIBItem(note: FIB) {
@@ -144,10 +154,10 @@ const NuggetProvider = (props: any) => {
   }
 
   function updateContentItem(idx: number, note: ContentObject) {
-    console.log("..........idx..........", idx);
-    console.log("..........note..........", note);
-    if (test.content) test.content[idx] = note;
-    setTest({ ...test });
+    //console.log("..........idx..........", idx);
+    //console.log("..........note..........", note);
+    if (nugget.content) nugget.content[idx] = note;
+    setNugget({ ...nugget });
   }
 
   //use alternate kind definition
@@ -162,8 +172,6 @@ const NuggetProvider = (props: any) => {
       list[idj] = item;
       setList(list);
     }
-    // console.log("..........idj..........", idj);
-    // console.log("..........idi..........", idi);
     if (kind == "OL") {
       updateContentItem(idi, { kind: kind, list: list, bullet: bullet });
     } else if (kind == "UL") {
@@ -179,14 +187,14 @@ const NuggetProvider = (props: any) => {
   }
 
   function handleDeleteNoteContent(id: number) {
-    if (test.content) {
-      test.content.splice(id, 1);
+    if (nugget.content) {
+      nugget.content.splice(id, 1);
     }
-    setTest(test);
+    setNugget(nugget);
   }
 
   function updateSolHint(SolHint: { text?: string; hint?: string }) {
-    setTest((prev) => ({
+    setNugget((prev) => ({
       ...prev,
       question: {
         ...prev.question,
@@ -216,7 +224,7 @@ const NuggetProvider = (props: any) => {
     }));
   }
   function updateQuestion(question: { english: string }) {
-    setTest((prev) => ({
+    setNugget((prev) => ({
       ...prev,
       question: {
         ...prev.question,
@@ -225,7 +233,7 @@ const NuggetProvider = (props: any) => {
     }));
   }
   function updateAnswer(Answer: { answer: string }) {
-    setTest((prev) => ({
+    setNugget((prev) => ({
       ...prev,
       question: {
         ...prev.question,
@@ -234,21 +242,7 @@ const NuggetProvider = (props: any) => {
     }));
   }
   function updateCaption(caption: { caption?: string }) {
-    setTest({ ...test, caption: caption.caption });
-  }
-
-  function updateVideoNugget(videoNugget: {
-    videoCaption?: string;
-    videoURI?: string;
-  }) {
-    setState({
-      ...state,
-      nugget: {
-        ...state.nugget,
-        caption: videoNugget.videoCaption,
-        videoURI: videoNugget.videoURI,
-      },
-    });
+    setNugget({ ...nugget, caption: caption.caption });
   }
 
   function updateFileObj(FileObj: {
@@ -257,11 +251,11 @@ const NuggetProvider = (props: any) => {
     baseUrl: string;
     key: string;
     type?:
-    | "CONTENT"
-    | "TEST"
-    | "SUBJECTIVE_TEST_SOLUTIONS"
-    | "VIMEO"
-    | "JWPLAYER";
+      | "CONTENT"
+      | "TEST"
+      | "SUBJECTIVE_TEST_SOLUTIONS"
+      | "VIMEO"
+      | "JWPLAYER";
     organization?: string;
     size?: number;
     details?: string;
@@ -284,53 +278,39 @@ const NuggetProvider = (props: any) => {
     });
   }
 
-  // function updateOption(Option: { option: { text: string }[] }) {
-  //   setState({
-  //     ...state,
-  //     nugget: {
-  //       ...state.nugget,
-  //       question: {
-  //         ...state.nugget.question,
-  //         bilingual_options: {
-  //           ...state.nugget.question?.bilingual_options,
-  //           english: Option.option,
-  //         },
-  //       },
-  //     },
-  //   });
-  // }
-
   function updateCorrectOption(Option: { isCorrect: boolean; index: number }) {
-    setTest((prev) => ({
+    setNugget((prev) => ({
       ...prev,
       question: {
         ...prev.question,
         bilingual_options: {
           ...prev.question.bilingual_options,
-          english: test.question.bilingual_options!.english.map((option, i) => {
-            if (test.kind === "SCQ") {
-              console.log("scq");
-              if (i === Option.index) {
-                return {
-                  ...option,
-                  isCorrect: Option.isCorrect,
-                };
+          english: nugget.question.bilingual_options!.english.map(
+            (option, i) => {
+              if (nugget.kind === "SCQ") {
+                console.log("scq");
+                if (i === Option.index) {
+                  return {
+                    ...option,
+                    isCorrect: Option.isCorrect,
+                  };
+                } else {
+                  return {
+                    ...option,
+                    isCorrect: false,
+                  };
+                }
               } else {
-                return {
-                  ...option,
-                  isCorrect: false,
-                };
+                if (i === Option.index) {
+                  return {
+                    ...option,
+                    isCorrect: Option.isCorrect,
+                  };
+                }
+                return option;
               }
-            } else {
-              if (i === Option.index) {
-                return {
-                  ...option,
-                  isCorrect: Option.isCorrect,
-                };
-              }
-              return option;
             }
-          }),
+          ),
         },
       },
     }));
@@ -340,19 +320,21 @@ const NuggetProvider = (props: any) => {
     const newOption = {
       text: "",
     };
-    if (!test.question.bilingual_options?.english)
-      setTest((prev) => ({
+    //debugger;
+    console.log("This is being called");
+    if (!nugget.question?.bilingual_options?.english)
+      setNugget((prev) => ({
         ...prev,
         question: {
           ...prev.question,
           bilingual_options: {
-            ...prev.question.bilingual_options,
+            ...prev.question?.bilingual_options,
             english: [newOption],
           },
         },
       }));
     else
-      setTest((prev) => ({
+      setNugget((prev) => ({
         ...prev,
         question: {
           ...prev.question,
@@ -364,31 +346,34 @@ const NuggetProvider = (props: any) => {
       }));
   }
   function deleteSCQOption(Option: { index: number }) {
-    setTest((prev) => {
+    setNugget((prev) => {
       return {
         ...prev,
         question: {
           ...prev.question,
           bilingual_options: {
             ...prev.question.bilingual_options,
-            english:
-              prev.question.bilingual_options?.english.filter(
-                (_, i) => i !== Option.index
-              )
-          }
-        }
-      }
-    })
+            english: prev.question.bilingual_options?.english.filter(
+              (_, i) => i !== Option.index
+            ),
+          },
+        },
+      };
+    });
     //test.question.bilingual_options?.english.splice(Option.index, 1);
     // setTest({test});
   }
 
   function updateSCQOption(Option: { index: number; text: string }) {
-    setTest((prev) => {
+    setNugget((prev) => {
       const updatedOptions = prev.question.bilingual_options?.english
         ? prev.question.bilingual_options.english
         : [];
-      updatedOptions[Option.index] = { text: Option.text };
+      updatedOptions[Option.index] = {
+        text: Option.text,
+        isCorrect:
+          prev.question.bilingual_options?.english[Option.index].isCorrect,
+      };
       return {
         ...prev,
         question: {
@@ -402,13 +387,51 @@ const NuggetProvider = (props: any) => {
     });
   }
 
+  function validateErrors(values: Nugget) {
+    const errors: any = {};
+    let flag = false;
+    let check = false;
+    if (nugget.kind == "SCQ" || nugget.kind == "MCQ") {
+      console.log("This is question.content", values.question.content);
+      if (!values.question.content || values.question.content.english == "") {
+        errors.question = "Type Question is Empty";
+      }
+
+      values.question.bilingual_options?.english.map((opt) => {
+        console.log("this is opt text", opt.text);
+        if (opt.text == "") {
+          console.log("I have found an empty string");
+          check = true;
+        }
+      });
+
+      if (check) {
+        console.log("......ENTRY ACCESS GIVEN!......");
+        errors.options = "Type Option is Empty";
+      }
+
+      //scq and mcq different
+
+      values.question.bilingual_options?.english.map((opt) => {
+        if (opt.isCorrect == true) {
+          flag = true;
+        }
+      });
+
+      if (!flag) {
+        errors.isCorrect = "Correct Option not defined";
+      }
+    }
+    console.log("Here are the errors", errors);
+    return errors;
+  }
+
   return (
     <div>
       <NuggetsContext.Provider
         value={{
-          ...state,
-          test,
-          setTest,
+          nugget: nugget,
+          setNugget: setNugget,
           updateNuggetKind,
           bullet,
           list,
@@ -423,9 +446,7 @@ const NuggetProvider = (props: any) => {
           updateSolHint,
           updateQuestion,
           updateCaption,
-          updateVideoNugget,
           updateFileObj,
-          // updateOption,
           updateCorrectOption,
           addSCQOption,
           deleteSCQOption,
@@ -438,6 +459,11 @@ const NuggetProvider = (props: any) => {
           handleDeleteNoteContent,
           addFIBItem,
           updateFIBItem,
+          submit,
+          setSubmit,
+          formErrors,
+          setFormErrors,
+          validateErrors,
         }}
       >
         {props.children}

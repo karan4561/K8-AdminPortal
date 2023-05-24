@@ -5,8 +5,12 @@ import { useState, useContext, useEffect } from "react";
 import AddOptionTextEditor from "../SccNugget/AddTextEditor";
 
 function MCQNugget() {
-  const { updateQuestion, updateSolHint, updateCorrectOption, test } =
-    useContext(NuggetsContext);
+  const {
+    updateQuestion,
+    updateSolHint,
+    updateCorrectOption,
+    nugget: test,
+  } = useContext(NuggetsContext);
   const [selectedOptions, setSelectedOptions] = useState<number[]>([]);
   const [solContent, setSolContent] = useState<string>();
   const [hintContent, setHintContent] = useState<string>();
@@ -76,32 +80,30 @@ function MCQNugget() {
             <br />
             Answer
           </h4>
-          {nugget.question?.bilingual_options?.english.map(
-            (arrayData, index) => {
-              const indexToAlpha = (index = 1) => {
-                // ASCII value of first character
-                const A = "A".charCodeAt(0);
-                let numberToCharacter = (number: number) => {
-                  return String.fromCharCode(A + number);
-                };
-                return numberToCharacter(index);
+          {test.question?.bilingual_options?.english.map((arrayData, index) => {
+            const indexToAlpha = (index = 1) => {
+              // ASCII value of first character
+              const A = "A".charCodeAt(0);
+              let numberToCharacter = (number: number) => {
+                return String.fromCharCode(A + number);
               };
-              return (
-                <>
-                  <label className="label-option">
-                    <input
-                      type="checkbox"
-                      name="SCCOption"
-                      value={index}
-                      checked={selectedOptions.includes(index)}
-                      onChange={OptionChange}
-                    />
-                    Option {indexToAlpha(index)}
-                  </label>
-                </>
-              );
-            }
-          )}
+              return numberToCharacter(index);
+            };
+            return (
+              <>
+                <label className="label-option">
+                  <input
+                    type="checkbox"
+                    name="SCCOption"
+                    value={index}
+                    checked={selectedOptions.includes(index)}
+                    onChange={OptionChange}
+                  />
+                  Option {indexToAlpha(index)}
+                </label>
+              </>
+            );
+          })}
         </div>
       </div>
     </>
@@ -109,3 +111,12 @@ function MCQNugget() {
 }
 
 export default MCQNugget;
+
+// empty option
+// validation on option required or not
+// selecting every option
+// connect with product team for validation = test cases
+
+//preview
+
+//INuggetContext improving

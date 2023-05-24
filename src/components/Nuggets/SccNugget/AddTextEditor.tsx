@@ -4,27 +4,28 @@ import uuid from "react-uuid";
 import { NuggetsContext } from "../../../context/NuggetsContext";
 
 function AddTextEditor() {
-  const { test, updateSCQOption, deleteSCQOption, addSCQOption } =
-    useContext(NuggetsContext);
-  // const [sections, setSections] = useState(nugget.question?.bilingual_options?.english || []);
+  const {
+    nugget: test,
+    updateSCQOption,
+    deleteSCQOption,
+    addSCQOption,
+  } = useContext(NuggetsContext);
+
+  // if (!test.question?.bilingual_options?.english) {
+  //   useEffect(() => {
+  //     addSCQOption();
+  //   }, []);
+  // }
 
   function addSection() {
-    // const newSection = { text: "" };
-    // setSections([...sections, newSection]);
     addSCQOption();
   }
 
   function handleDelete(index: number) {
-    // const updatedSections = [...sections];
-    // updatedSections.splice(index, 1);
-    // setSections(updatedSections);
     deleteSCQOption({ index });
   }
 
   function updateAnswerOption(index: number, content: string) {
-    // const updatedSections = [...sections];
-    // updatedSections[index] = { text: content };
-    // setSections(updatedSections);
     updateSCQOption({ index, text: content });
   }
 
@@ -47,7 +48,9 @@ function AddTextEditor() {
               onUpdate={(content: string) => updateAnswerOption(index, content)}
             />
           </div>
-          <button onClick={() => handleDelete(index)}>Delete</button>
+          {test.question.bilingual_options?.english?.length !== 1 && (
+            <button onClick={() => handleDelete(index)}>Delete</button>
+          )}
         </>
       );
     }
