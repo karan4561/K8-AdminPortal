@@ -19,11 +19,11 @@ function AddTextEditor() {
 
   if (!test.question?.bilingual_options?.english) {
     useEffect(() => {
-      addSCQOption()
-    }, [])
+      addSCQOption();
+    }, []);
   }
   // console.log(test.question?.bilingual_options?.english.length,"len");
-  
+
   function addSection() {
     addSCQOption();
   }
@@ -33,14 +33,7 @@ function AddTextEditor() {
   }
 
   function updateAnswerOption(index: number, content: string) {
-<<<<<<< HEAD
     updateSCQOption({ index, text: content });
-=======
-    // const updatedSections = [...sections];
-    // updatedSections[index] = { text: content };
-    // setSections(updatedSections);
-    updateSCQOption({ index, text: content, });
->>>>>>> 34e8eeea8bbb0b72af856c8413eb58f67c5181c2
   }
 
   const sectionElements = test.question?.bilingual_options?.english.map(

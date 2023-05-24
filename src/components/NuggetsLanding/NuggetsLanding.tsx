@@ -50,11 +50,6 @@ function NuggetsLanding() {
   const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     updateNuggetKind(event.target.value as OptionType["value"]);
   };
-<<<<<<< HEAD
-
-=======
-  
->>>>>>> 34e8eeea8bbb0b72af856c8413eb58f67c5181c2
   useEffect(() => {
     if (nugget.kind) updateNuggetKind(nugget.kind);
   }, [nugget.kind]);

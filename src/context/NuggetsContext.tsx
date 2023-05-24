@@ -344,8 +344,8 @@ const NuggetProvider = (props: any) => {
           },
         },
       }));
-    }
   }
+
   function deleteSCQOption(Option: { index: number }) {
     setNugget((prev) => {
       return {
@@ -370,7 +370,11 @@ const NuggetProvider = (props: any) => {
       const updatedOptions = prev.question.bilingual_options?.english
         ? prev.question.bilingual_options.english
         : [];
-      updatedOptions[Option.index] = { text: Option.text, isCorrect:prev.question.bilingual_options?.english[Option.index].isCorrect };
+      updatedOptions[Option.index] = {
+        text: Option.text,
+        isCorrect:
+          prev.question.bilingual_options?.english[Option.index].isCorrect,
+      };
       return {
         ...prev,
         question: {
@@ -454,8 +458,6 @@ const NuggetProvider = (props: any) => {
           addListItem,
           updateListItem,
           handleDeleteNoteContent,
-          addFIBItem,
-          updateFIBItem,
           submit,
           setSubmit,
           formErrors,
