@@ -350,12 +350,18 @@ h4 {
 
 /* Preview  */
 
+<<<<<<< HEAD
 .prev-sticky {
   position: sticky;
   top: 5px;
 }
 
 .preview > h2 {
+=======
+.prev-sticky{
+  position: sticky;
+  top: 5px;
+>>>>>>> 34e8eeea8bbb0b72af856c8413eb58f67c5181c2
   text-align: center;
 }
 .headerimage-headertitle {

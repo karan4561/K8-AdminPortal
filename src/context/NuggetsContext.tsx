@@ -55,9 +55,9 @@ const NuggetProvider = (props: any) => {
   console.log("this is testing file", nugget);
 
   function updateCategoryObject(Category: {
-    Category?: string;
-    Chapter?: string;
-    Subject?: string;
+    Category: string;
+    Chapter: string;
+    Subject: string;
     Topic?: string;
   }) {
     setNugget((prev) => ({
@@ -141,17 +141,17 @@ const NuggetProvider = (props: any) => {
     //console.log("Here is list", list);
   }
 
-  function addFIBItem(note: FIB) {
-    if (!ques?.fib)
-      setQues((prev) => ({ ...prev, fib: { ...prev?.fib, english: [note] } }));
-    else {
-      setQues((prev) => ({
-        ...prev,
-        fib: { ...prev?.fib, english: [...prev?.fib?.english, note] },
-      }));
-    }
-    //console.log("wuhoo");
-  }
+  // function addFIBItem(note: FIB) {
+  //   if (!ques?.fib)
+  //     setQues((prev) => ({ ...prev, fib: { ...prev?.fib, english: [note] } }));
+  //   else {
+  //     setQues((prev) => ({
+  //       ...prev,
+  //       fib: { ...prev?.fib, english: [...prev?.fib?.english, note] },
+  //     }));
+  //   }
+  //   //console.log("wuhoo");
+  // }
 
   function updateContentItem(idx: number, note: ContentObject) {
     //console.log("..........idx..........", idx);
@@ -344,6 +344,7 @@ const NuggetProvider = (props: any) => {
           },
         },
       }));
+    }
   }
   function deleteSCQOption(Option: { index: number }) {
     setNugget((prev) => {
@@ -369,11 +370,7 @@ const NuggetProvider = (props: any) => {
       const updatedOptions = prev.question.bilingual_options?.english
         ? prev.question.bilingual_options.english
         : [];
-      updatedOptions[Option.index] = {
-        text: Option.text,
-        isCorrect:
-          prev.question.bilingual_options?.english[Option.index].isCorrect,
-      };
+      updatedOptions[Option.index] = { text: Option.text, isCorrect:prev.question.bilingual_options?.english[Option.index].isCorrect };
       return {
         ...prev,
         question: {
