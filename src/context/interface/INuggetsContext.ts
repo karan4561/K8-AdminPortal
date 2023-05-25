@@ -17,7 +17,7 @@ export interface INuggetContext {
     updateNuggetKind?: any,
     setQues?: React.Dispatch<React.SetStateAction<QuestionObject|undefined>>
     updateNuggetInfo: (NuggetInfo: {headerTitle?:string,sideNote?: string, isKnowledgeCap?: boolean}) => void,
-    updateCategoryObject: (Category: {Category?: string,Chapter?: string,Subject?:string,Topic?:string})=>void,
+    updateCategoryObject: (Category: {Category: string,Chapter: string,Subject:string,Topic?:string})=>void,
     updateXPTimer: (XPTimer: {reward: number, timeToReward: number}) => void,
     updateContentKind?: (kind: {kind: 'H1' | 'H2' | 'Text' | 'UL' | 'OL' | 'IMG'}) => void,
     updateCaption: (caption: {caption?:string})=>void
@@ -35,11 +35,9 @@ export interface INuggetContext {
     addContentItem?: any,
     addListItem?: any,
     updateListItem?: any,
-    addFIBItem: any,
-    updateFIBItem: any,
     submit:boolean,
     setSubmit:React.Dispatch<React.SetStateAction<boolean>>,
     formErrors:any,
     setFormErrors:any
-    validateErrors?: (values: Nugget)=>void,
+    validateErrors?: (values: Nugget)=>any,
 }

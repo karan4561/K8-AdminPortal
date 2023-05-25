@@ -3,6 +3,7 @@ import { INuggetContext } from "./interface/INuggetsContext";
 import { useEffect } from "react";
 
 import { Nugget } from "@/interfaces/INugget";
+import * as _ from "lodash";
 
 interface OptionType {
   label:
@@ -27,13 +28,23 @@ import {
 } from "@/interfaces/INugget";
 
 const initialState = {} as INuggetContext;
+// const initialStateTest = {
+//   question: {
+//     bilingual_options: {
+//       english: [""],
+//     },
+//   },
+// } as any;
+
 const initialStateTest = {
+  kind: "SCQ",
   question: {
     bilingual_options: {
       english: [
-       { text: null,
-        isCorrect: true
-      }
+        {
+          text: "Hello",
+          isCorrect: true,
+        },
       ],
     },
     solutions:[
@@ -55,7 +66,7 @@ interface FIB {
 export const NuggetsContext = React.createContext<INuggetContext>(initialState);
 
 const NuggetProvider = (props: any) => {
-  const [nugget, setNugget] = useState<Nugget>(initialStateTest);
+  const [nugget, setNugget] = useState<Nugget>(_.cloneDeep(initialStateTest));
   const [bullet, setBullet] = useState<BulletObject>();
   const [list, setList] = useState<Array<string>>([""]); //fib
   const [ques, setQues] = useState<QuestionObject>(); //fib
@@ -64,7 +75,14 @@ const NuggetProvider = (props: any) => {
 
   //check naming
 
-  console.log("this is testing file", nugget);
+  //console.log("this is testing file", nugget);
+
+  useEffect(() => {
+    console.log(
+      "*******Initial State Test******",
+      initialStateTest.question.bilingual_options.english
+    );
+  }, [initialStateTest.question.bilingual_options.english]);
 
   function updateCategoryObject(Category: {
     Category?: string;
@@ -108,7 +126,12 @@ const NuggetProvider = (props: any) => {
       | "TrueFalse"
       | "Audio"
   ) {
-    setNugget({ ...initialStateTest, kind: nuggetkind } as Nugget);
+    console.log("Initial State Testing: ", initialStateTest);
+    setNugget({
+      ...initialStateTest,
+      kind: nuggetkind,
+      categories: nugget.categories,
+    } as Nugget);
   }
 
   function updateNuggetInfo(NuggetInfo: {
@@ -405,22 +428,33 @@ const NuggetProvider = (props: any) => {
     const errors: any = {};
     let flag = false;
     let check = false;
+    if (
+      !values.categories?.categoryId ||
+      !values.categories?.chapterId ||
+      !values.categories?.subjectId
+    ) {
+      errors.categories = "Category Option is Empty";
+    }
+
+    if (!values.kind) {
+      errors.kind = "Nugget Kind is Empty!";
+    }
     if (nugget.kind == "SCQ" || nugget.kind == "MCQ") {
-      console.log("This is question.content", values.question.content);
+      //console.log("This is question.content", values.question.content);
       if (!values.question.content || values.question.content.english == "") {
         errors.question = "Type Question is Empty";
       }
 
       values.question.bilingual_options?.english.map((opt) => {
-        console.log("this is opt text", opt.text);
+        //console.log("this is opt text", opt.text);
         if (opt.text == "") {
-          console.log("I have found an empty string");
+          //console.log("I have found an empty string");
           check = true;
         }
       });
 
       if (check) {
-        console.log("......ENTRY ACCESS GIVEN!......");
+        //console.log("......ENTRY ACCESS GIVEN!......");
         errors.options = "Type Option is Empty";
       }
 
@@ -432,7 +466,10 @@ const NuggetProvider = (props: any) => {
         }
       });
 
+      console.log("value of flag for correction option:", flag);
+
       if (!flag) {
+        console.log("Triggeredddddddd");
         errors.isCorrect = "Correct Option not defined";
       }
     }
@@ -485,3 +522,8 @@ const NuggetProvider = (props: any) => {
 };
 
 export default NuggetProvider;
+
+//two way binding
+//preview
+//validations in UI
+// Error in UI

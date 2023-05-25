@@ -2,7 +2,7 @@ import { useState, useContext, useEffect } from "react";
 import Select from "react-select";
 import { NuggetsContext } from "../../context/NuggetsContext";
 import { getCategory, getSubject, getChapters, getTopics } from "@/api/filter";
-import { test } from "node:test";
+import { CategoryObject } from "@/interfaces/INugget";
 interface OptionType {
   value: string;
   label: string;
@@ -39,7 +39,7 @@ export default function AddNuggetHeader() {
     setTopicValue(selectedOption);
     updateCategoryObject({
       Topic: selectedOption?.value,
-    });
+    } as any);
   };
 
   const SubjectChange = (selectedOption: OptionType | null) => {
@@ -47,7 +47,7 @@ export default function AddNuggetHeader() {
       setSubjectValue(selectedOption);
       updateCategoryObject({
         Subject: selectedOption.value,
-      });
+      } as any);
       getChapters(categoryValue.value, selectedOption.value).then((data) =>
         setChapterList(
           data.map((obj: any) => {
@@ -63,7 +63,7 @@ export default function AddNuggetHeader() {
       setcategoryValue(selectedOption);
       updateCategoryObject({
         Category: selectedOption.value,
-      });
+      } as any);
       getSubject(selectedOption.value).then((data) =>
         setSubjectList(
           data.map((obj: any) => {
@@ -79,7 +79,7 @@ export default function AddNuggetHeader() {
       setChapterValue(selectedOption);
       updateCategoryObject({
         Chapter: selectedOption.value,
-      });
+      } as any);
       getTopics(
         categoryValue.value,
         SubjectValue.value,
