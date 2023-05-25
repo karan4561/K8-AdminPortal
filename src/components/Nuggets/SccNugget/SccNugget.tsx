@@ -6,7 +6,7 @@ import AddTextEditor from "./AddTextEditor";
 
 function SccNugget() {
   const {
-    nugget: test,
+    nugget: nugget,
     updateQuestion,
     updateSolHint,
     updateCorrectOption,
@@ -61,30 +61,32 @@ function SccNugget() {
             <br />
             Answer
           </h4>
-          {test.question?.bilingual_options?.english.map((arrayData, index) => {
-            const indexToAlpha = (index = 1) => {
-              // ASCII value of first character
-              const A = "A".charCodeAt(0);
-              let numberToCharacter = (number: number) => {
-                return String.fromCharCode(A + number);
+          {nugget.question?.bilingual_options?.english.map(
+            (arrayData, index) => {
+              const indexToAlpha = (index = 1) => {
+                // ASCII value of first character
+                const A = "A".charCodeAt(0);
+                let numberToCharacter = (number: number) => {
+                  return String.fromCharCode(A + number);
+                };
+                return numberToCharacter(index);
               };
-              return numberToCharacter(index);
-            };
-            return (
-              <>
-                <label className="label-option">
-                  <input
-                    type="radio"
-                    name="SCCOption"
-                    value={index}
-                    checked={option === index}
-                    onChange={OptionChange}
-                  />
-                  Option {indexToAlpha(index)}
-                </label>
-              </>
-            );
-          })}
+              return (
+                <>
+                  <label className="label-option">
+                    <input
+                      type="radio"
+                      name="SCCOption"
+                      value={index}
+                      checked={option === index}
+                      onChange={OptionChange}
+                    />
+                    Option {indexToAlpha(index)}
+                  </label>
+                </>
+              );
+            }
+          )}
         </div>
       </div>
     </>
