@@ -11,7 +11,7 @@ function SccNugget() {
     updateSolHint,
     updateCorrectOption,
   } = useContext(NuggetsContext);
-  const [option, setOption] = useState<number>();
+  const [option, setOption] = useState<number>(0);
   const [solContent, setSolContent] = useState<string>();
   const [hintContent, setHintContent] = useState<string>();
   const OptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
