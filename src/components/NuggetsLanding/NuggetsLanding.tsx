@@ -13,7 +13,6 @@ import MCQNugget from "../Nuggets/MCQNugget/MCQNugget";
 import LTI from "../LTI/LTI";
 
 import NoteNugget from "../Nuggets/NoteNugget/NoteNugget";
-import PreviewHeader from "../Preview/previewHeader";
 import FIBNugget from "../Nuggets/FIB/FIBNugget";
 import { get, post } from "@/api/api";
 import { Nugget } from "@/interfaces/INugget";
@@ -120,7 +119,7 @@ function NuggetsLanding() {
           {nugget.kind == "LTI" && <LTI />}
         </div>
       </div>
-      {/* <Preview /> */}
+      <Preview />
     </div>
   );
 }

@@ -8,7 +8,7 @@ interface OptionType {
   label: string;
 }
 export default function AddNuggetHeader() {
-  const { test, updateCategoryObject } = useContext(NuggetsContext);
+  const { nugget, updateCategoryObject } = useContext(NuggetsContext);
 
   const Subject: OptionType[] = [{ value: "option1", label: "Option 1" }];
   const Category: OptionType[] = [{ value: "option1", label: "Option 1" }];
@@ -94,7 +94,6 @@ export default function AddNuggetHeader() {
     }
     // setChapterValue(selectedOption);
   };
-  console.log(chapterList);
 
   return (
     <>

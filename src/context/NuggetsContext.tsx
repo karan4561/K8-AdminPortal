@@ -30,8 +30,20 @@ const initialState = {} as INuggetContext;
 const initialStateTest = {
   question: {
     bilingual_options: {
-      english: [""],
+      english: [
+       { text: null,
+        isCorrect: true
+      }
+      ],
     },
+    solutions:[
+      {
+        english:{
+          text:null,
+          hint: null
+        }
+      }
+    ]
   },
 } as any;
 
@@ -55,9 +67,9 @@ const NuggetProvider = (props: any) => {
   console.log("this is testing file", nugget);
 
   function updateCategoryObject(Category: {
-    Category: string;
-    Chapter: string;
-    Subject: string;
+    Category?: string;
+    Chapter?: string;
+    Subject?: string;
     Topic?: string;
   }) {
     setNugget((prev) => ({
@@ -319,6 +331,7 @@ const NuggetProvider = (props: any) => {
   function addSCQOption() {
     const newOption = {
       text: "",
+      isCorrect:false
     };
     //debugger;
     console.log("This is being called");
