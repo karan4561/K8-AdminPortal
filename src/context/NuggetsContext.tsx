@@ -28,11 +28,23 @@ import {
 
 const initialState = {} as INuggetContext;
 const initialStateTest = {
+  categories:[{
+    categoryId: null,
+    subjectId: null,
+    chapterId: null,
+    topicId: null
+  }],
   question: {
     bilingual_options: {
       english: [
        { text: null,
+        isCorrect: false
+      },
+      { text: null,
         isCorrect: true
+      },
+      { text: null,
+        isCorrect: false
       }
       ],
     },
@@ -74,24 +86,24 @@ const NuggetProvider = (props: any) => {
   }) {
     setNugget((prev) => ({
       ...prev,
-      categories: {
+      categories: [{
         categoryId:
           Category.Category !== undefined
             ? Category.Category
-            : prev.categories?.categoryId,
+            : prev.categories[0].categoryId,
         subjectId:
           Category.Subject !== undefined
             ? Category.Subject
-            : prev.categories?.subjectId,
+            : prev.categories[0].subjectId,
         chapterId:
           Category.Chapter !== undefined
             ? Category.Chapter
-            : prev.categories?.chapterId,
+            : prev.categories[0].chapterId,
         topicId:
           Category.Topic !== undefined
             ? Category.Topic
-            : prev.categories?.topicId,
-      },
+            : prev.categories[0].topicId,
+      }],
     }));
   }
 
@@ -108,7 +120,7 @@ const NuggetProvider = (props: any) => {
       | "TrueFalse"
       | "Audio"
   ) {
-    setNugget({ ...initialStateTest, kind: nuggetkind } as Nugget);
+    setNugget({ ...initialStateTest, kind: nuggetkind, categories: nugget.categories } as Nugget);
   }
 
   function updateNuggetInfo(NuggetInfo: {
@@ -118,9 +130,15 @@ const NuggetProvider = (props: any) => {
   }) {
     setNugget((prev) => ({
       ...prev,
-      headerTitle: NuggetInfo.headerTitle,
-      sideNote: NuggetInfo.sideNote,
-      IsKnowledgeCap: NuggetInfo.isKnowledgeCap,
+      headerTitle: NuggetInfo.headerTitle !== undefined
+      ? NuggetInfo.headerTitle
+      : prev.headerTitle,
+      sideNote: NuggetInfo.sideNote !== undefined
+      ? NuggetInfo.sideNote
+      : prev.sideNote,
+      IsKnowledgeCap: NuggetInfo.isKnowledgeCap !== undefined
+      ? NuggetInfo.isKnowledgeCap
+      : prev.IsKnowledgeCap,
     }));
   }
 
@@ -272,22 +290,19 @@ const NuggetProvider = (props: any) => {
     size?: number;
     details?: string;
   }) {
-    setState({
-      ...state,
-      nugget: {
-        ...state.nugget,
-        imageURI: {
-          _id: FileObj.id,
-          name: FileObj.name,
-          baseUrl: FileObj.baseUrl,
-          key: FileObj.key,
-          type: FileObj.type,
-          organization: FileObj.organization,
-          size: FileObj.size,
-          details: FileObj.details,
-        },
-      },
-    });
+    setNugget((prev)=>({
+      ...prev,
+      imageURI:{
+        _id: FileObj.id,
+        name: FileObj.name,
+        baseUrl: FileObj.baseUrl,
+        key: FileObj.key,
+        type: FileObj.type,
+        organization: FileObj.organization,
+        size: FileObj.size,
+        details: FileObj.details
+      }
+    }))
   }
 
   function updateCorrectOption(Option: { isCorrect: boolean; index: number }) {

@@ -5,17 +5,18 @@ import { useState, useContext, useEffect } from "react";
 import AddTextEditor from "./AddTextEditor";
 
 function SccNugget() {
+  let indexTrue:number
   const {
     nugget: test,
     updateQuestion,
     updateSolHint,
     updateCorrectOption,
   } = useContext(NuggetsContext);
-  const [option, setOption] = useState<number>(0);
+  // const [option, setOption] = useState<number>();
   const [solContent, setSolContent] = useState<string>();
   const [hintContent, setHintContent] = useState<string>();
   const OptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setOption(Number(event.target.value));
+    // setOption(Number(event.target.value));
     updateCorrectOption({
       index: Number(event.target.value),
       isCorrect: true,
@@ -70,6 +71,9 @@ function SccNugget() {
               };
               return numberToCharacter(index);
             };
+            if(arrayData.isCorrect==true){
+              indexTrue=index
+            }
             return (
               <>
                 <label className="label-option">
@@ -77,7 +81,7 @@ function SccNugget() {
                     type="radio"
                     name="SCCOption"
                     value={index}
-                    checked={option === index}
+                    checked={indexTrue === index}
                     onChange={OptionChange}
                   />
                   Option {indexToAlpha(index)}

@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect, useRef } from "react";
 import Select from "react-select";
 import { NuggetsContext } from "../../context/NuggetsContext";
 import { getCategory, getSubject, getChapters, getTopics } from "@/api/filter";
@@ -35,6 +35,7 @@ export default function AddNuggetHeader() {
   const [SubjectValue, setSubjectValue] = useState<OptionType>(Subject[0]);
   const [TopicValue, setTopicValue] = useState<OptionType | null>(null);
 
+  
   const TopicChange = (selectedOption: OptionType | null) => {
     setTopicValue(selectedOption);
     updateCategoryObject({
@@ -102,6 +103,7 @@ export default function AddNuggetHeader() {
         <div className="select-dropdown">
           {/* <Category/> */}
           <Select
+            
             className="AddNuggetCategory"
             value={categoryValue}
             onChange={CategoryChange}
@@ -131,9 +133,11 @@ export default function AddNuggetHeader() {
             onChange={TopicChange}
             options={topicList}
             placeholder="Topic"
+            isClearable={true}
           />
         </div>
       </div>
     </>
   );
 }
+

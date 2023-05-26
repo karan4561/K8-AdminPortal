@@ -13,7 +13,7 @@ export interface INuggetContext {
     setBullet?: React.Dispatch<React.SetStateAction<BulletObject|undefined>>,
     list:Array<string>,
     setList?: any,
-    ques?: QuestionObject 
+    ques?: QuestionObject
     updateNuggetKind?: any,
     setQues?: React.Dispatch<React.SetStateAction<QuestionObject|undefined>>
     updateNuggetInfo: (NuggetInfo: {headerTitle?:string,sideNote?: string, isKnowledgeCap?: boolean}) => void,
@@ -41,5 +41,5 @@ export interface INuggetContext {
     setSubmit:React.Dispatch<React.SetStateAction<boolean>>,
     formErrors:any,
     setFormErrors:any
-    validateErrors?: (values: Nugget)=>void,
+    validateErrors?: (values: Nugget)=>any,
 }

@@ -66,18 +66,27 @@ function NuggetsLanding() {
     { value: "Audio", label: "Audio" },
   ];
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    setSubmit(true);
-    if (validateErrors) setFormErrors(validateErrors(nugget));
-
-    console.log("The Errors in the form : ", formErrors);
-
-    console.log("Submit Value: ", submit);
-
-    if (Object && Object.keys(formErrors || {}).length === 0 && submit) {
-      //console.log("Form is Submitted Successfully");
-      submitNugget(nugget);
+    if (validateErrors) {
+      if (Object && Object.keys(validateErrors(nugget) || {}).length === 0) {
+        console.log("Form is Submitted Successfully");
+        try {
+          await submitNugget(nugget);
+        } catch (e: any) {
+          if (e.response.status == 401) {
+            alert("Unauthorized Entry");
+          } else if (e.response.status == 403) {
+            alert("Scope Error");
+          } else if (e.response.status == 500) {
+            alert("Server Error Entry");
+          } else if (e.response.status == 400) {
+            console.log(e.response?.data?.error?.message);
+          }
+        }
+      } else {
+        alert("Add Required Fields");
+      }
     }
   };
 
