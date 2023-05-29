@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState } from "react";
 import { INuggetContext } from "./interface/INuggetsContext";
 import { useEffect } from "react";
 
-import { Nugget } from "@/interfaces/INugget";
+import { CategoryObject, Nugget } from "@/interfaces/INugget";
 import * as _ from "lodash";
 
 interface OptionType {
@@ -26,15 +26,9 @@ import {
   ListItemObject,
   QuestionObject,
 } from "@/interfaces/INugget";
+import useFilters from "./filters";
 
 const initialState = {} as INuggetContext;
-// const initialStateTest = {
-//   question: {
-//     bilingual_options: {
-//       english: [""],
-//     },
-//   },
-// } as any;
 
 const initialStateTest = {
   kind: "SCQ",
@@ -47,14 +41,14 @@ const initialStateTest = {
         },
       ],
     },
-    solutions:[
+    solutions: [
       {
-        english:{
-          text:null,
-          hint: null
-        }
-      }
-    ]
+        english: {
+          text: null,
+          hint: null,
+        },
+      },
+    ],
   },
 } as any;
 
@@ -73,45 +67,22 @@ const NuggetProvider = (props: any) => {
   const [submit, setSubmit] = useState<boolean>(false);
   const [formErrors, setFormErrors] = useState<any>({});
 
+  const { filters, ...filterFunctions } = useFilters();
+
   //check naming
 
-  //console.log("this is testing file", nugget);
+  console.log("this is testing file", nugget);
+
+  // useEffect(() => {
+  //   console.log(
+  //     "*******Initial State Test******",
+  //     initialStateTest.question.bilingual_options.english
+  //   );
+  // }, [initialStateTest.question.bilingual_options.english]);
 
   useEffect(() => {
-    console.log(
-      "*******Initial State Test******",
-      initialStateTest.question.bilingual_options.english
-    );
-  }, [initialStateTest.question.bilingual_options.english]);
-
-  function updateCategoryObject(Category: {
-    Category?: string;
-    Chapter?: string;
-    Subject?: string;
-    Topic?: string;
-  }) {
-    setNugget((prev) => ({
-      ...prev,
-      categories: {
-        categoryId:
-          Category.Category !== undefined
-            ? Category.Category
-            : prev.categories?.categoryId,
-        subjectId:
-          Category.Subject !== undefined
-            ? Category.Subject
-            : prev.categories?.subjectId,
-        chapterId:
-          Category.Chapter !== undefined
-            ? Category.Chapter
-            : prev.categories?.chapterId,
-        topicId:
-          Category.Topic !== undefined
-            ? Category.Topic
-            : prev.categories?.topicId,
-      },
-    }));
-  }
+    updateFilters(filters);
+  }, [filters]);
 
   function updateNuggetKind(
     nuggetkind:
@@ -132,6 +103,12 @@ const NuggetProvider = (props: any) => {
       kind: nuggetkind,
       categories: nugget.categories,
     } as Nugget);
+  }
+  function updateFilters(filter: CategoryObject[]) {
+    setNugget((prev) => ({
+      ...prev,
+      categories: filter,
+    }));
   }
 
   function updateNuggetInfo(NuggetInfo: {
@@ -214,12 +191,12 @@ const NuggetProvider = (props: any) => {
     }
   }
 
-  function updateFIBItem(idx: number, note: FIB) {
-    if (ques?.fib?.english) {
-      ques.fib.english[idx] = note;
-    }
-    setQues({ ...ques });
-  }
+  // function updateFIBItem(idx: number, note: FIB) {
+  //   if (ques?.fib?.english) {
+  //     ques.fib.english[idx] = note;
+  //   }
+  //   setQues({ ...ques });
+  // }
 
   function handleDeleteNoteContent(id: number) {
     if (nugget.content) {
@@ -354,7 +331,7 @@ const NuggetProvider = (props: any) => {
   function addSCQOption() {
     const newOption = {
       text: "",
-      isCorrect:false
+      isCorrect: false,
     };
     //debugger;
     console.log("This is being called");
@@ -428,13 +405,13 @@ const NuggetProvider = (props: any) => {
     const errors: any = {};
     let flag = false;
     let check = false;
-    if (
-      !values.categories?.categoryId ||
-      !values.categories?.chapterId ||
-      !values.categories?.subjectId
-    ) {
-      errors.categories = "Category Option is Empty";
-    }
+    // if (
+    //   !values.categories?.categoryId ||
+    //   !values.categories?.chapterId ||
+    //   !values.categories?.subjectId
+    // ) {
+    //   errors.categories = "Category Option is Empty";
+    // }
 
     if (!values.kind) {
       errors.kind = "Nugget Kind is Empty!";
@@ -481,7 +458,8 @@ const NuggetProvider = (props: any) => {
     <div>
       <NuggetsContext.Provider
         value={{
-          nugget: nugget,
+          nugget: { ...nugget, categories: filters },
+          ...filterFunctions,
           setNugget: setNugget,
           updateNuggetKind,
           bullet,
@@ -490,7 +468,6 @@ const NuggetProvider = (props: any) => {
           setQues,
           setList,
           setBullet,
-          updateCategoryObject,
           updateNuggetInfo,
           updateXPTimer,
           updateAnswer,

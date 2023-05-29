@@ -15,7 +15,7 @@ export type Nugget = {
   status: "active" | "inactive";
   question: QuestionObject;
   content?: Array<ContentObject>;
-  categories: CategoryObject;
+  categories: Array<CategoryObject>;
   updatedAt: Date;
   createdAt: Date;
   //error:

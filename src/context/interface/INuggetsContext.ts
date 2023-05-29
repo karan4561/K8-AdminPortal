@@ -6,7 +6,7 @@ interface FIB {
 
 //update any info
 
-export interface INuggetContext {
+export interface INuggetContext extends FilterFunctions {
     nugget:Nugget,
     setNugget: any,
     bullet?: BulletObject,
@@ -17,7 +17,7 @@ export interface INuggetContext {
     updateNuggetKind?: any,
     setQues?: React.Dispatch<React.SetStateAction<QuestionObject|undefined>>
     updateNuggetInfo: (NuggetInfo: {headerTitle?:string,sideNote?: string, isKnowledgeCap?: boolean}) => void,
-    updateCategoryObject: (Category: {Category: string,Chapter: string,Subject:string,Topic?:string})=>void,
+    updateCategoryObject?: (Category: {Category: string,Chapter: string,Subject:string,Topic?:string})=>void,
     updateXPTimer: (XPTimer: {reward: number, timeToReward: number}) => void,
     updateContentKind?: (kind: {kind: 'H1' | 'H2' | 'Text' | 'UL' | 'OL' | 'IMG'}) => void,
     updateCaption: (caption: {caption?:string})=>void
@@ -40,4 +40,13 @@ export interface INuggetContext {
     formErrors:any,
     setFormErrors:any
     validateErrors?: (values: Nugget)=>any,
+}
+
+interface FilterFunctions {
+  selectCategory: (idx: number, categoryId: string) => void;
+  selectSubject: (idx: number, subjectId: string) => void;
+  selectChapter: (idx: number, chapterId: string) => void;
+  selectTopic: (idx: number, topicId: string) => void;
+  deleteFilter: (idx: number) => void;
+  addFilter: () => void;
 }

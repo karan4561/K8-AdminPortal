@@ -84,7 +84,7 @@ function NuggetsLanding() {
           } else if (e.response.status == 500) {
             alert("Server Error Entry");
           } else if (e.response.status == 400) {
-            alert(e.response.message);
+            console.log(e.response?.data?.error?.message);
           }
         }
       } else {
