@@ -22,16 +22,16 @@ function EditNuggetLanding() {
         <>
             <h3>Search Nugget by:</h3>
             <div className='edit-nugget-category'>
-            {nugget.categories?.map((obj, i) => (
-                <NuggetFilters index={i} key={i} />
-            ))}
-            <Select
-                className="AddNuggetCategory"
-                value={approvedStatus}
-                onChange={approveStatusChange}
-                options={approveStatus}
-                placeholder="Status"
-            />
+                {nugget.categories?.map((obj, i) => (
+                    <NuggetFilters index={i} key={i} />
+                ))}
+                <Select
+                    className="AddNuggetCategory"
+                    value={approvedStatus}
+                    onChange={approveStatusChange}
+                    options={approveStatus}
+                    placeholder="Status"
+                />
             </div>
         </>
     )
