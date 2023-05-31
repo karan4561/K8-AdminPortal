@@ -86,7 +86,7 @@ function NuggetFilters(props: any) {
   };
 
   return (
-    <div>
+    // <div>
       <div className="select-dropdown">
         {/* <Category/> */}
         <Select
@@ -124,7 +124,7 @@ function NuggetFilters(props: any) {
           <button onClick={() => deleteFilter(props.index)}>Delete</button>
         ) : null}
       </div>
-    </div>
+    // </div>
   );
 }
 

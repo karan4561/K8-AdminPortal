@@ -517,3 +517,30 @@ h4 {
     Font-size: 20px;
     Line-height: 30px;
 } */
+
+//Edit Nuggets
+
+.edit-Nugget{
+  /* box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 4px 0px;
+  width: 70vw;
+  margin: 5px 0 5px 10px;
+  padding: 10px; */
+}
+
+.edit-Nugget-div-label{
+  display: flex;
+  justify-content: space-between;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 4px 0px;
+  width: 70vw;
+  margin: 5px 0 5px 10px;
+  padding: 10px;
+}
+
+.edit-Nugget-div-label>div>img{
+  padding: 5px
+}
+
+.edit-nugget-category{
+  display: flex;
+  align-items: center;
+}
