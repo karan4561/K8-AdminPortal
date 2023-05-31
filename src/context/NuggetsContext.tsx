@@ -36,8 +36,8 @@ const initialStateTest = {
     bilingual_options: {
       english: [
         {
-          text: "Hello",
-          isCorrect: true,
+          text: "",
+          isCorrect: false,
         },
       ],
     },
@@ -504,3 +504,5 @@ export default NuggetProvider;
 //preview
 //validations in UI
 // Error in UI
+
+//check on header title

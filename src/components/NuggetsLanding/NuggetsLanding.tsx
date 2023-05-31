@@ -73,12 +73,12 @@ function NuggetsLanding() {
     e.preventDefault();
     if (validateErrors) {
       if (Object && Object.keys(validateErrors(nugget) || {}).length === 0) {
-        console.log("Form is Submitted Successfully");
+        console.log("Form is Submitted Successfully"); //toast
         try {
           await submitNugget(nugget);
         } catch (e: any) {
           if (e.response.status == 401) {
-            alert("Unauthorized Entry");
+            alert("Unauthorized Entry"); //toast
           } else if (e.response.status == 403) {
             alert("Scope Error");
           } else if (e.response.status == 500) {
@@ -88,7 +88,7 @@ function NuggetsLanding() {
           }
         }
       } else {
-        alert("Add Required Fields");
+        alert("Add Required Fields"); //toast
       }
     }
   };
