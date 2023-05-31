@@ -6,6 +6,7 @@ import { NuggetsContext } from "@/context/NuggetsContext";
 import NuggetProvider from "../context/NuggetsContext";
 import EditNuggetLanding from "./EditNuggetLanding";
 import Select from "react-select";
+import data from 'test.json'
 import { getCategory, getSubject, getChapters, getTopics } from "@/api/filter";
 
 interface Approve {
@@ -34,7 +35,7 @@ function EditNugget() {
     const [chapter, setChapter] = useState<OptionType[]>();
 
     const approveStatusChange = (selectedOption: Approve | null) => {
-        if(selectedOption){
+        if (selectedOption) {
             setApprovedStatus(selectedOption.value);
         }
     }
@@ -60,8 +61,8 @@ function EditNugget() {
             setChapter(selectedOption.value);
         }
     };
-    console.log(chapter,"chapter",topic,"topic",category,"category",subject,"subject",approvedStatus,"approveStatus");
-    
+    console.log(chapter, "chapter", topic, "topic", category, "category", subject, "subject", approvedStatus, "approveStatus");
+
     return (
         <>
             <h3>Search Nugget by:</h3>
@@ -101,25 +102,56 @@ function EditNugget() {
                     options={approveStatus}
                     placeholder="Status"
                 />
+                <button>Search</button>
             </div>
             {/* <NuggetProvider> */}
             {/* <EditNuggetLanding /> */}
-            <div className='edit-Nugget'>
-                <div className='edit-Nugget-div-label'>
-                    <p>#7777</p>
-                    <div>
-                        <Image src="/Edit.png" height={15} width={15} alt='' />
-                        <Image src="/Vector.png" height={15} width={15} alt='' />
-                    </div>
-                </div>
-                {/* <div>
-                <div className="headerimage-headertitle">
-                <h4>Header Title</h4>
-                </div>
-                <p>ques</p>
-                </div> */}
-            </div>
-            {/* </NuggetProvider> */}
+            {data.data.map((data, index) => {
+                if (data.kind == 'MCQ') {
+                    return (
+                        <div className="edit-label">
+                            <div className='edit-Nugget-div-label'>
+                                <p>#{data._id}</p>
+                                <div>
+                                    <button className="edit-delete-button"><Image src="/Edit.png" height={15} width={15} alt='' /></button>
+                                    <button className="edit-delete-button"><Image src="/Vector.png" height={15} width={15} alt='' /></button>
+                                </div>
+                            </div>
+                            <div className="edit-nugget-prev">
+                                <div className="headerimage-headertitle">
+                                    <h4>{data.headerTitle}</h4>
+                                </div>
+                                <p>{data.question.content?.english}</p>
+                                <div className="TFPrev">
+                                    {data.question.bilingual_options?.english.map((optionData, index) => {
+                                        return (
+                                            <div className="TFOptionPrev scq-option-prev">
+                                                <p>{index}. {optionData.text}</p>
+                                                <div></div>
+                                            </div>
+                                        )
+                                    })}
+                                </div>
+                                <div className="prev-buttons">
+                                    <p>Hint</p>
+                                    <p className="Submit-prev">Submit</p>
+                                    <p className="Submit-prev prev-color">Don't know</p>
+                                </div>
+                                <div className="Hint-Prev-box">
+                                    <h4>Solution</h4>
+                                    <p>{data.question.solutions[0].english.text}</p>
+                                </div>
+                                <div className="Hint-Prev-box">
+                                    <h4>Hint</h4>
+                                    <p>{data.question.solutions[0].english.hint}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    )
+                }
+            })
+            }
         </>
     )
 }

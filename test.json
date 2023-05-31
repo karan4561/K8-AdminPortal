@@ -1,0 +1,123 @@
+{
+    "success": true,
+    "data": [
+        {
+            "_id": "644f54e879bd80ff7b2b0ccb",
+            "kind": "FIB",
+            "isIncreasing": false,
+            "reward": 0,
+            "isKnowledgeCap": false,
+            "timeToReward": 0,
+            "status": "Active",
+            "question": {
+                "fib": {
+                    "english": [
+                        {
+                            "id": "d4df93d8-ddf9-4bae-81d8-97a44edf9cbe",
+                            "value": "<strong>hey</strong>what is your nameand this is some text",
+                            "type": "blank",
+                            "valueArr": [
+                                "<strong>hey</strong>",
+                                "what",
+                                "is",
+                                "your",
+                                "nameand",
+                                "this",
+                                "is",
+                                "some",
+                                "text"
+                            ]
+                        },
+                        {
+                            "id": "f56f42e1-8879-41cb-b89a-69f2ecd0742c",
+                            "value": "This is txt one",
+                            "type": "blank",
+                            "valueArr": [
+                                "This",
+                                "is",
+                                "txt",
+                                "one"
+                            ]
+                        }
+                    ]
+                },
+                "type": 50
+            },
+            "content": [],
+            "categories": [
+                {
+                    "categoryId": "643fd0002dc9d87f646da86a",
+                    "subjectId": "643fd0002dc9d87f646da86a",
+                    "chapterId": "643fd0002dc9d87f646da86a",
+                    "topicId": "643fd0002dc9d87f646da86a"
+                }
+            ],
+            "createdAt": "2023-05-01T05:58:00.833Z",
+            "updatedAt": "2023-05-01T05:58:09.521Z",
+            "__v": 0
+        },
+        {
+            "_id": "64465761f95f4e58a20cc3c9",
+            "kind": "MCQ",
+            "headerTitle": "Mark Just One",
+            "isIncreasing": true,
+            "reward": 0,
+            "isKnowledgeCap": false,
+            "timeToReward": 0,
+            "status": "Active",
+            "question": {
+                "content": {
+                    "english": "What are the countries with VETO power?"
+                },
+                "bilingual_options": {
+                    "english": [
+                        {
+                            "id": "cee3ba23-19a7-4d3a-9e6b-2722eb186d77",
+                            "text": "Russia",
+                            "isCorrect": true
+                        },
+                        {
+                            "id": "fb495256-556a-47bb-abbd-9570cddbaab0",
+                            "text": "China",
+                            "isCorrect": true
+                        },
+                        {
+                            "id": "4a4addaf-20af-44f0-a165-bc8b13bd7109",
+                            "text": "Pakistan",
+                            "isCorrect": false
+                        },
+                        {
+                            "id": "6badcd8f-a5e7-49b4-9429-84514b1394bc",
+                            "text": "USA",
+                            "isCorrect": true
+                        }
+                    ]
+                },
+                "solutions": [
+                    {
+                        "english": {
+                            "hint": "Only 5 countries have VETO power",
+                            "text": "Members are the United States of America, France, Britain, China and Russia"
+                        }
+                    }
+                ],
+                "answer": {
+                    "english": "Russia, China & USA"
+                },
+                "type": 2
+            },
+            "content": [],
+            "categories": [
+                {
+                    "categoryId": "643fd0002dc9d87f646da86a",
+                    "subjectId": "643fd0002dc9d87f646da86a",
+                    "chapterId": "643fd0002dc9d87f646da86a",
+                    "topicId": "643fd0002dc9d87f646da86a"
+                }
+            ],
+            "createdAt": "2023-04-24T10:18:09.346Z",
+            "updatedAt": "2023-04-26T11:13:56.294Z",
+            "__v": 0
+        }
+    ]
+}
