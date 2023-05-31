@@ -499,8 +499,3 @@ const NuggetProvider = (props: any) => {
 };
 
 export default NuggetProvider;
-
-//two way binding
-//preview
-//validations in UI
-// Error in UI

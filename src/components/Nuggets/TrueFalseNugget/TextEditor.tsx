@@ -72,7 +72,7 @@ const TextEditor = (props) => {
             "advlist autolink lists link image charmap print preview anchor",
             "searchreplace visualblocks code fullscreen",
             "insertdatetime media table paste code help wordcount",
-            "math",
+            'MathType',
             "tex",
             "button",
             "image",
@@ -81,11 +81,11 @@ const TextEditor = (props) => {
           contextmenu_avoid_overlap: ".mce-spelling-word",
           branding: false,
           external_plugins: {
-            mathjax:
-              "/your-path-to-plugin/@dimakorotkov/tinymce-mathjax/plugin.min.js",
+            tiny_mce_wiris: 'https://www.wiris.net/demo/plugins/tiny_mce/plugin.js',
+            tiny_mce_mathType: 'https://mathtype-main.s3.ap-south-1.amazonaws.com/mathTypeIntegration.min.js',
           },
           toolbar:
-            "link image | code| mathjax | tiny_mce_wiris_formulaEditor tiny_mce_wiris_formulaEditorChemistry | bold italic underline | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat",
+            "link image | code| mathjax | mathtype | tiny_mce_wiris_formulaEditor tiny_mce_wiris_formulaEditorChemistry | bold italic underline | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat",
           content_style:
             "body { font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; font-size:14px}",
           formats: {
