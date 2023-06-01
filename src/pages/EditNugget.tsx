@@ -4,10 +4,10 @@ import { useState, useEffect } from "react";
 import NuggetFilters from '../components/addNugget/NuggetFilters'
 import { NuggetsContext } from "@/context/NuggetsContext";
 import NuggetProvider from "../context/NuggetsContext";
-import EditNuggetLanding from "./EditNuggetLanding";
 import Select from "react-select";
 import data from 'test.json'
 import { getCategory, getSubject, getChapters, getTopics } from "@/api/filter";
+import SCQPrev from "@/components/Preview/SCQPrev";
 
 interface Approve {
     value: boolean;
@@ -149,12 +149,12 @@ function EditNugget() {
             </div>
             {/* <NuggetProvider> */}
             {/* <EditNuggetLanding /> */}
-            {data.data.map((data, index) => {
-                if (data.kind == 'MCQ') {
+            {data.data.map((nuggetData, index) => {
+                // if (nuggetData.kind == 'MCQ') {
                     return (
                         <div className="edit-label">
                             <div className='edit-Nugget-div-label'>
-                                <p>#{data._id}</p>
+                                <p>#{nuggetData._id}</p>
                                 <div>
                                     <button className="edit-delete-button"><Image src="/Edit.png" height={15} width={15} alt='' /></button>
                                     <button className="edit-delete-button"><Image src="/Vector.png" height={15} width={15} alt='' /></button>
@@ -162,9 +162,10 @@ function EditNugget() {
                             </div>
                             <div className="edit-nugget-prev">
                                 <div className="headerimage-headertitle">
-                                    <h4>{data.headerTitle}</h4>
+                                    <h4>{nuggetData.headerTitle}</h4>
                                 </div>
-                                <p>{data.question.content?.english}</p>
+                               {(nuggetData.kind=='MCQ') && <SCQPrev nugget={nuggetData} />}
+                                {/* <p>{data.question.content?.english}</p>
                                 <div className="TFPrev">
                                     {data.question.bilingual_options?.english.map((optionData, index) => {
                                         return (
@@ -187,12 +188,11 @@ function EditNugget() {
                                 <div className="Hint-Prev-box">
                                     <h4>Hint</h4>
                                     <p>{data.question.solutions[0].english.hint}</p>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
-
                     )
-                }
+                // }
             })
             }
         </>

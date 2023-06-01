@@ -27,7 +27,7 @@ interface OptionType {
   | "IMG"
   | "AUDIOCLIP"
   | "LTI"
-  | "TrueFalse"
+  | "TRUEFALSE"
   | "Audio";
   value: string;
 }
@@ -64,7 +64,7 @@ function NuggetsLanding() {
     { value: "IMG", label: "IMG" },
     { value: "AUDIOCLIP", label: "AUDIOCLIP" },
     { value: "LTI", label: "LTI" },
-    { value: "TrueFalse", label: "TrueFalse" },
+    { value: "TRUEFALSE", label: "TRUEFALSE" },
     { value: "Audio", label: "Audio" },
   ];
 
@@ -134,7 +134,7 @@ function NuggetsLanding() {
           <XPTimer />
           {nugget.kind == "Note" && <NoteNugget />}
           {nugget.kind == "FIB" && <FIBNugget />}
-          {nugget.kind == "TrueFalse" && <TrueFalse />}
+          {nugget.kind == "TRUEFALSE" && <TrueFalse />}
           {nugget.kind == "IMG" && <ImageNugget />}
           {nugget.kind == "Video" && <VideoNugget />}
           {nugget.kind == "SCQ" && <SccNugget />}
@@ -142,7 +142,7 @@ function NuggetsLanding() {
           {nugget.kind == "LTI" && <LTI />}
         </div>
       </div>
-      <Preview />
+      <Preview/>
     </div>
     </>
   );

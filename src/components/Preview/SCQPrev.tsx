@@ -2,8 +2,8 @@ import React from "react";
 import { NuggetsContext } from "../../context/NuggetsContext";
 import { useState, useContext } from "react";
 
-function SCQPrev() {
-  const { nugget } = useContext(NuggetsContext);
+function SCQPrev({nugget}) {
+  // const { nugget } = useContext(NuggetsContext);
   const parse = require("html-react-parser");
   return (
     <>
