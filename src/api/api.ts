@@ -8,7 +8,7 @@ async function get(url: string, data?: any) {
 }
 async function post(url: string, data: any) {
   const response = await axiosClient.post(url, data , {
-    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ce659f944b730a89fa1010840459842cb6ea1e930792b2f3fca2c02909890935'}
+    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer a9876d5be7957d6d516fb571e9ac850757116af9cb7a8f98354b1b45835c8f6d'}
   })
   return response.data
 }

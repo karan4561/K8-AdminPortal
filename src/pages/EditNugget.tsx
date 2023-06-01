@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
-import { useContext, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import NuggetFilters from '../components/addNugget/NuggetFilters'
 import { NuggetsContext } from "@/context/NuggetsContext";
 import NuggetProvider from "../context/NuggetsContext";
@@ -18,21 +18,81 @@ interface OptionType {
     value: string;
     label: string;
 }
+
 function EditNugget() {
     const approveStatus: Approve[] = [
         { value: true, label: "Approved" },
         { value: false, label: "Not Approved" },
     ];
-    const list: OptionType[] = [
-        { value: "option1", label: "option1" },
-        { value: "option2", label: "option2" },
-    ];
-    const { nugget, addFilter } = useContext(NuggetsContext);
+    // const list: OptionType[] = [
+    //     { value: "option1", label: "option1" },
+    //     { value: "option2", label: "option2" },
+    // ];
+
+    const [categoryList, setCategoryList] = useState<OptionType[]>();
+    const [subjectList, setSubjectList] = useState<OptionType[]>();
+    const [topicList, setTopicList] = useState<OptionType[]>();
+    const [chapterList, setChapterList] = useState<OptionType[]>();
+
     const [approvedStatus, setApprovedStatus] = useState<Approve[]>();
-    const [category, setCategory] = useState<OptionType[]>();
-    const [subject, setSubject] = useState<OptionType[]>();
-    const [topic, setTopic] = useState<OptionType[]>();
-    const [chapter, setChapter] = useState<OptionType[]>();
+    const [category, setCategory] = useState<string>("");
+    const [subject, setSubject] = useState<string>("");
+    const [topic, setTopic] = useState<string>("");
+    const [chapter, setChapter] = useState<string>("");
+
+    useEffect(() => {
+        getCategory().then((data) =>
+            setCategoryList(
+                data.map((obj: any) => {
+                    return { value: obj.unique_id, label: obj.name };
+                })
+            )
+        );
+    }, []);
+
+    const onCategoryChange = (selectedOption: OptionType | null) => {
+        if (selectedOption) {
+            setCategory(selectedOption.value);
+            getSubject(selectedOption.value).then((data) =>
+                setSubjectList(
+                    data.map((obj: any) => {
+                        return { value: obj.unique_id, label: obj.english_name };
+                    })
+                )
+            );
+        }
+    };
+
+    const onSubjectChange = (selectedOption: OptionType | null) => {
+        if (selectedOption) {
+            setSubject(selectedOption.value);
+            getChapters(category, selectedOption.value).then((data) =>
+                setChapterList(
+                    data.map((obj: any) => {
+                        return { value: obj.unique_id, label: obj.english_name };
+                    })
+                )
+            );
+        }
+    };
+
+    const onChapterChange = (selectedOption: OptionType | null) => {
+        if (selectedOption) {
+            setChapter(selectedOption.value);
+            getTopics(
+                category,
+                subject,
+                selectedOption.value
+            ).then((data) =>
+                setTopicList(
+                    data.map((obj: any) => {
+                        return { value: obj.unique_id, label: obj.english_name };
+                    })
+                )
+            );
+        }
+        // setChapterValue(selectedOption);
+    };
 
     const approveStatusChange = (selectedOption: Approve | null) => {
         if (selectedOption) {
@@ -42,24 +102,6 @@ function EditNugget() {
 
     const onTopicChange = (selectedOption: OptionType | null) => {
         if (selectedOption) setTopic(selectedOption.value);
-    };
-
-    const onSubjectChange = (selectedOption: OptionType | null) => {
-        if (selectedOption) {
-            setSubject(selectedOption.value);
-        }
-    };
-
-    const onCategoryChange = (selectedOption: OptionType | null) => {
-        if (selectedOption) {
-            setCategory(selectedOption.value)
-        }
-    };
-
-    const onChapterChange = (selectedOption: OptionType | null) => {
-        if (selectedOption) {
-            setChapter(selectedOption.value);
-        }
     };
     console.log(chapter, "chapter", topic, "topic", category, "category", subject, "subject", approvedStatus, "approveStatus");
 
@@ -71,29 +113,30 @@ function EditNugget() {
                     className="AddNuggetCategory"
                     // value={categoryList?.filter((o) => o.value == category.categoryId)}
                     onChange={onCategoryChange}
-                    options={list}
+                    options={categoryList}
                     placeholder="Category"
                 />
                 <Select
                     className="AddNuggetCategory"
                     // value={}
                     onChange={onSubjectChange}
-                    options={list}
+                    options={subjectList}
                     placeholder="Subject"
                 />
                 <Select
                     className="AddNuggetCategory"
                     // value={}
                     onChange={onChapterChange}
-                    options={list}
+                    options={chapterList}
                     placeholder="Chapter"
                 />
                 <Select
                     className="AddNuggetCategory"
                     // value={}
                     onChange={onTopicChange}
-                    options={list}
+                    options={topicList}
                     placeholder="Topic"
+                    isClearable={true}
                 />
                 <Select
                     className="AddNuggetCategory"
@@ -126,7 +169,7 @@ function EditNugget() {
                                     {data.question.bilingual_options?.english.map((optionData, index) => {
                                         return (
                                             <div className="TFOptionPrev scq-option-prev">
-                                                <p>{index}. {optionData.text}</p>
+                                                <p>{index + 1}. {optionData.text}</p>
                                                 <div></div>
                                             </div>
                                         )
