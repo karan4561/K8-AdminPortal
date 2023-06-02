@@ -520,20 +520,24 @@ h4 {
 
 //Edit Nuggets
 
-.edit-Nugget{
-  /* box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 4px 0px;
-  width: 70vw;
-  margin: 5px 0 5px 10px;
-  padding: 10px; */
+.ediit{
+  background-color: black;
 }
 
-.edit-Nugget-div-label{
-  display: flex;
-  justify-content: space-between;
+.edit-label{
   box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 4px 0px;
   width: 70vw;
   margin: 5px 0 5px 10px;
   padding: 10px;
+}
+.edit-Nugget-div-label{
+  display: flex;
+  justify-content: space-between;
+}
+
+.edit-Nugget-div-label>p{
+  font-style: oblique;
+  font-weight: bold;
 }
 
 .edit-Nugget-div-label>div>img{
@@ -543,4 +547,23 @@ h4 {
 .edit-nugget-category{
   display: flex;
   align-items: center;
+}
+
+.edit-nugget-category>button{
+  height: 30px;
+    width: 70px;
+    background-color: #5a4bda;
+    border-radius: 6px;
+    color: white;
+    border: 1px;
+}
+
+.edit-nugget-prev{
+  width: 30vw;
+}
+
+.edit-delete-button{
+  all: unset;
+  padding: 10px;
+  cursor: pointer;
 }

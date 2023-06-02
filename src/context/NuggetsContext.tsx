@@ -15,7 +15,7 @@ interface OptionType {
     | "IMG"
     | "AUDIOCLIP"
     | "LTI"
-    | "TrueFalse"
+    | "TRUEFALSE"
     | "Audio";
   value: string;
 }
@@ -94,7 +94,7 @@ const NuggetProvider = (props: any) => {
       | "IMG"
       | "AUDIOCLIP"
       | "LTI"
-      | "TrueFalse"
+      | "TRUEFALSE"
       | "Audio"
   ) {
     console.log("Initial State Testing: ", initialStateTest);

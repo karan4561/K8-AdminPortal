@@ -17,16 +17,16 @@ import { submitNugget } from "@/api/utils";
 
 interface OptionType {
   label:
-    | "Video"
-    | "SCQ"
-    | "MCQ"
-    | "Note"
-    | "FIB"
-    | "IMG"
-    | "AUDIOCLIP"
-    | "LTI"
-    | "TrueFalse"
-    | "Audio";
+  | "Video"
+  | "SCQ"
+  | "MCQ"
+  | "Note"
+  | "FIB"
+  | "IMG"
+  | "AUDIOCLIP"
+  | "LTI"
+  | "TRUEFALSE"
+  | "Audio";
   value: string;
 }
 
@@ -62,7 +62,7 @@ function NuggetsLanding() {
     { value: "IMG", label: "IMG" },
     { value: "AUDIOCLIP", label: "AUDIOCLIP" },
     { value: "LTI", label: "LTI" },
-    { value: "TrueFalse", label: "TrueFalse" },
+    { value: "TRUEFALSE", label: "TRUEFALSE" },
     { value: "Audio", label: "Audio" },
   ];
 
@@ -141,9 +141,25 @@ function NuggetsLanding() {
             {nugget.kind == "MCQ" && <MCQNugget />}
             {nugget.kind == "LTI" && <LTI />}
           </div>
+
+          <NuggetInfo />
+          <XPTimer />
+          {nugget.kind == "Note" && <NoteNugget />}
+          {nugget.kind == "FIB" && <FIBNugget />}
+          {nugget.kind == "TRUEFALSE" && <TrueFalse />}
+          {nugget.kind == "IMG" && <ImageNugget />}
+          {nugget.kind == "Video" && <VideoNugget />}
+          {nugget.kind == "SCQ" && <SccNugget />}
+          {nugget.kind == "MCQ" && <MCQNugget />}
+          {nugget.kind == "LTI" && <LTI />}
+
         </div>
         <Preview />
       </div>
+
+      <Preview/>
+    </div>
+
     </>
   );
 }
