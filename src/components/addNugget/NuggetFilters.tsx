@@ -1,9 +1,7 @@
 import { useState, useContext, useEffect } from "react";
 import { NuggetsContext } from "../../context/NuggetsContext";
 import { getCategory, getSubject, getChapters, getTopics } from "@/api/filter";
-import { CategoryObject } from "@/interfaces/INugget";
 import Select from "react-select";
-import { filter } from "lodash";
 
 interface OptionType {
   value: string;
@@ -87,43 +85,43 @@ function NuggetFilters(props: any) {
 
   return (
     // <div>
-      <div className="select-dropdown">
-        {/* <Category/> */}
-        <Select
-          className="AddNuggetCategory"
-          value={categoryList?.filter((o) => o.value == category.categoryId)}
-          onChange={onCategoryChange}
-          options={categoryList}
-          placeholder="Category"
-        />
-        {/* <Subject /> */}
-        <Select
-          className="AddNuggetCategory"
-          value={subjectList?.filter((o) => o.value == category.subjectId)}
-          onChange={onSubjectChange}
-          options={subjectList}
-          placeholder="Subject"
-        />
-        {/* <Chapter /> */}
-        <Select
-          className="AddNuggetCategory"
-          value={chapterList?.filter((o) => o.value == category.chapterId)}
-          onChange={onChapterChange}
-          options={chapterList}
-          placeholder="Chapter"
-        />
-        {/* <Topic /> */}
-        <Select
-          className="AddNuggetCategory"
-          value={topicList?.filter((o) => o.value == category.topicId)}
-          onChange={TopicChange}
-          options={topicList}
-          placeholder="Topic"
-        />
-        {props.index ? (
-          <button onClick={() => deleteFilter(props.index)}>Delete</button>
-        ) : null}
-      </div>
+    <div className="select-dropdown">
+      {/* <Category/> */}
+      <Select
+        className="AddNuggetCategory"
+        value={categoryList?.filter((o) => o.value == category.categoryId)}
+        onChange={onCategoryChange}
+        options={categoryList}
+        placeholder="Category"
+      />
+      {/* <Subject /> */}
+      <Select
+        className="AddNuggetCategory"
+        value={subjectList?.filter((o) => o.value == category.subjectId)}
+        onChange={onSubjectChange}
+        options={subjectList}
+        placeholder="Subject"
+      />
+      {/* <Chapter /> */}
+      <Select
+        className="AddNuggetCategory"
+        value={chapterList?.filter((o) => o.value == category.chapterId)}
+        onChange={onChapterChange}
+        options={chapterList}
+        placeholder="Chapter"
+      />
+      {/* <Topic /> */}
+      <Select
+        className="AddNuggetCategory"
+        value={topicList?.filter((o) => o.value == category.topicId)}
+        onChange={TopicChange}
+        options={topicList}
+        placeholder="Topic"
+      />
+      {props.index ? (
+        <button onClick={() => deleteFilter(props.index)}>Delete</button>
+      ) : null}
+    </div>
     // </div>
   );
 }

@@ -1,6 +1,6 @@
-import Head from "next/head";
 import Image from "next/image";
 import { useState, useEffect } from "react";
+
 import NuggetFilters from '../components/addNugget/NuggetFilters'
 import { NuggetsContext } from "@/context/NuggetsContext";
 import NuggetProvider from "../context/NuggetsContext";
@@ -14,14 +14,16 @@ import { Nugget } from "@/interfaces/INugget";
 interface Approve {
     value: string;
     label: string;
+
 }
 
 interface OptionType {
-    value: string;
-    label: string;
+  value: string;
+  label: string;
 }
 
 function EditNugget() {
+
     const approveStatus: Approve[] = [
         { value: "", label: "check" },
         { value: "true", label: "Approved" },

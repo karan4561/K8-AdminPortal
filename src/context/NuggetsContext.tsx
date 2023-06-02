@@ -36,8 +36,8 @@ const initialStateTest = {
     bilingual_options: {
       english: [
         {
-          text: "Hello",
-          isCorrect: true,
+          text: "",
+          isCorrect: false,
         },
       ],
     },
@@ -499,3 +499,14 @@ const NuggetProvider = (props: any) => {
 };
 
 export default NuggetProvider;
+
+//two way binding
+//preview
+//validations in UI
+// Error in UI
+
+//check on header title
+
+// two way binding
+//edit nugget functionality
+//not change in nugget kind
