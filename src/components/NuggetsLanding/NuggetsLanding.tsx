@@ -13,45 +13,33 @@ import MCQNugget from "../Nuggets/MCQNugget/MCQNugget";
 import LTI from "../LTI/LTI";
 import NoteNugget from "../Nuggets/NoteNugget/NoteNugget";
 import FIBNugget from "../Nuggets/FIB/FIBNugget";
-import { submitNugget } from "@/api/utils";
+import { fetchNugget, submitNugget } from "@/api/utils";
+import { log } from "console";
 
 interface OptionType {
   label:
-  | "Video"
-  | "SCQ"
-  | "MCQ"
-  | "Note"
-  | "FIB"
-  | "IMG"
-  | "AUDIOCLIP"
-  | "LTI"
-  | "TRUEFALSE"
-  | "Audio";
+    | "Video"
+    | "SCQ"
+    | "MCQ"
+    | "Note"
+    | "FIB"
+    | "IMG"
+    | "AUDIOCLIP"
+    | "LTI"
+    | "TRUEFALSE"
+    | "Audio";
   value: string;
 }
 
-//NOTE => OL , xyz , OL
-
-function NuggetsLanding() {
+function NuggetsLanding({ nuggetId }: any) {
+  console.log("****Nuggets Landing*****", nuggetId);
   const {
     updateNuggetKind,
     nugget: nugget,
-    // submit,
-    // setSubmit,
-    formErrors,
-    setFormErrors,
+    setNugget,
     validateErrors,
   } = useContext(NuggetsContext);
   const [isVisible, setIsVisible] = useState(true);
-  // const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   updateNuggetKind(event.target.value as OptionType["value"]);
-  // };
-
-  // useEffect(() => {
-  //   if (nugget.kind) updateNuggetKind(nugget.kind);
-  // }, [nugget.kind]);
-
-  //useEffect()
 
   const options: OptionType[] = [
     { value: "Video", label: "Video" },
@@ -65,9 +53,29 @@ function NuggetsLanding() {
     { value: "TRUEFALSE", label: "TRUEFALSE" },
     { value: "Audio", label: "Audio" },
   ];
+  function fetchNuggetContent() {
+    console.log("***Nugget Info Dynamic - 1 ******", nugget);
+    if (!nuggetId) return;
+    else {
+      fetchNugget([nuggetId]).then((data) => {
+        console.log("***Nugget in FetchContent", data);
+        setNugget(data[0]);
+      });
+    }
+    console.log("***Nugget Info Dynamic - 2 *******", nugget);
+  }
+
+  useEffect(() => {
+    fetchNuggetContent();
+    const timer = setTimeout(() => {
+      setIsVisible(false);
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+
     if (validateErrors) {
       if (Object && Object.keys(validateErrors(nugget) || {}).length === 0) {
         console.log("Form is Submitted Successfully");
@@ -95,12 +103,6 @@ function NuggetsLanding() {
       }
     }
   };
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible(false);
-    }, 5000);
-    return () => clearTimeout(timer);
-  }, []);
   return (
     <>
       <div>
@@ -141,25 +143,9 @@ function NuggetsLanding() {
             {nugget.kind == "MCQ" && <MCQNugget />}
             {nugget.kind == "LTI" && <LTI />}
           </div>
-
-          <NuggetInfo />
-          <XPTimer />
-          {nugget.kind == "Note" && <NoteNugget />}
-          {nugget.kind == "FIB" && <FIBNugget />}
-          {nugget.kind == "TRUEFALSE" && <TrueFalse />}
-          {nugget.kind == "IMG" && <ImageNugget />}
-          {nugget.kind == "Video" && <VideoNugget />}
-          {nugget.kind == "SCQ" && <SccNugget />}
-          {nugget.kind == "MCQ" && <MCQNugget />}
-          {nugget.kind == "LTI" && <LTI />}
-
         </div>
         <Preview />
       </div>
-
-      <Preview/>
-    </div>
-
     </>
   );
 }

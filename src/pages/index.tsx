@@ -1,18 +1,16 @@
-import Head from "next/head";
-import Image from "next/image";
-import { Inter } from "@next/font/google";
-import styles from "@/styles/Home.module.css";
-import NuggetsLanding from "@/components/NuggetsLanding/NuggetsLanding";
-import NuggetProvider from "../context/NuggetsContext";
+import React from "react";
+import Link from "next/link";
 
-const inter = Inter({ subsets: ["latin"] });
-
-export default function Home() {
+function index() {
   return (
-    <>
-      <NuggetProvider>
-        <NuggetsLanding />
-      </NuggetProvider>
-    </>
+    <h1>
+      Go to{" "}
+      <span>
+        {" "}
+        <Link href="/nuggets">"http://localhost:3000/nuggets"</Link>{" "}
+      </span>
+    </h1>
   );
 }
+
+export default index;
