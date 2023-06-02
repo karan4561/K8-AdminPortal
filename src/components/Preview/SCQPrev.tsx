@@ -1,8 +1,7 @@
 import React from "react";
-import { NuggetsContext } from "../../context/NuggetsContext";
-import { useState, useContext } from "react";
+import { Nugget } from "@/interfaces/INugget";
 
-function SCQPrev({nugget}) {
+function SCQPrev({ nugget }) {
   // const { nugget } = useContext(NuggetsContext);
   const parse = require("html-react-parser");
   return (
@@ -10,23 +9,27 @@ function SCQPrev({nugget}) {
       {!!nugget?.question?.content?.english && (
         <p>{parse(nugget?.question.content?.english)}</p>
       )}
-      {(
+      {
         <div className="TFPrev">
-          {nugget.question.bilingual_options.english.map((optionData, index) => {
-            // console.log(optionData.text,"optionData.text");
-            return (
-              <>
-                {(!!optionData.text) && <div className="TFOptionPrev scq-option-prev">
-                   <p>
-                    {index + 1}. {parse(optionData.text)}
-                  </p>
-                  <div></div>
-                </div>}
-              </>
-            );
-          })}
+          {nugget.question.bilingual_options.english.map(
+            (optionData, index) => {
+              // console.log(optionData.text,"optionData.text");
+              return (
+                <>
+                  {!!optionData.text && (
+                    <div className="TFOptionPrev scq-option-prev">
+                      <p>
+                        {index + 1}. {parse(optionData.text)}
+                      </p>
+                      <div></div>
+                    </div>
+                  )}
+                </>
+              );
+            }
+          )}
         </div>
-      )}
+      }
       <div className="prev-buttons">
         <p>Hint</p>
         <p className="Submit-prev">Submit</p>

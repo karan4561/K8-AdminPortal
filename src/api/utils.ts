@@ -18,3 +18,12 @@ export async function getNuggetList(pagination: number, experienceSearch: boolea
     });
     return response.data;
 }
+
+export async function fetchNugget(list: string[]){
+    const response = await get("/v3/admin/pitara/nuggets/metadata?",{
+        params:{list},
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer a9876d5be7957d6d516fb571e9ac850757116af9cb7a8f98354b1b45835c8f6d'}
+    })
+    return response.data;
+}
+
