@@ -8,9 +8,11 @@ import Select from "react-select";
 import data from 'test.json'
 import { getCategory, getSubject, getChapters, getTopics } from "@/api/filter";
 import SCQPrev from "@/components/Preview/SCQPrev";
+import { getNuggetList } from "@/api/utils";
+import { Nugget } from "@/interfaces/INugget";
 
 interface Approve {
-    value: boolean;
+    value: string;
     label: string;
 }
 
@@ -21,13 +23,15 @@ interface OptionType {
 
 function EditNugget() {
     const approveStatus: Approve[] = [
-        { value: true, label: "Approved" },
-        { value: false, label: "Not Approved" },
-    ];
+        { value: "", label: "check" },
+        { value: "true", label: "Approved" },
+        { value: "false", label: "Not Approved" },
+      ];
     // const list: OptionType[] = [
     //     { value: "option1", label: "option1" },
     //     { value: "option2", label: "option2" },
     // ];
+    const [nuggetList, setNuggetList] = useState<Nugget[]>([]);
 
     const [categoryList, setCategoryList] = useState<OptionType[]>();
     const [subjectList, setSubjectList] = useState<OptionType[]>();
@@ -96,14 +100,41 @@ function EditNugget() {
 
     const approveStatusChange = (selectedOption: Approve | null) => {
         if (selectedOption) {
-            setApprovedStatus(selectedOption.value);
+          setApprovedStatus(selectedOption.value);
         }
-    }
+      };
 
     const onTopicChange = (selectedOption: OptionType | null) => {
         if (selectedOption) setTopic(selectedOption.value);
     };
-    console.log(chapter, "chapter", topic, "topic", category, "category", subject, "subject", approvedStatus, "approveStatus");
+
+    
+    const onSubmit = () => {
+        if (category && subject && chapter) {
+          console.log(
+            chapter,
+            "chapter",
+            topic,
+            "topic",
+            category,
+            "category",
+            subject,
+            "subject",
+            approvedStatus,
+            "approveStatus"
+          );
+          getNuggetList(
+            10,
+            false,
+            category,
+            subject,
+            chapter,
+            topic,
+            approveStatus[0].value
+          ).then((data) => setNuggetList(data));
+          console.log("********Nugget-List**********", nuggetList);
+        } else alert("Add Required Fields");
+      };
 
     return (
         <>
@@ -145,11 +176,11 @@ function EditNugget() {
                     options={approveStatus}
                     placeholder="Status"
                 />
-                <button>Search</button>
+                <button onClick={onSubmit}>Search</button>
             </div>
             {/* <NuggetProvider> */}
             {/* <EditNuggetLanding /> */}
-            {data.data.map((nuggetData, index) => {
+            {nuggetList.map((nuggetData, index) => {
                 // if (nuggetData.kind == 'MCQ') {
                     return (
                         <div className="edit-label">
@@ -164,31 +195,7 @@ function EditNugget() {
                                 <div className="headerimage-headertitle">
                                     <h4>{nuggetData.headerTitle}</h4>
                                 </div>
-                               {(nuggetData.kind=='MCQ') && <SCQPrev nugget={nuggetData} />}
-                                {/* <p>{data.question.content?.english}</p>
-                                <div className="TFPrev">
-                                    {data.question.bilingual_options?.english.map((optionData, index) => {
-                                        return (
-                                            <div className="TFOptionPrev scq-option-prev">
-                                                <p>{index + 1}. {optionData.text}</p>
-                                                <div></div>
-                                            </div>
-                                        )
-                                    })}
-                                </div>
-                                <div className="prev-buttons">
-                                    <p>Hint</p>
-                                    <p className="Submit-prev">Submit</p>
-                                    <p className="Submit-prev prev-color">Don't know</p>
-                                </div>
-                                <div className="Hint-Prev-box">
-                                    <h4>Solution</h4>
-                                    <p>{data.question.solutions[0].english.text}</p>
-                                </div>
-                                <div className="Hint-Prev-box">
-                                    <h4>Hint</h4>
-                                    <p>{data.question.solutions[0].english.hint}</p>
-                                </div> */}
+                               {(nuggetData.kind=='SCQ' || 'MCQ') && <SCQPrev nugget={nuggetData} />}
                             </div>
                         </div>
                     )
