@@ -498,7 +498,6 @@ const NuggetProvider = (props: any) => {
   );
 };
 
-<<<<<<< HEAD
 export default NuggetProvider;
 
 //two way binding
@@ -507,6 +506,7 @@ export default NuggetProvider;
 // Error in UI
 
 //check on header title
-=======
-export default NuggetProvider;
->>>>>>> 6c7f26a7d1bce8a82bce1bdd3932083ccf1db904
+
+// two way binding
+//edit nugget functionality
+//not change in nugget kind

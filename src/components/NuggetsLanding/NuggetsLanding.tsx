@@ -13,8 +13,6 @@ import MCQNugget from "../Nuggets/MCQNugget/MCQNugget";
 import LTI from "../LTI/LTI";
 import NoteNugget from "../Nuggets/NoteNugget/NoteNugget";
 import FIBNugget from "../Nuggets/FIB/FIBNugget";
-import { get, post } from "@/api/api";
-import { Nugget } from "@/interfaces/INugget";
 import { submitNugget } from "@/api/utils";
 
 interface OptionType {
@@ -79,20 +77,20 @@ function NuggetsLanding() {
         } catch (e: any) {
           if (e.response.status == 401) {
             toast.error("Unauthorized Entry");
-            alert("Unauthorized Entry");
+            //alert("Unauthorized Entry");
           } else if (e.response.status == 403) {
             toast.error("Scope Error");
-            alert("Scope Error");
+            //alert("Scope Error");
           } else if (e.response.status == 500) {
             toast.error(e.response.message);
-            alert("Server Error Entry");
+            //alert("Server Error Entry");
           } else if (e.response.status == 400) {
             toast.error(e.response?.data?.error?.message);
             console.log(e.response?.data?.error?.message);
           }
         }
       } else {
-        alert("Add Required Fields");
+        //alert("Add Required Fields");
         toast.error("Add Required Fields");
       }
     }

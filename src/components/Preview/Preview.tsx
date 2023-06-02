@@ -6,6 +6,7 @@ import SCQPrev from "./SCQPrev";
 import { NuggetsContext } from "../../context/NuggetsContext";
 import { useContext } from "react";
 import { log } from "console";
+import { Nugget } from "@/interfaces/INugget";
 
 function Preview() {
   const { nugget } = useContext(NuggetsContext);
