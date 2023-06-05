@@ -32,10 +32,9 @@ interface OptionType {
 }
 
 function NuggetsLanding({ nuggetId }: any) {
-  console.log("****Nuggets Landing*****", nuggetId);
   const {
     updateNuggetKind,
-    nugget: nugget,
+    nugget,
     setNugget,
     validateErrors,
   } = useContext(NuggetsContext);
@@ -54,25 +53,25 @@ function NuggetsLanding({ nuggetId }: any) {
     { value: "Audio", label: "Audio" },
   ];
   function fetchNuggetContent() {
-    console.log("***Nugget Info Dynamic - 1 ******", nugget);
+    // console.log("***Nugget Info Dynamic - 1 ******", nugget);
     if (!nuggetId) return;
     else {
       fetchNugget([nuggetId]).then((data) => {
         console.log("***Nugget in FetchContent", data);
         setNugget(data[0]);
-        
+      //  console.log(nugget,"nuggetId");
       });
     }
-    console.log("***Nugget Info Dynamic - 2 *******", nugget);
   }
+  console.log(nugget,"nuggetIdjgjg");
 
   useEffect(() => {
     fetchNuggetContent();
-    const timer = setTimeout(() => {
-      setIsVisible(false);
-    }, 5000);
-    return () => clearTimeout(timer);
-  }, []);
+    // const timer = setTimeout(() => {
+    //   setIsVisible(false);
+    // }, 5000);
+    // return () => clearTimeout(timer);
+  }, [nuggetId]);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();

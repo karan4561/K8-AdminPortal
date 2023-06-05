@@ -5,6 +5,7 @@ import { useState, useContext, useEffect } from "react";
 import AddOptionTextEditor from "../SccNugget/AddTextEditor";
 
 function MCQNugget() {
+  let selectedOption:number[]=[]
   const {
     updateQuestion,
     updateSolHint,
@@ -89,6 +90,9 @@ function MCQNugget() {
               };
               return numberToCharacter(index);
             };
+            if(arrayData.isCorrect==true){
+              selectedOption.push(index)
+            }
             return (
               <>
                 <label className="label-option">
@@ -96,7 +100,7 @@ function MCQNugget() {
                     type="checkbox"
                     name="SCCOption"
                     value={index}
-                    checked={selectedOptions.includes(index)}
+                    checked={selectedOption.includes(index)}
                     onChange={OptionChange}
                   />
                   Option {indexToAlpha(index)}
