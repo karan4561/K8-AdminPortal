@@ -113,7 +113,10 @@ function NuggetsLanding({ nuggetId }: any) {
           <button onClick={handleSubmit}>Create Nugget</button>
           <div className="cards-parent">
             <AddNuggetHeader />
-            <div className="card-header NuggetId">
+            <div
+              className="card-header NuggetId"
+              style={nuggetId ? { pointerEvents: "none", opacity: 0.5 } : {}}
+            >
               <h2 className="text-2xl">Nugget ID</h2>
               <div className="NuggetIdOption">
                 {options.map((op) => (
