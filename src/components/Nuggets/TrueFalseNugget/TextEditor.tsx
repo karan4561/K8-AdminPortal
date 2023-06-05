@@ -7,7 +7,7 @@ const TextEditor = (props) => {
   const editorRef = useRef(null);
   const [content, setContent] = useState("");
 
-  const handleEditorChange = (content, editor) => {
+  const handleEditorChange = (content) => {
     setContent(content);
     props.onUpdate(content, props.id);
   };
