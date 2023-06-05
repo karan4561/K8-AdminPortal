@@ -9,7 +9,7 @@ function MCQNugget() {
     updateQuestion,
     updateSolHint,
     updateCorrectOption,
-    nugget: test,
+    nugget,
   } = useContext(NuggetsContext);
   const [selectedOptions, setSelectedOptions] = useState<number[]>([]);
   const [solContent, setSolContent] = useState<string>();
@@ -52,18 +52,18 @@ function MCQNugget() {
     setSolContent(content);
   };
 
-  useEffect(() => {
-    updateSolHint({
-      text: solContent,
-      hint: hintContent,
-    });
-  }, [solContent, hintContent]);
+  // useEffect(() => {
+  //   updateSolHint({
+  //     text: solContent,
+  //     hint: hintContent,
+  //   });
+  // }, [solContent, hintContent]);
 
   return (
     <>
       <div className="card-header NuggetId TrueFalseNugget">
         <h4>Question</h4>
-        <TextEditor onUpdate={onUpdateQues} />
+        <TextEditor value={nugget.question.content?.english} onUpdate={onUpdateQues} />
         <div>
           <h4>Answers Options</h4>
         </div>
@@ -71,16 +71,16 @@ function MCQNugget() {
           <AddOptionTextEditor />
         </div>
         <h4>Hint</h4>
-        <TextEditor onUpdate={onUpdateHint} />
+        <TextEditor value={nugget.question.solutions[0].english.hint} onUpdate={(content: string) => updateSolHint({hint:content})} />
         <h4>Solution</h4>
-        <TextEditor onUpdate={onUpdateSol} />
+        <TextEditor value={nugget.question.solutions[0].english.text} onUpdate={(content: string) => updateSolHint({text:content})} />
         <div className="TrueFalseOption">
           <h4>
             Select Correct
             <br />
             Answer
           </h4>
-          {test.question?.bilingual_options?.english.map((arrayData, index) => {
+          {nugget.question?.bilingual_options?.english.map((arrayData, index) => {
             const indexToAlpha = (index = 1) => {
               // ASCII value of first character
               const A = "A".charCodeAt(0);

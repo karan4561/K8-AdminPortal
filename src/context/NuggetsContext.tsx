@@ -213,8 +213,12 @@ const NuggetProvider = (props: any) => {
         solutions: [
           {
             english: {
-              hint: SolHint.hint,
-              text: SolHint.text,
+              hint:  SolHint.hint !== undefined
+              ? SolHint.hint
+              : prev.question.solutions[0].english.hint,
+              text: SolHint.text !== undefined
+              ? SolHint.text
+              : prev.question.solutions[0].english.text,
               otherSolutions: undefined,
               videoSolutions: undefined,
             },

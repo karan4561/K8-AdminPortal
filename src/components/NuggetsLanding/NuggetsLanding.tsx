@@ -60,6 +60,7 @@ function NuggetsLanding({ nuggetId }: any) {
       fetchNugget([nuggetId]).then((data) => {
         console.log("***Nugget in FetchContent", data);
         setNugget(data[0]);
+        
       });
     }
     console.log("***Nugget Info Dynamic - 2 *******", nugget);
