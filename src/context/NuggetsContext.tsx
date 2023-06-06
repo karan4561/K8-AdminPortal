@@ -31,6 +31,7 @@ import useFilters from "./filters";
 const initialState = {} as INuggetContext;
 
 const initialStateTest = {
+  categories: [],
   kind: "SCQ",
   question: {
     bilingual_options: {
@@ -68,17 +69,6 @@ const NuggetProvider = (props: any) => {
   const [formErrors, setFormErrors] = useState<any>({});
 
   const { filters, ...filterFunctions } = useFilters();
-
-  //check naming
-
-  console.log("this is testing file", nugget);
-
-  // useEffect(() => {
-  //   console.log(
-  //     "*******Initial State Test******",
-  //     initialStateTest.question.bilingual_options.english
-  //   );
-  // }, [initialStateTest.question.bilingual_options.english]);
 
   useEffect(() => {
     updateFilters(filters);
@@ -213,12 +203,14 @@ const NuggetProvider = (props: any) => {
         solutions: [
           {
             english: {
-              hint:  SolHint.hint !== undefined
-              ? SolHint.hint
-              : prev.question.solutions[0].english.hint,
-              text: SolHint.text !== undefined
-              ? SolHint.text
-              : prev.question.solutions[0].english.text,
+              hint:
+                SolHint.hint !== undefined
+                  ? SolHint.hint
+                  : prev.question.solutions[0].english.hint,
+              text:
+                SolHint.text !== undefined
+                  ? SolHint.text
+                  : prev.question.solutions[0].english.text,
               otherSolutions: undefined,
               videoSolutions: undefined,
             },

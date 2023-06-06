@@ -1,5 +1,5 @@
 import { Nugget } from "@/interfaces/INugget";
-import { get, post } from "./api";
+import { get, post, put } from "./api";
 export async function getHeaderIcons(){
     const response= await get("/v3/admin/pitara/icons");
     return response.data;
@@ -7,6 +7,12 @@ export async function getHeaderIcons(){
 
 export async function submitNugget(nugget: Nugget){
     const response = await post("/v3/admin/pitara/nuggets",nugget);
+    console.log("*******API Testing:************",nugget);
+    return response.data;
+}
+
+export async function updateNugget(nugget: Nugget,nuggetId: string){
+    const response = await put("/v3/admin/pitara/nuggets/"+nuggetId+"/update",nugget);
     console.log("*******API Testing:************",nugget);
     return response.data;
 }

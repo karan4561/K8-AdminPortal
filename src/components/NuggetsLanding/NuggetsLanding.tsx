@@ -13,7 +13,7 @@ import MCQNugget from "../Nuggets/MCQNugget/MCQNugget";
 import LTI from "../LTI/LTI";
 import NoteNugget from "../Nuggets/NoteNugget/NoteNugget";
 import FIBNugget from "../Nuggets/FIB/FIBNugget";
-import { fetchNugget, submitNugget } from "@/api/utils";
+import { fetchNugget, submitNugget, updateNugget } from "@/api/utils";
 import { log } from "console";
 
 interface OptionType {
@@ -32,12 +32,8 @@ interface OptionType {
 }
 
 function NuggetsLanding({ nuggetId }: any) {
-  const {
-    updateNuggetKind,
-    nugget,
-    setNugget,
-    validateErrors,
-  } = useContext(NuggetsContext);
+  const { updateNuggetKind, nugget, setNugget, validateErrors } =
+    useContext(NuggetsContext);
   const [isVisible, setIsVisible] = useState(true);
 
   const options: OptionType[] = [
@@ -53,17 +49,17 @@ function NuggetsLanding({ nuggetId }: any) {
     { value: "Audio", label: "Audio" },
   ];
   function fetchNuggetContent() {
-    // console.log("***Nugget Info Dynamic - 1 ******", nugget);
+    console.log("***Nugget Info Dynamic - 1 ******", nugget);
     if (!nuggetId) return;
     else {
       fetchNugget([nuggetId]).then((data) => {
-        console.log("***Nugget in FetchContent", data);
+        console.log("***Nugget in FetchContent", data[0]);
         setNugget(data[0]);
-      //  console.log(nugget,"nuggetId");
+        console.log("***Nugget Info Dynamic fetchContent ******", nugget);
       });
     }
   }
-  console.log(nugget,"nuggetIdjgjg");
+  console.log("***Nugget Info Dynamic - 2 ******", nugget);
 
   useEffect(() => {
     fetchNuggetContent();
@@ -81,7 +77,11 @@ function NuggetsLanding({ nuggetId }: any) {
         console.log("Form is Submitted Successfully");
         toast.success("Form is Submitted Successfully");
         try {
-          await submitNugget(nugget);
+          if (!nuggetId) {
+            await submitNugget(nugget);
+          } else {
+            await updateNugget(nugget, nuggetId);
+          }
         } catch (e: any) {
           if (e.response.status == 401) {
             toast.error("Unauthorized Entry");
@@ -113,7 +113,10 @@ function NuggetsLanding({ nuggetId }: any) {
           <button onClick={handleSubmit}>Create Nugget</button>
           <div className="cards-parent">
             <AddNuggetHeader />
-            <div className="card-header NuggetId">
+            <div
+              className="card-header NuggetId"
+              style={nuggetId ? { pointerEvents: "none", opacity: 0.5 } : {}}
+            >
               <h2 className="text-2xl">Nugget ID</h2>
               <div className="NuggetIdOption">
                 {options.map((op) => (
