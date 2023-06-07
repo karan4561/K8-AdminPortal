@@ -11,7 +11,7 @@ function SCQPrev({ nugget }) {
       )}
       {
         <div className="TFPrev">
-          {nugget.question.bilingual_options.english.map(
+          {nugget.question?.bilingual_options.english.map(
             (optionData, index) => {
               // console.log(optionData.text,"optionData.text");
               return (

@@ -2,7 +2,7 @@ import { useContext } from "react";
 import NuggetFilters from "./NuggetFilters";
 import { NuggetsContext } from "@/context/NuggetsContext";
 
-export default function AddNuggetHeader() {
+export default function AddNuggetHeader({nuggetId}) {
   const { nugget, addFilter } = useContext(NuggetsContext);
 
   return (
@@ -10,7 +10,7 @@ export default function AddNuggetHeader() {
       <div className="card-header AddNugget">
         <h2>Add Nugget To</h2>
         {nugget.categories?.map((obj, i) => (
-          <NuggetFilters index={i} key={i} />
+          <NuggetFilters nuggetId={nuggetId} index={i} key={i} />
         ))}
         <button onClick={addFilter}>+</button>
       </div>

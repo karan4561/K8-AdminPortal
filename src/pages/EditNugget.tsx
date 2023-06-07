@@ -4,7 +4,10 @@ import toast, { Toaster } from "react-hot-toast";
 import Select from "react-select";
 import { getCategory, getSubject, getChapters, getTopics } from "@/api/filter";
 import SCQPrev from "@/components/Preview/SCQPrev";
+import TrueFalsePrev from "@/components/Preview/TrueFalsePrev";
+
 import { deleteNugget, getNuggetList } from "@/api/utils";
+
 import { Nugget } from "@/interfaces/INugget";
 import Link from "next/link";
 
@@ -194,6 +197,13 @@ function EditNugget() {
                   <SCQPrev nugget={nuggetData} />
                 )}
               </div>
+              {(nuggetData.kind == "TRUEFALSE | TF") && (
+                <TrueFalsePrev TFPrevData={nuggetData} />
+                )}
+                {(nuggetData.kind == "SCQ" || "MCQ") && (
+                  <SCQPrev nugget={nuggetData} />
+                )}
+
             </div>
           );
           // }

@@ -58,10 +58,12 @@ function NuggetsLanding({ nuggetId }: any) {
   useEffect(() => {
     fetchNuggetContent(nuggetId);
     // const timer = setTimeout(() => {
+
     //   setIsVisible(false);
     // }, 5000);
     // return () => clearTimeout(timer);
   }, [nuggetId]);
+
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -106,7 +108,7 @@ function NuggetsLanding({ nuggetId }: any) {
         <div className="create-nugget">
           <button onClick={handleSubmit}>Create Nugget</button>
           <div className="cards-parent">
-            <AddNuggetHeader />
+            <AddNuggetHeader nuggetId={nuggetId}/> 
             <div
               className="card-header NuggetId"
               style={nuggetId ? { pointerEvents: "none", opacity: 0.5 } : {}}
@@ -133,7 +135,7 @@ function NuggetsLanding({ nuggetId }: any) {
             <XPTimer />
             {nugget.kind == "Note" && <NoteNugget />}
             {nugget.kind == "FIB" && <FIBNugget />}
-            {nugget.kind == "TrueFalse" && <TrueFalse />}
+            {nugget.kind == "TRUEFALSE" && <TrueFalse />}
             {nugget.kind == "IMG" && <ImageNugget />}
             {nugget.kind == "Video" && <VideoNugget />}
             {nugget.kind == "SCQ" && <SccNugget />}
