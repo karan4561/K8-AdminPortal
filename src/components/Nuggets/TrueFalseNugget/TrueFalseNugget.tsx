@@ -9,7 +9,7 @@ function TrueFalseNugget() {
   const [solContent, setSolContent] = useState<string>();
   const [hintContent, setHintContent] = useState<string>();
   const {
-    nugget: test,
+    nugget,
     updateAnswer,
     updateSolHint,
     updateQuestion,
@@ -27,22 +27,23 @@ function TrueFalseNugget() {
     setHintContent(content);
   };
   const OptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value === "true";
     if (updateAnswer)
       updateAnswer({
-        answer: event.target.value as OptionType["value"],
+        answer:value
       });
   };
-  useEffect(() => {
-    updateSolHint({
-      text: solContent,
-      hint: hintContent,
-    });
-  }, [solContent, hintContent]);
+  // useEffect(() => {
+  //   updateSolHint({
+  //     text: solContent,
+  //     hint: hintContent,
+  //   });
+  // }, [solContent, hintContent]);
   return (
     <>
       <div className="card-header NuggetId TrueFalseNugget">
         <h4>Question</h4>
-        <TextEditor onUpdate={onUpdateQues} />
+        <TextEditor value={nugget.question.content.english} onUpdate={onUpdateQues} />
         <h4>Answers Options</h4>
         <div className="TFOption">
           <p>A. True</p>
@@ -51,9 +52,9 @@ function TrueFalseNugget() {
           <p>A. False</p>
         </div>
         <h4>Hint</h4>
-        <TextEditor onUpdate={onUpdateHint} />
+        <TextEditor value={nugget.question.solutions[0].english.hint} onUpdate={(content: string) => updateSolHint({hint:content})} />
         <h4>Solution</h4>
-        <TextEditor onUpdate={onUpdateSol} />
+        <TextEditor value={nugget.question.solutions[0].english.text} onUpdate={(content: string) => updateSolHint({text:content})} />
         <div className="TrueFalseOption">
           <h4>
             Select Correct
@@ -64,8 +65,8 @@ function TrueFalseNugget() {
             <input
               type="radio"
               name="optio"
-              value="True"
-              checked={test.question?.answer?.english === "True"}
+              value={false.toString()}
+              checked={nugget.question?.bilingual_options.english[0].isCorrect === true}
               onChange={OptionChange}
             />
             True
@@ -74,8 +75,8 @@ function TrueFalseNugget() {
             <input
               type="radio"
               name="optio"
-              value="False"
-              checked={test.question?.answer?.english === "False"}
+              value={false.toString()}
+              checked={nugget.question?.bilingual_options.english[0].isCorrect === false}
               onChange={OptionChange}
             />
             False

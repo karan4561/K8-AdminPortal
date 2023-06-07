@@ -39,7 +39,7 @@ const initialStateTest = {
       english: [
         {
           text: "",
-          isCorrect: false,
+          isCorrect: true,
         },
       ],
     },
@@ -90,13 +90,13 @@ const NuggetProvider = (props: any) => {
       | "TRUEFALSE"
       | "Audio"
   ) {
-    console.log("Initial State Testing: ", initialStateTest);
     setNugget({
       ...initialStateTest,
       kind: nuggetkind,
       categories: nugget.categories,
     } as Nugget);
   }
+  console.log("Initial State Testing: ", nugget);
   function updateFilters(filter: CategoryObject[]) {
     console.log("*****This is being called******** step - 2", filter);
     setNugget((prev) => ({
@@ -244,24 +244,38 @@ const NuggetProvider = (props: any) => {
       },
     }));
   }
-  function updateAnswer(Answer: { answer: string }) {
+  function updateAnswer(Answer: { answer: boolean }) {
     setNugget((prev) => ({
       ...prev,
       question: {
         ...prev.question,
-        answer: { ...prev.question.answer, english: Answer.answer },
+        bilingual_options: {
+          english:[
+            {
+              text: "True",
+              isCorrect: Answer.answer
+            },
+            {
+              text: "True",
+              isCorrect: !Answer.answer
+            }
+          ]
+        },
       },
     }));
   }
   function updateCaption(caption: { caption?: string }) {
-    setNugget({ ...nugget, caption: caption.caption });
+    setNugget((prev)=>({
+      ...prev,
+      caption: caption.caption
+    }));
   }
 
   function updateFileObj(FileObj: {
     id?: string;
     name?: string;
     baseUrl: string;
-    key: string;
+    key: string
     type?:
       | "CONTENT"
       | "TEST"
@@ -272,7 +286,7 @@ const NuggetProvider = (props: any) => {
     size?: number;
     details?: string;
   }) {
-    setState({
+    setNugget({
       ...state,
       nugget: {
         ...state.nugget,

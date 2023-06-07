@@ -29,7 +29,7 @@ export interface INuggetContext extends FilterFunctions {
     updateSCQOption: (Option: {index:number; text:string})=>void,
     updateImageCaption?: (caption: {imgCaption:string})=>void
     updateQuestion?: (question: { english: string })=>void,
-    updateAnswer?: (Answer:{ answer:string}) =>void,
+    updateAnswer: (Answer:{ answer:boolean}) =>void,
     handleDeleteNoteContent?:any,
     updateContentItem?: any,
     addContentItem?: any,

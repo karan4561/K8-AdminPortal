@@ -21,7 +21,7 @@ function Preview() {
           </div>
           {/* {(test?.kind == 'IMG') && <ImagePrev />} */}
           {/* {(test?.kind == 'Video') && <VideoPrev />} */}
-          {/* {(test?.kind == 'TrueFalse') && <TrueFalsePrev />} */}
+          {nugget?.kind == "TRUEFALSE" && <TrueFalsePrev TFPrevData={nugget}/>}
           {nugget?.kind == "SCQ" && <SCQPrev nugget={nugget}/>}
           {nugget?.kind == "MCQ" && <SCQPrev nugget={nugget}/>}
           {/* {(test?.kind=='Note') && <NoteNugget/>} */}

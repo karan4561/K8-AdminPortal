@@ -6,7 +6,7 @@ import { NuggetsContext } from "../../../context/NuggetsContext";
 function ImageNugget() {
   const [ImageCaption, setImageCaption] = useState("");
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
-  const { updateCaption } = useContext(NuggetsContext);
+  const { updateCaption,nugget } = useContext(NuggetsContext);
 
   const ImageCaptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setImageCaption(event.target.value);
@@ -30,7 +30,7 @@ function ImageNugget() {
           <input
             className="image-type-input"
             type="text"
-            value={ImageCaption}
+            value={nugget.caption}
             onChange={ImageCaptionChange}
             placeholder="Caption"
           />
