@@ -116,7 +116,7 @@ function NuggetsLanding({ nuggetId }: any) {
         <div className="create-nugget">
           <button onClick={handleSubmit}>Create Nugget</button>
           <div className="cards-parent">
-            <AddNuggetHeader /> 
+            <AddNuggetHeader nuggetId={nuggetId}/> 
             <div
               className="card-header NuggetId"
               style={nuggetId ? { pointerEvents: "none", opacity: 0.5 } : {}}
