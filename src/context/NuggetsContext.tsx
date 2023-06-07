@@ -27,6 +27,7 @@ import {
   QuestionObject,
 } from "@/interfaces/INugget";
 import useFilters from "./filters";
+import { fetchNugget } from "@/api/utils";
 
 const initialState = {} as INuggetContext;
 
@@ -70,9 +71,11 @@ const NuggetProvider = (props: any) => {
 
   const { filters, ...filterFunctions } = useFilters();
 
-  useEffect(() => {
-    updateFilters(filters);
-  }, [filters]);
+  // useEffect(() => {
+  //   updateFilters(filters);
+  // }, [filters]);
+
+  console.log("***This is Nugget***", nugget);
 
   function updateNuggetKind(
     nuggetkind:
@@ -95,6 +98,7 @@ const NuggetProvider = (props: any) => {
   }
   console.log("Initial State Testing: ", nugget);
   function updateFilters(filter: CategoryObject[]) {
+    console.log("*****This is being called******** step - 2", filter);
     setNugget((prev) => ({
       ...prev,
       categories: filter,
@@ -464,6 +468,20 @@ const NuggetProvider = (props: any) => {
     return errors;
   }
 
+  function fetchNuggetContent(nuggetId: string) {
+    //console.log("***Nugget Info Dynamic - 1 ******", nugget);
+    if (!nuggetId) return;
+    else {
+      fetchNugget([nuggetId]).then((data) => {
+        console.log("***Nugget in FetchContent - step 1", data[0]);
+        setNugget((prev: Nugget) => ({ ...prev, ...data[0] }));
+        filterFunctions.setFilters(data[0].categories);
+        //console.log("****!!!!!****", data[0].categories);
+        //console.log("***Nugget Info Dynamic fetchContent ******", nugget);
+      });
+    }
+  }
+
   return (
     <div>
       <NuggetsContext.Provider
@@ -500,6 +518,7 @@ const NuggetProvider = (props: any) => {
           formErrors,
           setFormErrors,
           validateErrors,
+          fetchNuggetContent,
         }}
       >
         {props.children}

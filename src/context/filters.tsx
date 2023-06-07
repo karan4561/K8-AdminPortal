@@ -50,6 +50,7 @@ function useFilters() {
   }
   return {
     filters,
+    setFilters,
     selectCategory,
     selectChapter,
     selectTopic,

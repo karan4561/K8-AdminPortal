@@ -15,6 +15,7 @@ import NoteNugget from "../Nuggets/NoteNugget/NoteNugget";
 import FIBNugget from "../Nuggets/FIB/FIBNugget";
 import { fetchNugget, submitNugget, updateNugget } from "@/api/utils";
 import { log } from "console";
+import { Nugget } from "@/interfaces/INugget";
 
 interface OptionType {
   label:
@@ -32,8 +33,13 @@ interface OptionType {
 }
 
 function NuggetsLanding({ nuggetId }: any) {
-  const { updateNuggetKind, nugget, setNugget, validateErrors } =
-    useContext(NuggetsContext);
+  const {
+    updateNuggetKind,
+    nugget,
+    setNugget,
+    validateErrors,
+    fetchNuggetContent,
+  } = useContext(NuggetsContext);
   const [isVisible, setIsVisible] = useState(true);
 
   const options: OptionType[] = [
@@ -49,27 +55,24 @@ function NuggetsLanding({ nuggetId }: any) {
     { value: "Audio", label: "Audio" },
   ];
 
-  function fetchNuggetContent() {
-    console.log("***Nugget Info Dynamic - 1 ******", nugget);
-    if (!nuggetId) return;
-    else {
-      fetchNugget([nuggetId]).then((data) => {
-        console.log("***Nugget in FetchContent", data[0]);
-        setNugget(data[0]);
-        console.log("***Nugget Info Dynamic fetchContent ******", nugget);
-      });
-    }
-  }
-  
+
+  console.log("***Nugget Info Dynamic - 2 ******", nugget);
+
+
   useEffect(() => {
-    fetchNuggetContent();
+    fetchNuggetContent(nuggetId);
     // const timer = setTimeout(() => {
-      //   setIsVisible(false);
-      // }, 5000);
-      // return () => clearTimeout(timer);
-    }, [nuggetId]);
-    
-    console.log("***Nugget Info Dynamic - 2 ******", nugget);
+
+    //   setIsVisible(false);
+    // }, 5000);
+    // return () => clearTimeout(timer);
+  }, [nuggetId]);
+
+  useEffect(() => {
+    console.log("*******Nugget in useEffect******* step - 3", nugget);
+  }, [nugget]);
+
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
