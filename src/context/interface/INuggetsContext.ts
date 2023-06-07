@@ -40,6 +40,7 @@ export interface INuggetContext extends FilterFunctions {
     formErrors:any,
     setFormErrors:any
     validateErrors?: (values: Nugget)=>any,
+    fetchNuggetContent: any
 }
 
 interface FilterFunctions {
