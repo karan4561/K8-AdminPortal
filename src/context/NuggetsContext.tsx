@@ -98,7 +98,7 @@ const NuggetProvider = (props: any) => {
     } as Nugget);
   }
   function updateFilters(filter: CategoryObject[]) {
-    console.log("*****This is being called******** step - 2", filter);
+    //console.log("*****This is being called******** step - 2", filter);
     setNugget((prev) => ({
       ...prev,
       categories: filter,
@@ -443,14 +443,10 @@ const NuggetProvider = (props: any) => {
         }
       });
 
-      console.log("value of flag for correction option:", flag);
-
       if (!flag) {
-        console.log("Triggeredddddddd");
         errors.isCorrect = "Correct Option not defined";
       }
     }
-    console.log("Here are the errors", errors);
     return errors;
   }
 

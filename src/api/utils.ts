@@ -1,5 +1,5 @@
 import { Nugget } from "@/interfaces/INugget";
-import { get, post, put } from "./api";
+import { deleteApi, get, post, put } from "./api";
 export async function getHeaderIcons(){
     const response= await get("/v3/admin/pitara/icons");
     return response.data;
@@ -7,13 +7,13 @@ export async function getHeaderIcons(){
 
 export async function submitNugget(nugget: Nugget){
     const response = await post("/v3/admin/pitara/nuggets",nugget);
-    console.log("*******API Testing:************",nugget);
+    //console.log("*******API Testing:************",nugget);
     return response.data;
 }
 
 export async function updateNugget(nugget: Nugget,nuggetId: string){
     const response = await put("/v3/admin/pitara/nuggets/"+nuggetId+"/update",nugget);
-    console.log("*******API Testing:************",nugget);
+    //console.log("*******API Testing:************",nugget);
     return response.data;
 }
 
@@ -30,5 +30,13 @@ export async function fetchNugget(list: string[]){
         params:{list},
         headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer a9876d5be7957d6d516fb571e9ac850757116af9cb7a8f98354b1b45835c8f6d'}
     })
+    return response.data;
+}
+
+export async function deleteNugget(nuggetId: string){
+    const response = await deleteApi("/v3/admin/pitara/nuggets/"+nuggetId,{
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer a9876d5be7957d6d516fb571e9ac850757116af9cb7a8f98354b1b45835c8f6d'}
+    });
+    //console.log("*******API Testing:************",nugget);
     return response.data;
 }

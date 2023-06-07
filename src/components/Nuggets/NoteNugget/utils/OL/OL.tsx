@@ -12,11 +12,11 @@ export default function () {
 
   const prefixChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPrefixValue(event.target.value);
-    console.log("Prefix VALUE:", prefixValue);
+    //console.log("Prefix VALUE:", prefixValue);
   };
   const suffixChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSuffixValue(event.target.value);
-    console.log("Suffix Value", suffixValue);
+    //console.log("Suffix Value", suffixValue);
   };
   const optionsXP = [
     { label: "1", value: "1" },
@@ -36,7 +36,7 @@ export default function () {
         suffix: suffixValue,
       });
     }
-    console.log("The Value of Bullet is here:", bullet);
+    //console.log("The Value of Bullet is here:", bullet);
   }, [OLType.value, prefixValue, suffixValue]);
 
   return (

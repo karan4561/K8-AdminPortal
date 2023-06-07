@@ -6,22 +6,11 @@ import { text } from "stream/consumers";
 
 function SccNugget() {
   let indexTrue: number;
-  const {
-    nugget,
-    updateQuestion,
-    updateSolHint,
-    updateCorrectOption,
-  } = useContext(NuggetsContext);
+  const { nugget, updateQuestion, updateSolHint, updateCorrectOption } =
+    useContext(NuggetsContext);
   const [option, setOption] = useState<number>();
   const [solContent, setSolContent] = useState<string>();
   const [hintContent, setHintContent] = useState<string>();
-
-  // useEffect(() => {
-  //   setSolContent(nugget.question.solutions[0].english.text)
-  //   setHintContent(nugget.question.solutions[0].english.hint)
-  // }, [])
-  console.log(solContent, "solContent");
-  console.log(hintContent, "hintContent");
 
   const OptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setOption(Number(event.target.value));
@@ -47,13 +36,6 @@ function SccNugget() {
     setSolContent(content);
   };
 
-  // useEffect(() => {
-  //   updateSolHint({
-  //     text: solContent,
-  //     hint: hintContent,
-  //   });
-  // }, [solContent, hintContent]);
-
   return (
     <>
       <div className="card-header NuggetId TrueFalseNugget">
@@ -71,10 +53,13 @@ function SccNugget() {
         <h4>Hint</h4>
         <TextEditor
           value={nugget.question.solutions[0].english.hint}
-          onUpdate={(content: string) => updateSolHint({hint:content})}
+          onUpdate={(content: string) => updateSolHint({ hint: content })}
         />
         <h4>Solution</h4>
-        <TextEditor value={nugget.question.solutions[0].english.text} onUpdate={(content: string) => updateSolHint({text:content})} />
+        <TextEditor
+          value={nugget.question.solutions[0].english.text}
+          onUpdate={(content: string) => updateSolHint({ text: content })}
+        />
         <div className="TrueFalseOption">
           <h4>
             Select Correct
