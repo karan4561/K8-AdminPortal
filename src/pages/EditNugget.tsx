@@ -1,15 +1,13 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
-
-import NuggetFilters from "../components/addNugget/NuggetFilters";
-import { NuggetsContext } from "@/context/NuggetsContext";
-import NuggetProvider from "../context/NuggetsContext";
+import toast, { Toaster } from "react-hot-toast";
 import Select from "react-select";
-import data from "test.json";
 import { getCategory, getSubject, getChapters, getTopics } from "@/api/filter";
 import SCQPrev from "@/components/Preview/SCQPrev";
 import TrueFalsePrev from "@/components/Preview/TrueFalsePrev";
-import { getNuggetList } from "@/api/utils";
+
+import { deleteNugget, getNuggetList } from "@/api/utils";
+
 import { Nugget } from "@/interfaces/INugget";
 import Link from "next/link";
 
@@ -34,7 +32,6 @@ function EditNugget() {
   //     { value: "option2", label: "option2" },
   // ];
   const [nuggetList, setNuggetList] = useState<Nugget[]>([]);
-
   const [categoryList, setCategoryList] = useState<OptionType[]>();
   const [subjectList, setSubjectList] = useState<OptionType[]>();
   const [topicList, setTopicList] = useState<OptionType[]>();
@@ -55,6 +52,12 @@ function EditNugget() {
       )
     );
   }, []);
+
+  function deleteNuggets(nuggetId: string) {
+    deleteNugget(nuggetId);
+    toast.success("Nugget is deleted Successfully");
+    onSubmit();
+  }
 
   const onCategoryChange = (selectedOption: OptionType | null) => {
     if (selectedOption) {
@@ -108,18 +111,6 @@ function EditNugget() {
 
   const onSubmit = () => {
     if (category && subject && chapter) {
-      console.log(
-        chapter,
-        "chapter",
-        topic,
-        "topic",
-        category,
-        "category",
-        subject,
-        "subject",
-        approvedStatus,
-        "approveStatus"
-      );
       getNuggetList(
         10,
         false,
@@ -129,73 +120,82 @@ function EditNugget() {
         topic,
         approveStatus[0].value
       ).then((data) => setNuggetList(data));
-      console.log("********Nugget-List**********", nuggetList);
+      //console.log("********Nugget-List**********", nuggetList);
     } else alert("Add Required Fields");
   };
 
   return (
     <>
-      <h3>Search Nugget by:</h3>
-      <div className="edit-nugget-category">
-        <Select
-          className="AddNuggetCategory"
-          // value={categoryList?.filter((o) => o.value == category.categoryId)}
-          onChange={onCategoryChange}
-          options={categoryList}
-          placeholder="Category"
-        />
-        <Select
-          className="AddNuggetCategory"
-          // value={}
-          onChange={onSubjectChange}
-          options={subjectList}
-          placeholder="Subject"
-        />
-        <Select
-          className="AddNuggetCategory"
-          // value={}
-          onChange={onChapterChange}
-          options={chapterList}
-          placeholder="Chapter"
-        />
-        <Select
-          className="AddNuggetCategory"
-          // value={}
-          onChange={onTopicChange}
-          options={topicList}
-          placeholder="Topic"
-          isClearable={true}
-        />
-        <Select
-          className="AddNuggetCategory"
-          // value={approvedStatus}
-          onChange={approveStatusChange}
-          options={approveStatus}
-          placeholder="Status"
-        />
-        <button onClick={onSubmit}>Search</button>
-      </div>
-      {/* <NuggetProvider> */}
-      {/* <EditNuggetLanding /> */}
-      {nuggetList.map((nuggetData, index) => {
-        return (
-          <div className="edit-label">
-            <div className="edit-Nugget-div-label">
-              <p>#{nuggetData._id}</p>
-              <div>
-                <Link href={"/nuggets/" + nuggetData._id}>
-                  <button className="edit-delete-button">
-                    <Image src="/Edit.png" height={15} width={15} alt="" />
+      <div>
+        <Toaster />
+        <h3>Search Nugget by:</h3>
+        <div className="edit-nugget-category">
+          <Select
+            className="AddNuggetCategory"
+            // value={categoryList?.filter((o) => o.value == category.categoryId)}
+            onChange={onCategoryChange}
+            options={categoryList}
+            placeholder="Category"
+          />
+          <Select
+            className="AddNuggetCategory"
+            // value={}
+            onChange={onSubjectChange}
+            options={subjectList}
+            placeholder="Subject"
+          />
+          <Select
+            className="AddNuggetCategory"
+            // value={}
+            onChange={onChapterChange}
+            options={chapterList}
+            placeholder="Chapter"
+          />
+          <Select
+            className="AddNuggetCategory"
+            // value={}
+            onChange={onTopicChange}
+            options={topicList}
+            placeholder="Topic"
+            isClearable={true}
+          />
+          <Select
+            className="AddNuggetCategory"
+            // value={approvedStatus}
+            onChange={approveStatusChange}
+            options={approveStatus}
+            placeholder="Status"
+          />
+          <button onClick={onSubmit}>Search</button>
+        </div>
+        {/* <NuggetProvider> */}
+        {/* <EditNuggetLanding /> */}
+        {nuggetList.map((nuggetData, index) => {
+          return (
+            <div className="edit-label">
+              <div className="edit-Nugget-div-label">
+                <p>#{nuggetData._id}</p>
+                <div>
+                  <Link href={"/nuggets/" + nuggetData._id}>
+                    <button className="edit-delete-button">
+                      <Image src="/Edit.png" height={15} width={15} alt="" />
+                    </button>
+                  </Link>
+                  <button
+                    className="edit-delete-button"
+                    onClick={() => deleteNuggets(nuggetData._id)}
+                  >
+                    <Image src="/Vector.png" height={15} width={15} alt="" />
                   </button>
-                </Link>
-                <button className="edit-delete-button">
-                  <Image src="/Vector.png" height={15} width={15} alt="" />
-                </button>
+                </div>
               </div>
-            </div>
-            <div className="edit-nugget-prev">
-              <div className="headerimage-headertitle">
-                <h4>{nuggetData.headerTitle}</h4>
+              <div className="edit-nugget-prev">
+                <div className="headerimage-headertitle">
+                  <h4>{nuggetData.headerTitle}</h4>
+                </div>
+                {(nuggetData.kind == "SCQ" || "MCQ") && (
+                  <SCQPrev nugget={nuggetData} />
+                )}
               </div>
               {(nuggetData.kind == "TRUEFALSE | TF") && (
                 <TrueFalsePrev TFPrevData={nuggetData} />
@@ -203,11 +203,12 @@ function EditNugget() {
                 {(nuggetData.kind == "SCQ" || "MCQ") && (
                   <SCQPrev nugget={nuggetData} />
                 )}
+
             </div>
-          </div>
-        );
-        // }
-      })}
+          );
+          // }
+        })}
+      </div>
     </>
   );
 }

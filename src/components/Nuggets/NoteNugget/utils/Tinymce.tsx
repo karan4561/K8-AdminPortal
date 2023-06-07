@@ -40,13 +40,13 @@ const TinyMCE = (props: {
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       if (props.kind == "OL") {
-        console.log(".......ol it is......");
+        //console.log(".......ol it is......");
         updateListItem(props.idx, content, "OL", props.idj);
       } else if (props.kind == "UL") {
-        console.log(".......ul it is......");
+        //console.log(".......ul it is......");
         updateListItem(props.idx, content, "UL", props.idj);
       } else {
-        console.log(".......else it is......");
+        //console.log(".......else it is......");
         updateContentItem(props.idx, { kind: props.kind, list: content });
       }
     }, 1500);

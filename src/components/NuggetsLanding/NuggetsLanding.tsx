@@ -55,10 +55,6 @@ function NuggetsLanding({ nuggetId }: any) {
     { value: "Audio", label: "Audio" },
   ];
 
-
-  console.log("***Nugget Info Dynamic - 2 ******", nugget);
-
-
   useEffect(() => {
     fetchNuggetContent(nuggetId);
     // const timer = setTimeout(() => {
@@ -67,10 +63,6 @@ function NuggetsLanding({ nuggetId }: any) {
     // }, 5000);
     // return () => clearTimeout(timer);
   }, [nuggetId]);
-
-  useEffect(() => {
-    console.log("*******Nugget in useEffect******* step - 3", nugget);
-  }, [nugget]);
 
 
   const handleSubmit = async (e: any) => {

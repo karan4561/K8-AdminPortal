@@ -5,7 +5,6 @@ import NuggetProvider from "../../context/NuggetsContext";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function NuggetHome({ nuggetId }: any) {
-  console.log("******NuggetHome****", nuggetId);
   return (
     <>
       <NuggetProvider>
