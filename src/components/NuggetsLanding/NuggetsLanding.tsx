@@ -13,7 +13,7 @@ import MCQNugget from "../Nuggets/MCQNugget/MCQNugget";
 import LTI from "../LTI/LTI";
 import NoteNugget from "../Nuggets/NoteNugget/NoteNugget";
 import FIBNugget from "../Nuggets/FIB/FIBNugget";
-import { fetchNugget, submitNugget, updateNugget } from "@/api/utils";
+import { fetchNugget, submitNugget, updateNugget, getHeaderIcons } from "@/api/utils";
 import { log } from "console";
 import { Nugget } from "@/interfaces/INugget";
 
@@ -39,6 +39,8 @@ function NuggetsLanding({ nuggetId }: any) {
     setNugget,
     validateErrors,
     fetchNuggetContent,
+    updateFileObj,
+    icon
   } = useContext(NuggetsContext);
   const [isVisible, setIsVisible] = useState(true);
 
@@ -57,14 +59,12 @@ function NuggetsLanding({ nuggetId }: any) {
 
   useEffect(() => {
     fetchNuggetContent(nuggetId);
-    // const timer = setTimeout(() => {
-
-    //   setIsVisible(false);
-    // }, 5000);
-    // return () => clearTimeout(timer);
   }, [nuggetId]);
 
-
+  useEffect(() => {
+    getHeaderIcons().then((data) => updateFileObj(data));
+  }, []);
+  
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
@@ -99,6 +99,8 @@ function NuggetsLanding({ nuggetId }: any) {
       }
     }
   };
+  console.log(nuggetId,"987654321");
+  
   return (
     <>
       <div>

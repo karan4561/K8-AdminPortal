@@ -53,10 +53,10 @@ function EditNugget() {
     );
   }, []);
 
-  function deleteNuggets(nuggetId: string) {
-    deleteNugget(nuggetId);
-    toast.success("Nugget is deleted Successfully");
+  async function deleteNuggets(nuggetId: string) {
+  await  deleteNugget(nuggetId);
     onSubmit();
+    toast.success("Nugget is deleted Successfully");
   }
 
   const onCategoryChange = (selectedOption: OptionType | null) => {
@@ -196,13 +196,13 @@ function EditNugget() {
                 {(nuggetData.kind == "SCQ" || "MCQ") && (
                   <SCQPrev nugget={nuggetData} />
                 )}
-              </div>
               {(nuggetData.kind == "TRUEFALSE | TF") && (
                 <TrueFalsePrev TFPrevData={nuggetData} />
                 )}
-                {(nuggetData.kind == "SCQ" || "MCQ") && (
+              </div>
+                {/* {(nuggetData.kind == "SCQ" || "MCQ") && (
                   <SCQPrev nugget={nuggetData} />
-                )}
+                )} */}
 
             </div>
           );

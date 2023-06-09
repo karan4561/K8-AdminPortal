@@ -17,15 +17,21 @@ function NuggetFilters(props: any) {
     selectTopic,
     selectChapter,
   } = useContext(NuggetsContext);
-
+  const [nuggetId, setNuggetId] = useState();
   const category = nugget.categories[props.index];
   console.log("******Nugget from Filter*****", category);
-  console.log(props.nuggetId, "propsNuggetID");
 
   const [categoryList, setCategoryList] = useState<OptionType[]>();
   const [subjectList, setSubjectList] = useState<OptionType[]>();
   const [topicList, setTopicList] = useState<OptionType[]>();
   const [chapterList, setChapterList] = useState<OptionType[]>();
+
+  useEffect(() => {
+    if (props.nuggetId) {
+      setNuggetId(props.nuggetId);
+    }
+  }, [props.nuggetId])
+  console.log(nuggetId, "propsNuggetID");
 
   useEffect(() => {
     getCategory().then((data) =>
@@ -41,11 +47,13 @@ function NuggetFilters(props: any) {
     if (selectedOption) selectTopic(props.index, selectedOption.value);
   };
 
-  useEffect(()=>{
-    if(nugget.categories[props.index].subjectId){
+  useEffect(() => {
+    if (nugget.categories[props.index].subjectId) {
       onSubjectChange(nugget.categories[props.index].subjectId)
     }
-  },[nugget.categories[props.index].subjectId,nugget.categories[props.index].categoryId])
+    console.log(nugget.categories[props.index].subjectId,"props.nuggetId");
+    
+  }, [nugget.categories[props.index].subjectId])
   // useEffect(() => {
   //   onSubjectChange(nugget.categories[props.index].subjectId)
   // }, [nugget.categories[props.index].subjectId])
@@ -63,10 +71,11 @@ function NuggetFilters(props: any) {
   };
 
   useEffect(()=>{
-    if(nugget.categories[props.index].categoryId){
-      onCategoryChange(nugget.categories[props.index].categoryId)
-    }
-  },[nugget.categories[props.index].categoryId])
+      if(category.categoryId){
+        onCategoryChange(category.categoryId)
+      }
+    console.log(category.categoryId,"123456789");
+  },[category.categoryId])
   // useEffect(() => {
   //   onCategoryChange(nugget.categories[props.index].categoryId)
   // }, [nugget.categories[props.index].categoryId])
@@ -153,3 +162,4 @@ function NuggetFilters(props: any) {
 }
 
 export default NuggetFilters;
+

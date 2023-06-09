@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState } from "react";
 import { INuggetContext } from "./interface/INuggetsContext";
 import { useEffect } from "react";
 
-import { CategoryObject, Nugget } from "@/interfaces/INugget";
+import { CategoryObject, Nugget,FileObject } from "@/interfaces/INugget";
 import * as _ from "lodash";
 
 interface OptionType {
@@ -23,7 +23,6 @@ interface OptionType {
 import {
   BulletObject,
   ContentObject,
-  ListItemObject,
   QuestionObject,
 } from "@/interfaces/INugget";
 import useFilters from "./filters";
@@ -68,7 +67,7 @@ const NuggetProvider = (props: any) => {
   const [ques, setQues] = useState<QuestionObject>(); //fib
   const [submit, setSubmit] = useState<boolean>(false);
   const [formErrors, setFormErrors] = useState<any>({});
-
+  const [icon,setIcon] = useState<FileObject[]>()
   const { filters, ...filterFunctions } = useFilters();
 
   // useEffect(() => {
@@ -76,7 +75,64 @@ const NuggetProvider = (props: any) => {
   // }, [filters]);
 
   console.log("***This is Nugget***", nugget);
+  function updateFileObj(FileObj: {
+    _id?: string;
+    name?: string;
+    baseUrl: string;
+    key: string
+    type?:
+      | "CONTENT"
+      | "TEST"
+      | "SUBJECTIVE_TEST_SOLUTIONS"
+      | "VIMEO"
+      | "JWPLAYER";
+    organization?: string;
+    size?: number;
+    details?: string;
+  }[]) {
+    const updatedIcons = FileObj.map((obj) => ({
+      _id: obj._id,
+      name: obj.name,
+      baseUrl: obj.baseUrl,
+      key: obj.key,
+      type: obj.type,
+      organization: obj.organization,
+      size: obj.size,
+      details: obj.details,
+    }));
+    setIcon(updatedIcons);
+  }
 
+  function updateHeaderIcon(iconObj:{
+    _id?: string,
+    name?: string,
+    baseUrl: string,
+    key: string,
+    type?:
+      | "CONTENT"
+      | "TEST"
+      | "SUBJECTIVE_TEST_SOLUTIONS"
+      | "VIMEO"
+      | "JWPLAYER",
+    organization?: string,
+    size?: number,
+    details?: string,
+  }
+  ){
+    setNugget((prev)=>({
+      ...prev,
+      headerIcon:{
+        _id: iconObj._id,
+        name: iconObj.name,
+        baseUrl: iconObj.baseUrl,
+        key: iconObj.key,
+        type: iconObj.type,
+        organization: iconObj.organization,
+        size: iconObj.size,
+        details: iconObj.details,
+      }
+    }))
+  }
   function updateNuggetKind(
     nuggetkind:
       | "Video"
@@ -271,38 +327,6 @@ const NuggetProvider = (props: any) => {
     }));
   }
 
-  function updateFileObj(FileObj: {
-    id?: string;
-    name?: string;
-    baseUrl: string;
-    key: string
-    type?:
-      | "CONTENT"
-      | "TEST"
-      | "SUBJECTIVE_TEST_SOLUTIONS"
-      | "VIMEO"
-      | "JWPLAYER";
-    organization?: string;
-    size?: number;
-    details?: string;
-  }) {
-    setNugget({
-      ...state,
-      nugget: {
-        ...state.nugget,
-        imageURI: {
-          _id: FileObj.id,
-          name: FileObj.name,
-          baseUrl: FileObj.baseUrl,
-          key: FileObj.key,
-          type: FileObj.type,
-          organization: FileObj.organization,
-          size: FileObj.size,
-          details: FileObj.details,
-        },
-      },
-    });
-  }
 
   function updateCorrectOption(Option: { isCorrect: boolean; index: number }) {
     setNugget((prev) => ({
@@ -489,6 +513,7 @@ const NuggetProvider = (props: any) => {
           bullet,
           list,
           ques,
+          icon,
           setQues,
           setList,
           setBullet,
@@ -499,6 +524,7 @@ const NuggetProvider = (props: any) => {
           updateQuestion,
           updateCaption,
           updateFileObj,
+          updateHeaderIcon,
           updateCorrectOption,
           addSCQOption,
           deleteSCQOption,

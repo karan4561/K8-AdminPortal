@@ -3,7 +3,7 @@ import Icon from "../../utils/IconType/IconType";
 import { useContext, useState, useEffect } from "react";
 
 export default function NuggetInfo() {
-  const { updateNuggetInfo,nugget } = useContext(NuggetsContext);
+  const { updateNuggetInfo, nugget } = useContext(NuggetsContext);
   // const [headerTitle, setheaderTitle] = useState("");
   const [isChecked, setIsChecked] = useState(false);
   const [sideNote, setsideNote] = useState("");

@@ -135,10 +135,18 @@ h4 {
   align-items: center;
 }
 
+.XP-timer-bar{
+  z-index: 99;
+}
+
 .timer {
   margin-left: 32px;
   display: flex;
   align-items: center;
+}
+
+.timer>select{
+  z-index: 9999;
 }
 
 .xp-timer-p {
@@ -268,17 +276,30 @@ h4 {
   position: absolute;
   border: 1px solid #b3b3b3;
   border-radius: 8px;
-  height: 140px;
+  height: 130px;
   overflow-y: scroll;
   margin-top: 5px;
   z-index: 99;
+  background-color: white;
+}
+
+.icon-list>input{
+  visibility: hidden;
+  width: 0;
+  height: 0;
+}
+
+.icon-list>label{
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .dropdown-menu {
   background-color: white;
   display: grid;
   margin-top: 5px;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(8, 1fr);
 }
 
 .icons {
@@ -286,7 +307,7 @@ h4 {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 5px 5px;
+  padding: 10px;
 }
 
 .icons > img {

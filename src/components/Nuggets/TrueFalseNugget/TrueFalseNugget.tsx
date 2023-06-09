@@ -43,7 +43,7 @@ function TrueFalseNugget() {
     <>
       <div className="card-header NuggetId TrueFalseNugget">
         <h4>Question</h4>
-        <TextEditor value={nugget.question.content.english} onUpdate={onUpdateQues} />
+        <TextEditor value={nugget.question.content?.english} onUpdate={onUpdateQues} />
         <h4>Answers Options</h4>
         <div className="TFOption">
           <p>A. True</p>
