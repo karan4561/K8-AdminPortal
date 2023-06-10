@@ -99,7 +99,6 @@ function NuggetsLanding({ nuggetId }: any) {
       }
     }
   };
-  console.log(nuggetId,"987654321");
   
   return (
     <>

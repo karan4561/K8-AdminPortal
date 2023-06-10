@@ -10,19 +10,11 @@ function AddTextEditor() {
     deleteSCQOption,
     addSCQOption,
   } = useContext(NuggetsContext);
-
   // if (!test.question?.bilingual_options?.english) {
   //   useEffect(() => {
   //     addSCQOption();
   //   }, []);
   // }
-
-  if (!test.question?.bilingual_options?.english) {
-    useEffect(() => {
-      addSCQOption();
-    }, []);
-  }
-  // console.log(test.question?.bilingual_options?.english.length,"len");
 
   function addSection() {
     addSCQOption();

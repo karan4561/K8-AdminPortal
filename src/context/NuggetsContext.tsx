@@ -2,21 +2,21 @@ import React, { createContext, useContext, useState } from "react";
 import { INuggetContext } from "./interface/INuggetsContext";
 import { useEffect } from "react";
 
-import { CategoryObject, Nugget,FileObject } from "@/interfaces/INugget";
+import { CategoryObject, Nugget, FileObject } from "@/interfaces/INugget";
 import * as _ from "lodash";
 
 interface OptionType {
   label:
-    | "Video"
-    | "SCQ"
-    | "MCQ"
-    | "Note"
-    | "FIB"
-    | "IMG"
-    | "AUDIOCLIP"
-    | "LTI"
-    | "TRUEFALSE"
-    | "Audio";
+  | "Video"
+  | "SCQ"
+  | "MCQ"
+  | "Note"
+  | "FIB"
+  | "IMG"
+  | "AUDIOCLIP"
+  | "LTI"
+  | "TRUEFALSE"
+  | "Audio";
   value: string;
 }
 
@@ -67,7 +67,7 @@ const NuggetProvider = (props: any) => {
   const [ques, setQues] = useState<QuestionObject>(); //fib
   const [submit, setSubmit] = useState<boolean>(false);
   const [formErrors, setFormErrors] = useState<any>({});
-  const [icon,setIcon] = useState<FileObject[]>()
+  const [icon, setIcon] = useState<FileObject[]>()
   const { filters, ...filterFunctions } = useFilters();
 
   // useEffect(() => {
@@ -81,11 +81,11 @@ const NuggetProvider = (props: any) => {
     baseUrl: string;
     key: string
     type?:
-      | "CONTENT"
-      | "TEST"
-      | "SUBJECTIVE_TEST_SOLUTIONS"
-      | "VIMEO"
-      | "JWPLAYER";
+    | "CONTENT"
+    | "TEST"
+    | "SUBJECTIVE_TEST_SOLUTIONS"
+    | "VIMEO"
+    | "JWPLAYER";
     organization?: string;
     size?: number;
     details?: string;
@@ -103,25 +103,25 @@ const NuggetProvider = (props: any) => {
     setIcon(updatedIcons);
   }
 
-  function updateHeaderIcon(iconObj:{
+  function updateHeaderIcon(iconObj: {
     _id?: string,
     name?: string,
     baseUrl: string,
     key: string,
     type?:
-      | "CONTENT"
-      | "TEST"
-      | "SUBJECTIVE_TEST_SOLUTIONS"
-      | "VIMEO"
-      | "JWPLAYER",
+    | "CONTENT"
+    | "TEST"
+    | "SUBJECTIVE_TEST_SOLUTIONS"
+    | "VIMEO"
+    | "JWPLAYER",
     organization?: string,
     size?: number,
     details?: string,
   }
-  ){
-    setNugget((prev)=>({
+  ) {
+    setNugget((prev) => ({
       ...prev,
-      headerIcon:{
+      headerIcon: {
         _id: iconObj._id,
         name: iconObj.name,
         baseUrl: iconObj.baseUrl,
@@ -215,6 +215,74 @@ const NuggetProvider = (props: any) => {
   //   //console.log("wuhoo");
   // }
 
+  function addFIBContent() {
+    const newOption = {
+      value: "",
+      type: "text",
+    };
+    if (!nugget.question?.fib?.english)
+      setNugget((prev) => ({
+        ...prev,
+        question: {
+          ...prev.question,
+          fib: {
+            ...prev.question?.fib,
+            english: [newOption],
+          },
+        },
+      }));
+    else
+      setNugget((prev) => ({
+        ...prev,
+        question: {
+          ...prev.question,
+          fib: {
+            ...prev.question.fib,
+            english: [...prev.question.fib?.english, newOption],
+          },
+        },
+      }));
+  }
+
+  function updateFIBContent(Content: { index: number; text: string, type: string }) {
+    setNugget((prev) => {
+      const updatedOptions = prev.question.fib?.english
+        ? prev.question.fib.english
+        : [];
+      updatedOptions[Content.index] = {
+        value: Content.text,
+        type: Content.type,
+      };
+      return {
+        ...prev,
+        question: {
+          ...prev.question,
+          fib: {
+            ...prev.question.fib,
+            english: updatedOptions,
+          },
+        },
+      };
+    });
+  }
+
+  function deleteFIBContent(Content: { index: number }) {
+    setNugget((prev) => {
+      return {
+        ...prev,
+        question: {
+          ...prev.question,
+          fib: {
+            ...prev.question.fib,
+            english: prev.question.fib?.english.filter(
+              (_, i) => i !== Content.index
+            ),
+          },
+        },
+      };
+    });
+  }
+
   function updateContentItem(idx: number, note: ContentObject) {
     //console.log("..........idx..........", idx);
     //console.log("..........note..........", note);
@@ -306,7 +374,7 @@ const NuggetProvider = (props: any) => {
       question: {
         ...prev.question,
         bilingual_options: {
-          english:[
+          english: [
             {
               text: "True",
               isCorrect: Answer.answer
@@ -321,7 +389,7 @@ const NuggetProvider = (props: any) => {
     }));
   }
   function updateCaption(caption: { caption?: string }) {
-    setNugget((prev)=>({
+    setNugget((prev) => ({
       ...prev,
       caption: caption.caption
     }));
@@ -364,6 +432,73 @@ const NuggetProvider = (props: any) => {
         },
       },
     }));
+  }
+
+  function addFIBOption() {
+    const newOption = {
+      text: "",
+    };
+    //debugger;
+    if (!nugget.question?.extraOptions?.english)
+      setNugget((prev) => ({
+        ...prev,
+        question: {
+          ...prev.question,
+          extraOptions: {
+            ...prev.question?.extraOptions,
+            english: [newOption],
+          },
+        },
+      }));
+    else
+      setNugget((prev) => ({
+        ...prev,
+        question: {
+          ...prev.question,
+          extraOptions: {
+            ...prev.question.extraOptions,
+            english: [...prev.question.extraOptions?.english, newOption],
+          },
+        },
+      }));
+  }
+
+  function deleteFIBOption(Option: { index: number }) {
+    setNugget((prev) => {
+      return {
+        ...prev,
+        question: {
+          ...prev.question,
+          extraOptions: {
+            ...prev.question.extraOptions,
+            english: prev.question.extraOptions?.english.filter(
+              (_, i) => i !== Option.index
+            ),
+          },
+        },
+      };
+    });
+  }
+
+  function updateFIBOption(Option: { index: number; text: string }) {
+    setNugget((prev) => {
+      const updatedOptions = prev.question.extraOptions?.english
+        ? prev.question.extraOptions.english
+        : [];
+      updatedOptions[Option.index] = {
+        text: Option.text,
+      };
+      return {
+        ...prev,
+        question: {
+          ...prev.question,
+          extraOptions: {
+            ...prev.question.extraOptions,
+            english: updatedOptions,
+          },
+        },
+      };
+    });
   }
 
   function addSCQOption() {
@@ -535,6 +670,9 @@ const NuggetProvider = (props: any) => {
           addListItem,
           updateListItem,
           handleDeleteNoteContent,
+          addFIBContent,
+          updateFIBContent,
+          deleteFIBContent,
           submit,
           setSubmit,
           formErrors,

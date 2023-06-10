@@ -1,12 +1,17 @@
 import { Nugget,FileObject } from "@/interfaces/INugget";
-import { deleteApi, get, post, put} from "./api";
-const formData = new FormData();
+import { deleteApi, get, post, put, post1} from "./api";
 export async function getHeaderIcons(){
     const response= await get("/v3/admin/pitara/icons");
     return response.data;
 }
+
 export async function uploadImage(image:any){
-    const response = await post("/v3/admin/pitara/icons",image);
+    const response = await post1("/v1/admin/files",image);
+    return response.data;
+}
+
+export async function postImage(FileObject: FileObject){
+    const response = await post("/v3/admin/pitara/icons",FileObject);
     return response.data;
 }
 

@@ -1,6 +1,8 @@
 import { NuggetsContext } from "../../context/NuggetsContext";
 import React, { useContext, useState, useEffect } from "react";
-import { uploadImage, getHeaderIcons } from "@/api/utils";
+import { uploadImage, postImage } from "@/api/utils";
+import { useAmp } from "next/amp";
+import { FileObject } from "@/interfaces/INugget";
 
 interface OptionType {
   _id?: string;
@@ -22,19 +24,8 @@ export default function MyDropdown() {
   const { icon, updateHeaderIcon, updateFileObj } = useContext(NuggetsContext);
   const [selectedOption, setSelectedOption] = useState<OptionType | null>(null);
   const [isOpen, setIsOpen] = useState(false);
-  const [uploadIcon, setUploadIcon] = useState<File>();
-  
-  const handleSubmit = async (e: any) => {
-    if (uploadImage) {
-      const formData = new FormData();
-      formData.append("myfile", uploadIcon);
-      console.log(uploadImage,"uploadImageapi");
-      await uploadImage(formData).then(data => {
-        debugger
-        console.log(data.data,"data.data");
-    });;
-    }
-  };
+  const [uploadedImage, setUploadedImage] = useState<FileObject>()
+
   // const options: OptionType[] | undefined = icon;
   // useEffect(() => {
   //   getHeaderIcons().then((data) => updateFileObj(data));
@@ -43,7 +34,6 @@ export default function MyDropdown() {
     setIsOpen(!isOpen);
   };
 
-  console.log(uploadImage, "uploadImage");
 
   const handleOptionClick = (selectedOption: OptionType) => {
     setSelectedOption(selectedOption);
@@ -53,12 +43,24 @@ export default function MyDropdown() {
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      setUploadIcon(file);
-      handleSubmit
+      const formData = new FormData();
+      formData.append("file", file)
+      console.log(formData, "formData");
+      uploadImage(formData).then((data) => setUploadedImage(data))
     }
-    console.log(uploadImage.files);
   };
 
+  useEffect(()=>{
+    if(uploadedImage){
+      postImage({
+        baseUrl: uploadedImage.baseUrl,
+        key: uploadedImage.key
+      })
+    }
+  },[uploadedImage])
+  
+  console.log(uploadedImage,"uploadedImage");
+  
   return (
     <div className="dropdown">
       <div className="dropdown-toggle" onClick={toggleDropdown}>
