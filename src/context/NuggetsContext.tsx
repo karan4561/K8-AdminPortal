@@ -105,16 +105,24 @@ const NuggetProvider = (props: any) => {
     }));
   }
 
-  function updateNuggetInfo(NuggetInfo: {
-    headerTitle?: string;
-    sideNote?: string;
-    isKnowledgeCap?: boolean;
-  }) {
+  function updateNuggetInfoHeader(headerTitle: string) {
     setNugget((prev) => ({
       ...prev,
-      headerTitle: NuggetInfo.headerTitle,
-      sideNote: NuggetInfo.sideNote,
-      IsKnowledgeCap: NuggetInfo.isKnowledgeCap,
+      headerTitle: headerTitle,
+    }));
+  }
+
+  function updateNuggetInfoSideNote(sideNote: string) {
+    setNugget((prev) => ({
+      ...prev,
+      sideNote: sideNote,
+    }));
+  }
+
+  function updateNuggetInfoKnowledgeCap(isKnowledgeCap: boolean) {
+    setNugget((prev) => ({
+      ...prev,
+      IsKnowledgeCap: isKnowledgeCap,
     }));
   }
 
@@ -250,24 +258,24 @@ const NuggetProvider = (props: any) => {
       question: {
         ...prev.question,
         bilingual_options: {
-          english:[
+          english: [
             {
               text: "True",
-              isCorrect: Answer.answer
+              isCorrect: Answer.answer,
             },
             {
               text: "True",
-              isCorrect: !Answer.answer
-            }
-          ]
+              isCorrect: !Answer.answer,
+            },
+          ],
         },
       },
     }));
   }
   function updateCaption(caption: { caption?: string }) {
-    setNugget((prev)=>({
+    setNugget((prev) => ({
       ...prev,
-      caption: caption.caption
+      caption: caption.caption,
     }));
   }
 
@@ -275,7 +283,7 @@ const NuggetProvider = (props: any) => {
     id?: string;
     name?: string;
     baseUrl: string;
-    key: string
+    key: string;
     type?:
       | "CONTENT"
       | "TEST"
@@ -492,7 +500,9 @@ const NuggetProvider = (props: any) => {
           setQues,
           setList,
           setBullet,
-          updateNuggetInfo,
+          updateNuggetInfoHeader,
+          updateNuggetInfoKnowledgeCap,
+          updateNuggetInfoSideNote,
           updateXPTimer,
           updateAnswer,
           updateSolHint,
