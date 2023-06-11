@@ -7,12 +7,16 @@ async function get(url: string, data?: any) {
   const response = await axiosClient.get(url, {
     headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer f8eae9e3980c011c312b12c1eb611861b3cd1380a01a19299714fd106d5ae258'},
     ...data,
+
   })
   return response.data
 }
 
 async function deleteApi(url: string, data?: any) {
-  const response = await axiosClient.delete(url, data)
+  const response = await axiosClient.delete(url, {
+    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer a9876d5be7957d6d516fb571e9ac850757116af9cb7a8f98354b1b45835c8f6d'},
+    data
+  })
   return response.data
 }
 

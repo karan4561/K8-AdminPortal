@@ -161,16 +161,24 @@ const NuggetProvider = (props: any) => {
     }));
   }
 
-  function updateNuggetInfo(NuggetInfo: {
-    headerTitle?: string;
-    sideNote?: string;
-    isKnowledgeCap?: boolean;
-  }) {
+  function updateNuggetInfoHeader(headerTitle: string) {
     setNugget((prev) => ({
       ...prev,
-      headerTitle: NuggetInfo.headerTitle,
-      sideNote: NuggetInfo.sideNote,
-      IsKnowledgeCap: NuggetInfo.isKnowledgeCap,
+      headerTitle: headerTitle,
+    }));
+  }
+
+  function updateNuggetInfoSideNote(sideNote: string) {
+    setNugget((prev) => ({
+      ...prev,
+      sideNote: sideNote,
+    }));
+  }
+
+  function updateNuggetInfoKnowledgeCap(isKnowledgeCap: boolean) {
+    setNugget((prev) => ({
+      ...prev,
+      IsKnowledgeCap: isKnowledgeCap,
     }));
   }
 
@@ -377,13 +385,13 @@ const NuggetProvider = (props: any) => {
           english: [
             {
               text: "True",
-              isCorrect: Answer.answer
+              isCorrect: Answer.answer,
             },
             {
               text: "True",
-              isCorrect: !Answer.answer
-            }
-          ]
+              isCorrect: !Answer.answer,
+            },
+          ],
         },
       },
     }));
@@ -391,10 +399,42 @@ const NuggetProvider = (props: any) => {
   function updateCaption(caption: { caption?: string }) {
     setNugget((prev) => ({
       ...prev,
-      caption: caption.caption
+      caption: caption.caption,
     }));
   }
 
+  function updateFileObj(FileObj: {
+    id?: string;
+    name?: string;
+    baseUrl: string;
+    key: string;
+    type?:
+      | "CONTENT"
+      | "TEST"
+      | "SUBJECTIVE_TEST_SOLUTIONS"
+      | "VIMEO"
+      | "JWPLAYER";
+    organization?: string;
+    size?: number;
+    details?: string;
+  }) {
+    setNugget({
+      ...state,
+      nugget: {
+        ...state.nugget,
+        imageURI: {
+          _id: FileObj.id,
+          name: FileObj.name,
+          baseUrl: FileObj.baseUrl,
+          key: FileObj.key,
+          type: FileObj.type,
+          organization: FileObj.organization,
+          size: FileObj.size,
+          details: FileObj.details,
+        },
+      },
+    });
+  }
 
   function updateCorrectOption(Option: { isCorrect: boolean; index: number }) {
     setNugget((prev) => ({
@@ -652,7 +692,9 @@ const NuggetProvider = (props: any) => {
           setQues,
           setList,
           setBullet,
-          updateNuggetInfo,
+          updateNuggetInfoHeader,
+          updateNuggetInfoKnowledgeCap,
+          updateNuggetInfoSideNote,
           updateXPTimer,
           updateAnswer,
           updateSolHint,
