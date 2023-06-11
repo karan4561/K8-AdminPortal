@@ -1,4 +1,4 @@
-import { Nugget,ContentObject,CategoryObject,BulletObject,ListItemObject,QuestionObject } from "src/interfaces/INugget";
+import { Nugget, ContentObject, CategoryObject, BulletObject, ListItemObject, QuestionObject, FileObject } from "src/interfaces/INugget";
 interface FIB {
   value?: string;
   type: "TEXT" | "BLANK";

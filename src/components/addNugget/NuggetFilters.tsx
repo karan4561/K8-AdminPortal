@@ -17,15 +17,21 @@ function NuggetFilters(props: any) {
     selectTopic,
     selectChapter,
   } = useContext(NuggetsContext);
-
+  const [nuggetId, setNuggetId] = useState();
   const category = nugget.categories[props.index];
   console.log("******Nugget from Filter*****", category);
-  console.log(props.nuggetId, "propsNuggetID");
 
   const [categoryList, setCategoryList] = useState<OptionType[]>();
   const [subjectList, setSubjectList] = useState<OptionType[]>();
   const [topicList, setTopicList] = useState<OptionType[]>();
   const [chapterList, setChapterList] = useState<OptionType[]>();
+
+  useEffect(() => {
+    if (props.nuggetId) {
+      setNuggetId(props.nuggetId);
+    }
+  }, [props.nuggetId])
+  console.log(nuggetId, "propsNuggetID");
 
   useEffect(() => {
     getCategory().then((data) =>
@@ -69,6 +75,7 @@ function NuggetFilters(props: any) {
       onCategoryChange(nugget.categories[props.index].categoryId);
     }
   }, [nugget.categories[props.index].categoryId]);
+
   // useEffect(() => {
   //   onCategoryChange(nugget.categories[props.index].categoryId)
   // }, [nugget.categories[props.index].categoryId])
@@ -159,3 +166,4 @@ function NuggetFilters(props: any) {
 }
 
 export default NuggetFilters;
+

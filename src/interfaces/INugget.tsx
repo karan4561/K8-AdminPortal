@@ -116,13 +116,13 @@ export interface QuestionObject {
     }[];
   };
   ltiImage?: FileObject;
-  fib?: {
-    english: Array<{
+  fib: {
+    english: {
       value?: string; //content
       id?: string; // backend
       type?: string; //blank/text
       valueArr?: string[]; //backend
-    }>;
+    }[];
     hindi?: {
       value: string;
       id: string;
@@ -136,10 +136,10 @@ export interface QuestionObject {
       valueArr: string[];
     }[];
   };
-  extraOptions?: {
+  extraOptions: {
     english: {
       text: string;
-      id: string;
+      id?: string;
     }[];
     hindi?: {
       text: string;

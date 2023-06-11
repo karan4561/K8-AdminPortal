@@ -48,7 +48,7 @@ function SccNugget() {
           <h4>Answers Options</h4>
         </div>
         <div>
-          <AddTextEditor />
+          <AddTextEditor/>
         </div>
         <h4>Hint</h4>
         <TextEditor
