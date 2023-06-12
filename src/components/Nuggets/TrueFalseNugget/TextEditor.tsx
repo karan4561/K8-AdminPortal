@@ -1,10 +1,12 @@
 import React, { useRef, useEffect } from "react";
 import { Editor } from "@tinymce/tinymce-react";
+import tinymce from "tinymce";
 import { useState, useContext } from "react";
+import { uploadImage } from "@/api/utils";
 // import { NuggetContext } from "../K-8ContextProvider";
 const TextEditor = (props) => {
   //   const { nugget,updateTFSolution } = useContext(NuggetContext);
-  const editorRef = useRef(null);
+  const editorRef = useRef<any>(null);
   const [content, setContent] = useState("");
 
   const handleEditorChange = (content) => {
@@ -16,7 +18,7 @@ const TextEditor = (props) => {
   useEffect(() => {
     if (editorRef.current) {
       editorRef.current.editor.on("init", () => {
-        editorRef.current.editor.formatter.register("mycustomformat", {
+        editorRef.current?.editor.formatter.register("mycustomformat", {
           inline: "span",
           styles: {
             color: "%value",
@@ -51,20 +53,20 @@ const TextEditor = (props) => {
             input.setAttribute("type", "file");
             input.setAttribute("accept", "image/*");
             input.onchange = function () {
-              var file = this.files[0];
-
+              var file = input?.files && input.files[0];
               var reader = new FileReader();
               reader.onload = function () {
-                var id = "blobid" + new Date().getTime();
-                var blobCache = tinymce.activeEditor.editorUpload.blobCache;
-                var base64 = reader.result.split(",")[1];
-                var blobInfo = blobCache.create(id, file, base64);
-                blobCache.add(blobInfo);
-                cb(blobInfo.blobUri(), { title: file.name });
+                const formData = new FormData();
+                const token = localStorage.getItem("TOKEN");
+                formData.append("file", file);
+                uploadImage(formData).then((data) => {
+                  cb(data.baseUrl + data.key, {
+                    title: data.name,
+                  });
+                });
               };
               reader.readAsDataURL(file);
             };
-
             input.click();
           },
           plugins: [
@@ -72,7 +74,7 @@ const TextEditor = (props) => {
             "advlist autolink lists link image charmap print preview anchor",
             "searchreplace visualblocks code fullscreen",
             "insertdatetime media table paste code help wordcount",
-            'MathType',
+            "MathType",
             "tex",
             "button",
             "image",
@@ -81,8 +83,10 @@ const TextEditor = (props) => {
           contextmenu_avoid_overlap: ".mce-spelling-word",
           branding: false,
           external_plugins: {
-            tiny_mce_wiris: 'https://www.wiris.net/demo/plugins/tiny_mce/plugin.js',
-            tiny_mce_mathType: 'https://mathtype-main.s3.ap-south-1.amazonaws.com/mathTypeIntegration.min.js',
+            tiny_mce_wiris:
+              "https://www.wiris.net/demo/plugins/tiny_mce/plugin.js",
+            tiny_mce_mathType:
+              "https://mathtype-main.s3.ap-south-1.amazonaws.com/mathTypeIntegration.min.js",
           },
           toolbar:
             "link image | code| mathjax | mathtype | tiny_mce_wiris_formulaEditor tiny_mce_wiris_formulaEditorChemistry | bold italic underline | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat",

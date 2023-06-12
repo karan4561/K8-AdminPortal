@@ -13,9 +13,7 @@ import MCQNugget from "../Nuggets/MCQNugget/MCQNugget";
 import LTI from "../LTI/LTI";
 import NoteNugget from "../Nuggets/NoteNugget/NoteNugget";
 import FIBNugget from "../Nuggets/FIB/FIBNugget";
-import { fetchNugget, submitNugget, updateNugget, getHeaderIcons } from "@/api/utils";
-import { log } from "console";
-import { Nugget } from "@/interfaces/INugget";
+import { submitNugget, updateNugget, getHeaderIcons } from "@/api/utils";
 
 interface OptionType {
   label:
@@ -40,9 +38,8 @@ function NuggetsLanding({ nuggetId }: any) {
     validateErrors,
     fetchNuggetContent,
     updateFileObj,
-    icon
+    icon,
   } = useContext(NuggetsContext);
-  const [isVisible, setIsVisible] = useState(true);
 
   const options: OptionType[] = [
     { value: "Video", label: "Video" },
@@ -64,7 +61,7 @@ function NuggetsLanding({ nuggetId }: any) {
   useEffect(() => {
     getHeaderIcons().then((data) => updateFileObj(data));
   }, []);
-  
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
@@ -99,7 +96,7 @@ function NuggetsLanding({ nuggetId }: any) {
       }
     }
   };
-  
+
   return (
     <>
       <div>
@@ -109,7 +106,7 @@ function NuggetsLanding({ nuggetId }: any) {
         <div className="create-nugget">
           <button onClick={handleSubmit}>Create Nugget</button>
           <div className="cards-parent">
-            <AddNuggetHeader nuggetId={nuggetId}/> 
+            <AddNuggetHeader nuggetId={nuggetId} />
             <div
               className="card-header NuggetId"
               style={nuggetId ? { pointerEvents: "none", opacity: 0.5 } : {}}

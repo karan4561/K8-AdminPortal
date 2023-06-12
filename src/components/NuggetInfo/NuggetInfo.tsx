@@ -7,10 +7,12 @@ export default function NuggetInfo() {
     updateNuggetInfoHeader,
     updateNuggetInfoSideNote,
     updateNuggetInfoKnowledgeCap,
-    nugget, } = useContext(NuggetsContext);
+    nugget,
+  } = useContext(NuggetsContext);
   // const [headerTitle, setheaderTitle] = useState("");
   const [isChecked, setIsChecked] = useState(false);
   const [sideNote, setsideNote] = useState("");
+
   const headerTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     // setheaderTitle(event.target.value);
     updateNuggetInfoHeader(event.target.value);
@@ -20,6 +22,7 @@ export default function NuggetInfo() {
     setIsChecked(!isChecked);
     updateNuggetInfoKnowledgeCap(!isChecked);
   }
+
   const sideNoteChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setsideNote(event.target.value);
     updateNuggetInfoSideNote(event.target.value);
