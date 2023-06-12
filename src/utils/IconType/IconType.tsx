@@ -1,6 +1,6 @@
 import { NuggetsContext } from "../../context/NuggetsContext";
 import React, { useContext, useState, useEffect } from "react";
-import { uploadImage, postImage } from "@/api/utils";
+import { uploadImage, postImage, getHeaderIcons } from "@/api/utils";
 import { useAmp } from "next/amp";
 import { FileObject } from "@/interfaces/INugget";
 
@@ -34,7 +34,6 @@ export default function MyDropdown() {
     setIsOpen(!isOpen);
   };
 
-
   const handleOptionClick = (selectedOption: OptionType) => {
     setSelectedOption(selectedOption);
     setIsOpen(false);
@@ -50,16 +49,22 @@ export default function MyDropdown() {
     }
   };
 
+  async function uploadimage(uploadedImage:FileObject) {
+   await postImage({
+      baseUrl: uploadedImage.baseUrl,
+      key: uploadedImage.key
+    })
+    getHeaderIcons().then((data) => updateFileObj(data));
+  }
   useEffect(()=>{
     if(uploadedImage){
-      postImage({
-        baseUrl: uploadedImage.baseUrl,
-        key: uploadedImage.key
-      })
+  // postImage({
+  //   baseUrl: uploadedImage.baseUrl,
+  //   key: uploadedImage.key
+  // })
+  uploadimage(uploadedImage)
     }
   },[uploadedImage])
-  
-  console.log(uploadedImage,"uploadedImage");
   
   return (
     <div className="dropdown">
@@ -75,6 +80,10 @@ export default function MyDropdown() {
               width={30}
               height={30}
             />
+            {/* <object type="image/svg+xml" data={selectedOption.baseUrl + selectedOption.key} width={30}
+              height={30}> */}
+          {/* Your browser does not support SVG. */}
+        {/* </object> */}
           </div>
         ) : (
           <div className="dropdownText" style={{ color: "#999" }}>

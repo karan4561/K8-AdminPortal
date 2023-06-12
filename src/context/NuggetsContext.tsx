@@ -191,6 +191,7 @@ const NuggetProvider = (props: any) => {
     }));
   }
 
+
   function updateContentKind(kind: {
     kind: "H1" | "H2" | "Text" | "UL" | "OL" | "IMG";
   }) {

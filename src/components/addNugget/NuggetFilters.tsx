@@ -27,13 +27,6 @@ function NuggetFilters(props: any) {
   const [chapterList, setChapterList] = useState<OptionType[]>();
 
   useEffect(() => {
-    if (props.nuggetId) {
-      setNuggetId(props.nuggetId);
-    }
-  }, [props.nuggetId])
-  console.log(nuggetId, "propsNuggetID");
-
-  useEffect(() => {
     getCategory().then((data) =>
       setCategoryList(
         data.map((obj: any) => {
@@ -48,15 +41,14 @@ function NuggetFilters(props: any) {
   };
 
   useEffect(() => {
-    if (nugget.categories[props.index].subjectId) {
-      onSubjectChange(nugget.categories[props.index].subjectId);
+    if (props.nuggetId && !chapterList && category.subjectId) {
+      onSubjectChange({value:category.subjectId})
     }
-  }, [
-    nugget.categories[props.index].subjectId,
-    nugget.categories[props.index].categoryId,
-  ]);
+    console.log(nugget.categories[props.index].subjectId,"props.nuggetId");
+  }, [props.nuggetId,chapterList,category.subjectId])
 
-  const onSubjectChange = async (selectedOption: OptionType | null) => {
+  const onSubjectChange = (selectedOption: OptionType | null) => {
+
     if (selectedOption && category.categoryId) {
       selectSubject(props.index, selectedOption.value);
       await getChapters(category.categoryId, selectedOption.value).then(
@@ -70,16 +62,15 @@ function NuggetFilters(props: any) {
     }
   };
 
-  useEffect(() => {
-    if (nugget.categories[props.index].categoryId) {
-      onCategoryChange(nugget.categories[props.index].categoryId);
-    }
-  }, [nugget.categories[props.index].categoryId]);
+  useEffect(()=>{
+      if(category.categoryId && props.nuggetId && !subjectList){
+        onCategoryChange({value:category.categoryId})
+      }
+    console.log(category.categoryId,"123456789");
+  },[props.nuggetId,subjectList,category.categoryId])
+  
+  const onCategoryChange = (selectedOption: OptionType | null) => {
 
-  // useEffect(() => {
-  //   onCategoryChange(nugget.categories[props.index].categoryId)
-  // }, [nugget.categories[props.index].categoryId])
-  const onCategoryChange = async (selectedOption: OptionType | null) => {
     if (selectedOption) {
       selectCategory(props.index, selectedOption.value);
       await getSubject(selectedOption.value).then((data) =>
@@ -92,18 +83,11 @@ function NuggetFilters(props: any) {
     }
   };
 
-  useEffect(() => {
-    if (nugget.categories[props.index].chapterId) {
-      onChapterChange(nugget.categories[props.index].chapterId);
+  useEffect(()=>{
+    if(props.nuggetId && !chapterList && category.chapterId){
+      onChapterChange({value:category.chapterId})
     }
-  }, [
-    nugget.categories[props.index].chapterId,
-    nugget.categories[props.index].categoryId,
-    nugget.categories[props.index].subjectId,
-  ]);
-  // useEffect(() => {
-  //   onChapterChange(nugget.categories[0].chapterId)
-  // }, [nugget.categories[props.index].chapterId])
+  },[props.nuggetId,chapterList,category.chapterId])
 
   const onChapterChange = async (selectedOption: OptionType | null) => {
     if (selectedOption && category.categoryId && category.subjectId) {
