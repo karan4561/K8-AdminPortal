@@ -3,28 +3,26 @@ import Icon from "../../utils/IconType/IconType";
 import { useContext, useState, useEffect } from "react";
 
 export default function NuggetInfo() {
-  const { updateNuggetInfo, nugget } = useContext(NuggetsContext);
+  const {
+    updateNuggetInfoHeader,
+    updateNuggetInfoSideNote,
+    updateNuggetInfoKnowledgeCap,
+    nugget, } = useContext(NuggetsContext);
   // const [headerTitle, setheaderTitle] = useState("");
   const [isChecked, setIsChecked] = useState(false);
   const [sideNote, setsideNote] = useState("");
   const headerTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     // setheaderTitle(event.target.value);
-    updateNuggetInfo({
-      headerTitle: event.target.value,
-    });
+    updateNuggetInfoHeader(event.target.value);
   };
 
   function handleCheckboxChange() {
     setIsChecked(!isChecked);
-    updateNuggetInfo({
-      isKnowledgeCap: !isChecked,
-    });
+    updateNuggetInfoKnowledgeCap(!isChecked);
   }
   const sideNoteChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setsideNote(event.target.value);
-    updateNuggetInfo({
-      sideNote: event.target.value,
-    });
+    updateNuggetInfoSideNote(event.target.value);
   };
   // useEffect(() => {
   //   updateNuggetInfo({

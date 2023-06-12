@@ -161,16 +161,37 @@ const NuggetProvider = (props: any) => {
     }));
   }
 
-  function updateNuggetInfo(NuggetInfo: {
-    headerTitle?: string;
-    sideNote?: string;
-    isKnowledgeCap?: boolean;
-  }) {
+  // function updateNuggetInfo(NuggetInfo: {
+  //   headerTitle?: string;
+  //   sideNote?: string;
+  //   isKnowledgeCap?: boolean;
+  // }) {
+  //   setNugget((prev) => ({
+  //     ...prev,
+  //     headerTitle: NuggetInfo.headerTitle,
+  //     sideNote: NuggetInfo.sideNote,
+  //     IsKnowledgeCap: NuggetInfo.isKnowledgeCap,
+  //   }));
+  // }
+
+  function updateNuggetInfoHeader(headerTitle: string) {
     setNugget((prev) => ({
       ...prev,
-      headerTitle: NuggetInfo.headerTitle,
-      sideNote: NuggetInfo.sideNote,
-      IsKnowledgeCap: NuggetInfo.isKnowledgeCap,
+      headerTitle: headerTitle,
+    }));
+  }
+
+  function updateNuggetInfoSideNote(sideNote: string) {
+    setNugget((prev) => ({
+      ...prev,
+      sideNote: sideNote,
+    }));
+  }
+
+  function updateNuggetInfoKnowledgeCap(isKnowledgeCap: boolean) {
+    setNugget((prev) => ({
+      ...prev,
+      IsKnowledgeCap: isKnowledgeCap,
     }));
   }
 
@@ -181,6 +202,7 @@ const NuggetProvider = (props: any) => {
       timeToReward: XPTimer.timeToReward,
     }));
   }
+
 
   function updateContentKind(kind: {
     kind: "H1" | "H2" | "Text" | "UL" | "OL" | "IMG";
@@ -652,7 +674,10 @@ const NuggetProvider = (props: any) => {
           setQues,
           setList,
           setBullet,
-          updateNuggetInfo,
+          updateNuggetInfoHeader,
+          updateNuggetInfoKnowledgeCap,
+          updateNuggetInfoSideNote,
+          // updateNuggetInfo,
           updateXPTimer,
           updateAnswer,
           updateSolHint,

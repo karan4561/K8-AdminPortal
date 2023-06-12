@@ -17,7 +17,10 @@ export interface INuggetContext extends FilterFunctions {
   ques?: QuestionObject
   updateNuggetKind?: any,
   setQues?: React.Dispatch<React.SetStateAction<QuestionObject | undefined>>
-  updateNuggetInfo: (NuggetInfo: { headerTitle?: string, sideNote?: string, isKnowledgeCap?: boolean }) => void,
+  updateNuggetInfoHeader: (headerTitle:string) => void,
+  updateNuggetInfoSideNote: (sideNote: string) => void,
+  updateNuggetInfoKnowledgeCap: (isKnowledgeCap: boolean) => void,
+  // updateNuggetInfo: (NuggetInfo: { headerTitle?: string, sideNote?: string, isKnowledgeCap?: boolean }) => void,
   updateCategoryObject?: (Category: { Category: string, Chapter: string, Subject: string, Topic?: string }) => void,
   updateXPTimer: (XPTimer: { reward: number, timeToReward: number }) => void,
   updateContentKind?: (kind: { kind: 'H1' | 'H2' | 'Text' | 'UL' | 'OL' | 'IMG' }) => void,

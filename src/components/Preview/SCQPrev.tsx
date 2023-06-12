@@ -1,13 +1,15 @@
 import React from "react";
 import { Nugget } from "@/interfaces/INugget";
 
-function SCQPrev({ nugget }) {
+function SCQPrev({ nugget }:any) {
   // const { nugget } = useContext(NuggetsContext);
   const parse = require("html-react-parser");
   return (
     <>
+    <div className="image-width">
       {!!nugget?.question?.content?.english && (
-        <p>{parse(nugget?.question.content?.english)}</p>
+        <p dangerouslySetInnerHTML={{__html
+        : nugget?.question?.content?.english}} />
       )}
       {
         <div className="TFPrev">
@@ -51,6 +53,7 @@ function SCQPrev({ nugget }) {
           )}
         </div>
       )}
+      </div>
     </>
   );
 }
