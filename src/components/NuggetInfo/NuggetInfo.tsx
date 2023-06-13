@@ -1,5 +1,5 @@
 import { NuggetsContext } from "../../context/NuggetsContext";
-import Icon from "../../utils/IconType/IconType";
+import IconDropdown from "../../utils/IconDropdown/IconDropdown";
 import { useContext, useState, useEffect } from "react";
 
 export default function NuggetInfo() {
@@ -27,13 +27,6 @@ export default function NuggetInfo() {
     setsideNote(event.target.value);
     updateNuggetInfoSideNote(event.target.value);
   };
-  // useEffect(() => {
-  //   updateNuggetInfo({
-  //     headerTitle: headerTitle,
-  //     sideNote: sideNote,
-  //     isKnowledgeCap: isChecked,
-  //   });
-  // }, [headerTitle, sideNote, isChecked]);
 
   return (
     <>
@@ -41,7 +34,7 @@ export default function NuggetInfo() {
         <h2>Nugget Info</h2>
         <h4>Header</h4>
         <div className="NuggetInfo-iconHeadertitle Info">
-          <Icon />
+          <IconDropdown />
           <input
             className="image-type-input"
             type="text"

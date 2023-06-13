@@ -48,6 +48,8 @@ export interface INuggetContext extends FilterFunctions {
     updateListItem?: (idi: number, item: string, kind: "H1" | "H2" | "Text" | "UL" | "OL" | "IMG", idj: number)=>void,
     submit:boolean,
     setSubmit:React.Dispatch<React.SetStateAction<boolean>>,
+    nuggetId?:string,
+    setNuggetId?:React.Dispatch<React.SetStateAction<string | undefined>>,
     // formErrors:any,
     // setFormErrors:any
     validateErrors?: (values: Nugget)=>any,

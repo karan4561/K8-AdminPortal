@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import Select from "react-select";
 import { getCategory, getSubject, getChapters, getTopics } from "@/api/filter";
@@ -54,7 +54,7 @@ function EditNugget() {
   }, []);
 
   async function deleteNuggets(nuggetId: string) {
-   await deleteNugget(nuggetId);
+    await deleteNugget(nuggetId);
     onSubmit();
     toast.success("Nugget is deleted Successfully");
   }
@@ -168,8 +168,6 @@ function EditNugget() {
           />
           <button onClick={onSubmit}>Search</button>
         </div>
-        {/* <NuggetProvider> */}
-        {/* <EditNuggetLanding /> */}
         {nuggetList.map((nuggetData, index) => {
           return (
             <div className="edit-label">
@@ -197,15 +195,13 @@ function EditNugget() {
                 {(nuggetData.kind == "SCQ" || "MCQ") && (
                   <SCQPrev nugget={nuggetData} />
                 )}
-              {(nuggetData.kind == "TRUEFALSE | TF") && (
-                <TrueFalsePrev TFPrevData={nuggetData} />
+                {nuggetData.kind == "TRUEFALSE | TF" && (
+                  <TrueFalsePrev TFPrevData={nuggetData} />
                 )}
               </div>
-                {/* {(nuggetData.kind == "SCQ" || "MCQ") && (
+              {/* {(nuggetData.kind == "SCQ" || "MCQ") && (
                   <SCQPrev nugget={nuggetData} />
                 )} */}
-
-
             </div>
           );
           // }

@@ -10,26 +10,24 @@ interface OptionType {
   baseUrl: string;
   key: string;
   type?:
-  | "CONTENT"
-  | "TEST"
-  | "SUBJECTIVE_TEST_SOLUTIONS"
-  | "VIMEO"
-  | "JWPLAYER";
+    | "CONTENT"
+    | "TEST"
+    | "SUBJECTIVE_TEST_SOLUTIONS"
+    | "VIMEO"
+    | "JWPLAYER";
   organization?: string;
   size?: number;
   details?: string;
 }
 
-export default function MyDropdown() {
-  const { nugget,icon, updateHeaderIcon, updateFileObj } = useContext(NuggetsContext);
+export default function IconDropdown() {
+  const { icon, updateHeaderIcon, updateFileObj } = useContext(NuggetsContext);
   const [selectedOption, setSelectedOption] = useState<OptionType | null>(null);
   const [isOpen, setIsOpen] = useState(false);
-  const [uploadedImage, setUploadedImage] = useState<FileObject>()
+  const [uploadedImage, setUploadedImage] = useState<FileObject>();
 
-  // const options: OptionType[] | undefined = icon;
-  // useEffect(() => {
-  //   getHeaderIcons().then((data) => updateFileObj(data));
-  // }, []);
+  const { nugget, nuggetId } = useContext(NuggetsContext);
+
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
@@ -37,53 +35,55 @@ export default function MyDropdown() {
   const handleOptionClick = (selectedOption: OptionType) => {
     setSelectedOption(selectedOption);
     setIsOpen(false);
-    updateHeaderIcon(selectedOption)
+    if (updateHeaderIcon) updateHeaderIcon(selectedOption);
   };
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
       const formData = new FormData();
-      formData.append("file", file)
+      formData.append("file", file);
       console.log(formData, "formData");
-      uploadImage(formData).then((data) => setUploadedImage(data))
+      uploadImage(formData).then((data) => setUploadedImage(data));
     }
   };
 
-  async function uploadimage(uploadedImage:FileObject) {
-   await postImage({
+  async function uploadimage(uploadedImage: FileObject) {
+    await postImage({
       baseUrl: uploadedImage.baseUrl,
-      key: uploadedImage.key
-    })
+      key: uploadedImage.key,
+    });
     getHeaderIcons().then((data) => updateFileObj(data));
   }
-  useEffect(()=>{
-    if(uploadedImage){
-  // postImage({
-  //   baseUrl: uploadedImage.baseUrl,
-  //   key: uploadedImage.key
-  // })
-  uploadimage(uploadedImage)
+  useEffect(() => {
+    if (uploadedImage) {
+      uploadimage(uploadedImage);
     }
-  },[uploadedImage])
-  
+    console.log("***This is selected Option****", selectedOption);
+  }, [uploadedImage]);
+
   return (
     <div className="dropdown">
       <div className="dropdown-toggle" onClick={toggleDropdown}>
-        {selectedOption ? (
+        {nuggetId && nugget.headerIcon?.baseUrl && nugget.headerIcon?.key ? (
+          <img
+            className="dropdownHeader"
+            style={{ display: "flex", alignItems: "center" }}
+            src={nugget.headerIcon.baseUrl + nugget.headerIcon.key}
+            width={30}
+            height={30}
+            alt=""
+          />
+        ) : selectedOption ? (
           <div
             className="dropdownHeader"
             style={{ display: "flex", alignItems: "center" }}
           >
             <img
-              src={nugget.headerIcon?.baseUrl+nugget.headerIcon?.key}
+              src={nugget.headerIcon?.baseUrl + nugget.headerIcon?.key}
               alt={selectedOption._id}
               width={30}
               height={30}
             />
-            {/* <object type="image/svg+xml" data={selectedOption.baseUrl + selectedOption.key} width={30}
-              height={30}> */}
-          {/* Your browser does not support SVG. */}
-        {/* </object> */}
           </div>
         ) : (
           <div className="dropdownText" style={{ color: "#999" }}>
@@ -121,7 +121,12 @@ export default function MyDropdown() {
             <img src="/upload.png" width={20} height={20} />
             <p>Upload Icon</p>
           </label>
-          <input id="file-input" type="file" accept="image/*" onChange={handleImageUpload} />
+          <input
+            id="file-input"
+            type="file"
+            accept="image/*"
+            onChange={handleImageUpload}
+          />
           {/* </div> */}
         </div>
       )}
