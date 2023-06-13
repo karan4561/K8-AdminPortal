@@ -15,7 +15,7 @@ function SCQPrev({ nugget }:any) {
       {
         <div className="TFPrev">
           {nugget.question?.bilingual_options.english.map(
-            (optionData, index) => {
+            (optionData, index:number) => {
               // console.log(optionData.text,"optionData.text");
               if(optionData.isCorrect){
                 correctOption="gray"
