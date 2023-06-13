@@ -8,14 +8,24 @@ interface OptionType {
 
 export default function () {
   const optionsXP: OptionType[] = [
+    { value: 15, label: 15 },
+    { value: 30, label: 30 },
     { value: 45, label: 45 },
-    { value: 25, label: 25 },
-    { value: 35, label: 35 },
+    { value: 60, label: 60 },
+    { value: 75, label: 75 },
+    { value: 90, label: 90 },
+    { value: 105, label: 105 },
+    { value: 120, label: 120 }
   ];
   const optionsTimer: OptionType[] = [
     { value: 15, label: 15 },
-    { value: 25, label: 25 },
-    { value: 32, label: 32 },
+    { value: 30, label: 30 },
+    { value: 45, label: 45 },
+    { value: 60, label: 60 },
+    { value: 75, label: 75 },
+    { value: 90, label: 90 },
+    { value: 105, label: 105 },
+    { value: 120, label: 120 }
   ];
   const { updateXPTimer } = useContext(NuggetsContext);
   const [selectedXP, setSelectedXP] = useState<OptionType>(optionsXP[0]);

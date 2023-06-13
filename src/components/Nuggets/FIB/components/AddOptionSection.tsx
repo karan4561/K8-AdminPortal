@@ -28,17 +28,18 @@ function AddOptionSection() {
         updateFIBOption({ index, text: content });
     }
 
-    const sectionElements = test.question?.bilingual_options?.english.map(
+    const sectionElements = test.question?.extraOptions?.english.map(
         (section, index) => {
             return (
                 <>
-                    <div className="option-editor" key={index}>
+                    <div key={index}>
                         <TextEditor
                             value={section.text}
                             onUpdate={(content: string) => updateAnswerOption(index, content)}
+                            fibExtraOption={"fibExtraOption"}
                         />
                     </div>
-                    {test.question.bilingual_options?.english?.length !== 1 && (
+                    {test.question.extraOptions.english.length !== 1 && (
                         <button onClick={() => handleDelete(index)}>Delete</button>
                     )}
                 </>
@@ -48,8 +49,8 @@ function AddOptionSection() {
 
     return (
         <>
-            <button className="subcard-addSection" onClick={addSection}>
-                Add Section
+            <button className="other-option-button" onClick={addSection}>
+               + Add Other Option
             </button>
             {sectionElements}
         </>

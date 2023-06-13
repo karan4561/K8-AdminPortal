@@ -4,6 +4,7 @@ import { Nugget } from "@/interfaces/INugget";
 function SCQPrev({ nugget }: any) {
   // const { nugget } = useContext(NuggetsContext);
   const parse = require("html-react-parser");
+  let correctOption: string;
   return (
     <>
       <div className="image-width">

@@ -79,7 +79,7 @@ export default function IconDropdown() {
             style={{ display: "flex", alignItems: "center" }}
           >
             <img
-              src={selectedOption.baseUrl + selectedOption.key}
+              src={nugget.headerIcon?.baseUrl + nugget.headerIcon?.key}
               alt={selectedOption._id}
               width={30}
               height={30}

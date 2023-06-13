@@ -15,7 +15,6 @@ function FIBSection(props: any) {
     { value: "TEXT", label: "TEXT" },
     { value: "BLANK", label: "BLANK" },
   ];
-  console.log("this is props.id: ", props.id);
 
   const [selectedOption, setSelectedOption] = useState<OptionType>(options[0]);
   const [fibContent, setFibContent] = useState<string>("");
@@ -38,8 +37,8 @@ function FIBSection(props: any) {
 
   return (
     <>
-      <div className="card-header add-section">
-        <div className="textEditor-addButton">
+      <div className="fib-card-header">
+        <div className="fib-option-editor">
           <Select
             className="AddNuggetCategory "
             value={selectedOption}
@@ -47,7 +46,7 @@ function FIBSection(props: any) {
             options={options}
             placeholder="TEXT"
           />
-          <TextEditor  idx={props.id} value={nugget.question.fib.english[props.id].value} onUpdate={updateSolHint} />
+          <TextEditor  idx={props.id} value={nugget.question.fib.english[props.id].value} onUpdate={updateSolHint}  fibOption={"fibOption"}/>
         </div>
       </div>
     </>

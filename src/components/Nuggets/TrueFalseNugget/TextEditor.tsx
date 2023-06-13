@@ -6,6 +6,7 @@ import { uploadImage } from "@/api/utils";
 // import { NuggetContext } from "../K-8ContextProvider";
 const TextEditor = (props) => {
   //   const { nugget,updateTFSolution } = useContext(NuggetContext);
+  let width:string
   const editorRef = useRef<any>(null);
   const [content, setContent] = useState("");
 
@@ -31,6 +32,12 @@ const TextEditor = (props) => {
       });
     }
   }, []);
+  if(props.fibOption || props.fibExtraOption){
+    width="40vw"
+  }
+  else{
+    width="60vw"
+  }
   return (
     <div className="text-editor">
       <Editor
@@ -39,12 +46,12 @@ const TextEditor = (props) => {
         apiKey={"2gzhpfsdrqpzlgs2servolzz08ba2ww1vypt3mvwuc8x16an"}
         init={{
           height: 200,
-          width: "60vw",
+          width: width,
           draggable_modal: false,
           paste_preprocess: function (plugin, args) {
             args.content = args.content.replace(/&nbsp;/g, " ");
           },
-          menubar: false,
+          menubar: "tools",
           image_title: true,
           automatic_uploads: true,
           file_picker_types: "image",
@@ -78,6 +85,7 @@ const TextEditor = (props) => {
             "tex",
             "button",
             "image",
+            "code"
           ],
           selector: "textarea",
           contextmenu_avoid_overlap: ".mce-spelling-word",
@@ -88,6 +96,7 @@ const TextEditor = (props) => {
             tiny_mce_mathType:
               "https://mathtype-main.s3.ap-south-1.amazonaws.com/mathTypeIntegration.min.js",
           },
+          menubar: false,
           toolbar:
             "link image | code| mathjax | mathtype | tiny_mce_wiris_formulaEditor tiny_mce_wiris_formulaEditorChemistry | bold italic underline | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat",
           content_style:

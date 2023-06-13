@@ -596,3 +596,38 @@ h4 {
   padding: 10px;
   cursor: pointer;
 }
+
+.fib-option-editor{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.fib-card-header{
+  margin-top: 32px;
+}
+
+.fib-card{
+  background-color: white;
+  border-right: 1px solid #00000038;
+  border-bottom: 1px solid #00000038;
+  border-left: 1px solid #00000038;
+  padding: 10px;
+  margin-top: 32px;
+  width: 62vw;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  border-top: 1px solid #00000038;
+  position: relative;
+}
+
+.other-option-button{
+  all: unset;
+    cursor: pointer;
+    box-shadow: rgb(35 38 49 / 12%) 0px 9px 17px 0px;
+    margin: 14px 0;
+    width: 161px;
+    display: block;
+    height: 44px;
+    color: #333333;
+    font-weight: bold;
+}

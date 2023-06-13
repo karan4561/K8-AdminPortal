@@ -9,18 +9,20 @@ function VideoNugget() {
 
   const captionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCaption(event.target.value);
+    updateVideoNugget({videoCaption: event.target.value})
   };
   const videoUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setvideoUrl(event.target.value);
+    updateVideoNugget({videoURI: event.target.value})
   };
 
-  useEffect(() => {
-    if (updateVideoNugget && caption && videoUrl)
-      updateVideoNugget({
-        videoCaption: caption,
-        videoURI: videoUrl,
-      });
-  }, [caption, videoUrl]);
+  // useEffect(() => {
+  //   if (updateVideoNugget && caption && videoUrl)
+  //     updateVideoNugget({
+  //       videoCaption: caption,
+  //       videoURI: videoUrl,
+  //     });
+  // }, [caption, videoUrl]);
   return (
     <>
       <div className="card-header add-section">

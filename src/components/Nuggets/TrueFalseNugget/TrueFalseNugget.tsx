@@ -30,7 +30,8 @@ function TrueFalseNugget() {
     const value = event.target.value === "true";
     if (updateAnswer)
       updateAnswer({
-        answer:value
+        answer:value,
+        text: event.target.value
       });
   };
   // useEffect(() => {
@@ -65,7 +66,7 @@ function TrueFalseNugget() {
             <input
               type="radio"
               name="optio"
-              value={false.toString()}
+              value={true.toString()}
               checked={nugget.question?.bilingual_options.english[0].isCorrect === true}
               onChange={OptionChange}
             />
