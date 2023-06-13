@@ -6,6 +6,7 @@ function EditNugget() {
   const router = useRouter();
   const nuggetId = router.query.nuggetId;
   console.log("*****NuggetID Dynamic****", nuggetId);
+
   return (
     <div>
       <NuggetHome nuggetId={nuggetId} />

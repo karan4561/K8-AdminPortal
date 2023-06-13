@@ -34,11 +34,10 @@ function NuggetsLanding({ nuggetId }: any) {
   const {
     updateNuggetKind,
     nugget,
-    setNugget,
     validateErrors,
     fetchNuggetContent,
     updateFileObj,
-    icon,
+    setNuggetId,
   } = useContext(NuggetsContext);
 
   const options: OptionType[] = [
@@ -56,6 +55,7 @@ function NuggetsLanding({ nuggetId }: any) {
 
   useEffect(() => {
     fetchNuggetContent(nuggetId);
+    if (setNuggetId) setNuggetId(nuggetId);
   }, [nuggetId]);
 
   useEffect(() => {
@@ -67,13 +67,13 @@ function NuggetsLanding({ nuggetId }: any) {
 
     if (validateErrors) {
       if (Object && Object.keys(validateErrors(nugget) || {}).length === 0) {
-        console.log("Form is Submitted Successfully");
-        toast.success("Form is Submitted Successfully");
         try {
           if (!nuggetId) {
             await submitNugget(nugget);
+            toast.success("Form is Submitted Successfully");
           } else {
             await updateNugget(nugget, nuggetId);
+            toast.success("Form is Updated Successfully");
           }
         } catch (e: any) {
           if (e.response.status == 401) {
@@ -104,7 +104,8 @@ function NuggetsLanding({ nuggetId }: any) {
       </div>
       <div className="nugget">
         <div className="create-nugget">
-          <button onClick={handleSubmit}>Create Nugget</button>
+          {!nuggetId && <button onClick={handleSubmit}>Create Nugget</button>}
+          {nuggetId && <button onClick={handleSubmit}>Update Nugget</button>}
           <div className="cards-parent">
             <AddNuggetHeader nuggetId={nuggetId} />
             <div

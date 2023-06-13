@@ -1,6 +1,5 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { useState } from "react";
 import { INuggetContext } from "./interface/INuggetsContext";
-import { useEffect } from "react";
 
 import { CategoryObject, Nugget, FileObject } from "@/interfaces/INugget";
 import * as _ from "lodash";
@@ -66,15 +65,13 @@ const NuggetProvider = (props: any) => {
   const [list, setList] = useState<Array<string>>([""]); //fib
   const [ques, setQues] = useState<QuestionObject>(); //fib
   const [submit, setSubmit] = useState<boolean>(false);
-  //const [formErrors, setFormErrors] = useState<any>({});
   const [icon, setIcon] = useState<FileObject[]>();
+  const [nuggetId, setNuggetId] = useState<string>();
   const { filters, ...filterFunctions } = useFilters();
 
-  // useEffect(() => {
-  //   updateFilters(filters);
-  // }, [filters]);
-
   console.log("***This is Nugget***", nugget);
+  console.log("This is Nugget Id:", nuggetId);
+
   function updateFileObj(
     FileObj: {
       _id?: string;
@@ -153,7 +150,7 @@ const NuggetProvider = (props: any) => {
       categories: nugget.categories,
     } as Nugget);
   }
-  console.log("Initial State Testing: ", nugget);
+
   function updateFilters(filter: CategoryObject[]) {
     //console.log("*****This is being called******** step - 2", filter);
     setNugget((prev) => ({
@@ -190,7 +187,6 @@ const NuggetProvider = (props: any) => {
       timeToReward: XPTimer.timeToReward,
     }));
   }
-
 
   function updateContentKind(kind: {
     kind: "H1" | "H2" | "Text" | "UL" | "OL" | "IMG";
@@ -662,6 +658,8 @@ const NuggetProvider = (props: any) => {
           list,
           ques,
           icon,
+          nuggetId,
+          setNuggetId,
           setQues,
           setList,
           setBullet,
@@ -690,8 +688,6 @@ const NuggetProvider = (props: any) => {
           deleteFIBContent,
           submit,
           setSubmit,
-          // formErrors,
-          // setFormErrors,
           validateErrors,
           fetchNuggetContent,
         }}
