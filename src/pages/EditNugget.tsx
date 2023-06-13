@@ -54,7 +54,7 @@ function EditNugget() {
   }, []);
 
   async function deleteNuggets(nuggetId: string) {
-  await  deleteNugget(nuggetId);
+   await deleteNugget(nuggetId);
     onSubmit();
     toast.success("Nugget is deleted Successfully");
   }
@@ -204,6 +204,7 @@ function EditNugget() {
                 {/* {(nuggetData.kind == "SCQ" || "MCQ") && (
                   <SCQPrev nugget={nuggetData} />
                 )} */}
+
 
             </div>
           );

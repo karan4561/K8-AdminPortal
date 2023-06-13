@@ -7,16 +7,16 @@ import * as _ from "lodash";
 
 interface OptionType {
   label:
-  | "Video"
-  | "SCQ"
-  | "MCQ"
-  | "Note"
-  | "FIB"
-  | "IMG"
-  | "AUDIOCLIP"
-  | "LTI"
-  | "TRUEFALSE"
-  | "Audio";
+    | "Video"
+    | "SCQ"
+    | "MCQ"
+    | "Note"
+    | "FIB"
+    | "IMG"
+    | "AUDIOCLIP"
+    | "LTI"
+    | "TRUEFALSE"
+    | "Audio";
   value: string;
 }
 
@@ -66,8 +66,8 @@ const NuggetProvider = (props: any) => {
   const [list, setList] = useState<Array<string>>([""]); //fib
   const [ques, setQues] = useState<QuestionObject>(); //fib
   const [submit, setSubmit] = useState<boolean>(false);
-  const [formErrors, setFormErrors] = useState<any>({});
-  const [icon, setIcon] = useState<FileObject[]>()
+  //const [formErrors, setFormErrors] = useState<any>({});
+  const [icon, setIcon] = useState<FileObject[]>();
   const { filters, ...filterFunctions } = useFilters();
 
   // useEffect(() => {
@@ -75,21 +75,23 @@ const NuggetProvider = (props: any) => {
   // }, [filters]);
 
   console.log("***This is Nugget***", nugget);
-  function updateFileObj(FileObj: {
-    _id?: string;
-    name?: string;
-    baseUrl: string;
-    key: string
-    type?:
-    | "CONTENT"
-    | "TEST"
-    | "SUBJECTIVE_TEST_SOLUTIONS"
-    | "VIMEO"
-    | "JWPLAYER";
-    organization?: string;
-    size?: number;
-    details?: string;
-  }[]) {
+  function updateFileObj(
+    FileObj: {
+      _id?: string;
+      name?: string;
+      baseUrl: string;
+      key: string;
+      type?:
+        | "CONTENT"
+        | "TEST"
+        | "SUBJECTIVE_TEST_SOLUTIONS"
+        | "VIMEO"
+        | "JWPLAYER";
+      organization?: string;
+      size?: number;
+      details?: string;
+    }[]
+  ) {
     const updatedIcons = FileObj.map((obj) => ({
       _id: obj._id,
       name: obj.name,
@@ -104,21 +106,20 @@ const NuggetProvider = (props: any) => {
   }
 
   function updateHeaderIcon(iconObj: {
-    _id?: string,
-    name?: string,
-    baseUrl: string,
-    key: string,
+    _id?: string;
+    name?: string;
+    baseUrl: string;
+    key: string;
     type?:
-    | "CONTENT"
-    | "TEST"
-    | "SUBJECTIVE_TEST_SOLUTIONS"
-    | "VIMEO"
-    | "JWPLAYER",
-    organization?: string,
-    size?: number,
-    details?: string,
-  }
-  ) {
+      | "CONTENT"
+      | "TEST"
+      | "SUBJECTIVE_TEST_SOLUTIONS"
+      | "VIMEO"
+      | "JWPLAYER";
+    organization?: string;
+    size?: number;
+    details?: string;
+  }) {
     setNugget((prev) => ({
       ...prev,
       headerIcon: {
@@ -130,8 +131,8 @@ const NuggetProvider = (props: any) => {
         organization: iconObj.organization,
         size: iconObj.size,
         details: iconObj.details,
-      }
-    }))
+      },
+    }));
   }
   function updateNuggetKind(
     nuggetkind:
@@ -160,19 +161,6 @@ const NuggetProvider = (props: any) => {
       categories: filter,
     }));
   }
-
-  // function updateNuggetInfo(NuggetInfo: {
-  //   headerTitle?: string;
-  //   sideNote?: string;
-  //   isKnowledgeCap?: boolean;
-  // }) {
-  //   setNugget((prev) => ({
-  //     ...prev,
-  //     headerTitle: NuggetInfo.headerTitle,
-  //     sideNote: NuggetInfo.sideNote,
-  //     IsKnowledgeCap: NuggetInfo.isKnowledgeCap,
-  //   }));
-  // }
 
   function updateNuggetInfoHeader(headerTitle: string) {
     setNugget((prev) => ({
@@ -266,7 +254,11 @@ const NuggetProvider = (props: any) => {
       }));
   }
 
-  function updateFIBContent(Content: { index: number; text: string, type: string }) {
+  function updateFIBContent(Content: {
+    index: number;
+    text: string;
+    type: string;
+  }) {
     setNugget((prev) => {
       const updatedOptions = prev.question.fib?.english
         ? prev.question.fib.english
@@ -399,13 +391,13 @@ const NuggetProvider = (props: any) => {
           english: [
             {
               text: "True",
-              isCorrect: Answer.answer
+              isCorrect: Answer.answer,
             },
             {
               text: "True",
-              isCorrect: !Answer.answer
-            }
-          ]
+              isCorrect: !Answer.answer,
+            },
+          ],
         },
       },
     }));
@@ -413,10 +405,9 @@ const NuggetProvider = (props: any) => {
   function updateCaption(caption: { caption?: string }) {
     setNugget((prev) => ({
       ...prev,
-      caption: caption.caption
+      caption: caption.caption,
     }));
   }
-
 
   function updateCorrectOption(Option: { isCorrect: boolean; index: number }) {
     setNugget((prev) => ({
@@ -677,7 +668,6 @@ const NuggetProvider = (props: any) => {
           updateNuggetInfoHeader,
           updateNuggetInfoKnowledgeCap,
           updateNuggetInfoSideNote,
-          // updateNuggetInfo,
           updateXPTimer,
           updateAnswer,
           updateSolHint,
@@ -700,8 +690,8 @@ const NuggetProvider = (props: any) => {
           deleteFIBContent,
           submit,
           setSubmit,
-          formErrors,
-          setFormErrors,
+          // formErrors,
+          // setFormErrors,
           validateErrors,
           fetchNuggetContent,
         }}
