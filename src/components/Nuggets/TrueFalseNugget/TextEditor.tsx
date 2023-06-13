@@ -6,6 +6,7 @@ import { uploadImage } from "@/api/utils";
 // import { NuggetContext } from "../K-8ContextProvider";
 const TextEditor = (props) => {
   //   const { nugget,updateTFSolution } = useContext(NuggetContext);
+  let width:string
   const editorRef = useRef<any>(null);
   const [content, setContent] = useState("");
 
@@ -31,6 +32,12 @@ const TextEditor = (props) => {
       });
     }
   }, []);
+  if(props.fibOption || props.fibExtraOption){
+    width="40vw"
+  }
+  else{
+    width="60vw"
+  }
   return (
     <div className="text-editor">
       <Editor
@@ -39,7 +46,7 @@ const TextEditor = (props) => {
         apiKey={"2gzhpfsdrqpzlgs2servolzz08ba2ww1vypt3mvwuc8x16an"}
         init={{
           height: 200,
-          width: "60vw",
+          width: width,
           draggable_modal: false,
           paste_preprocess: function (plugin, args) {
             args.content = args.content.replace(/&nbsp;/g, " ");

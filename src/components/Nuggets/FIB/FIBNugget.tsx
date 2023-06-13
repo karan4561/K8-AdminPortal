@@ -31,12 +31,16 @@ function FIBNugget() {
   return (
     <>
     <div>
+      <div className="fib-card">
+      <div>{sectionElement}</div>
       <button className="subcard-addSection" onClick={addFIBContent}>
         Add Section
       </button>
-      <div>{sectionElement}</div>
+      </div>
+      <div className="fib-card">
       <h4>Add Other options</h4>
       <AddOptionSection/>
+      </div>
       <h4>Hint</h4>
         <TextEditor
           value={nugget.question.solutions[0].english.hint}

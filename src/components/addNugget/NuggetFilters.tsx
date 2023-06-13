@@ -51,7 +51,7 @@ function NuggetFilters(props: any) {
 
     if (selectedOption && category.categoryId) {
       selectSubject(props.index, selectedOption.value);
-      await getChapters(category.categoryId, selectedOption.value).then(
+      getChapters(category.categoryId, selectedOption.value).then(
         (data) =>
           setChapterList(
             data.map((obj: any) => {
@@ -73,7 +73,7 @@ function NuggetFilters(props: any) {
 
     if (selectedOption) {
       selectCategory(props.index, selectedOption.value);
-      await getSubject(selectedOption.value).then((data) =>
+      getSubject(selectedOption.value).then((data) =>
         setSubjectList(
           data.map((obj: any) => {
             return { value: obj.unique_id, label: obj.english_name };
@@ -92,7 +92,7 @@ function NuggetFilters(props: any) {
   const onChapterChange = async (selectedOption: OptionType | null) => {
     if (selectedOption && category.categoryId && category.subjectId) {
       selectChapter(props.index, selectedOption.value);
-      await getTopics(
+      getTopics(
         category.categoryId,
         category.subjectId,
         selectedOption.value

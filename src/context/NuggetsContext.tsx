@@ -37,7 +37,7 @@ const initialStateTest = {
     bilingual_options: {
       english: [
         {
-          text: "",
+          text: "true",
           isCorrect: true,
         },
       ],
@@ -180,6 +180,18 @@ const NuggetProvider = (props: any) => {
     setNugget((prev) => ({
       ...prev,
       IsKnowledgeCap: isKnowledgeCap,
+    }));
+  }
+
+  function updateVideoNugget(video: {videoURI?: string,videoCaption?:string}) {
+    setNugget((prev) => ({
+      ...prev,
+      videoURI: video.videoURI !== undefined
+      ? video.videoURI
+      : prev.videoURI,
+      caption: video.videoCaption !== undefined
+      ? video.videoCaption
+      : prev.caption
     }));
   }
 
@@ -382,7 +394,21 @@ const NuggetProvider = (props: any) => {
       },
     }));
   }
-  function updateAnswer(Answer: { answer: boolean }) {
+
+  // function updateVideoNugget(video: {videoURI?: string,videoCaption?:string}) {
+  //   setNugget((prev) => ({
+  //     ...prev,
+  //     videoURI: video.videoURI !== undefined
+  //     ? video.videoURI
+  //     : prev.videoURI,
+  //     caption: video.videoCaption !== undefined
+  //     ? video.videoCaption
+  //     : prev.caption
+  //   }));
+  // }
+  
+  function updateAnswer(Answer: { answer: boolean,text:string }) {
+
     setNugget((prev) => ({
       ...prev,
       question: {
@@ -390,13 +416,17 @@ const NuggetProvider = (props: any) => {
         bilingual_options: {
           english: [
             {
-              text: "True",
+              text: Answer.text,
               isCorrect: Answer.answer,
             },
+            Answer.answer === true ? 
             {
-              text: "True",
+              text: "false",
               isCorrect: !Answer.answer,
-            },
+            } : {
+              text: "true",
+            isCorrect: !Answer.answer
+          },
           ],
         },
       },
@@ -686,8 +716,12 @@ const NuggetProvider = (props: any) => {
           updateListItem,
           handleDeleteNoteContent,
           addFIBContent,
+          addFIBOption,
+          updateFIBOption,
+          deleteFIBOption,
           updateFIBContent,
           deleteFIBContent,
+          updateVideoNugget,
           submit,
           setSubmit,
           // formErrors,
