@@ -42,7 +42,7 @@ const TextEditor = (props) => {
           paste_preprocess: function (plugin, args) {
             args.content = args.content.replace(/&nbsp;/g, " ");
           },
-          menubar: false,
+          menubar: "tools",
           image_title: true,
           automatic_uploads: true,
           file_picker_types: "image",
@@ -52,7 +52,6 @@ const TextEditor = (props) => {
             input.setAttribute("accept", "image/*");
             input.onchange = function () {
               var file = this.files[0];
-
               var reader = new FileReader();
               reader.onload = function () {
                 var id = "blobid" + new Date().getTime();
@@ -64,7 +63,6 @@ const TextEditor = (props) => {
               };
               reader.readAsDataURL(file);
             };
-
             input.click();
           },
           plugins: [
@@ -76,6 +74,7 @@ const TextEditor = (props) => {
             "tex",
             "button",
             "image",
+            "code"
           ],
           selector: "textarea",
           contextmenu_avoid_overlap: ".mce-spelling-word",
@@ -84,6 +83,7 @@ const TextEditor = (props) => {
             tiny_mce_wiris: 'https://www.wiris.net/demo/plugins/tiny_mce/plugin.js',
             tiny_mce_mathType: 'https://mathtype-main.s3.ap-south-1.amazonaws.com/mathTypeIntegration.min.js',
           },
+          menubar: false,
           toolbar:
             "link image | code| mathjax | mathtype | tiny_mce_wiris_formulaEditor tiny_mce_wiris_formulaEditorChemistry | bold italic underline | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat",
           content_style:

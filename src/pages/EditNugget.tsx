@@ -191,6 +191,7 @@ function EditNugget() {
               </div>
               <div className="edit-nugget-prev">
                 <div className="headerimage-headertitle">
+                  <img src={nuggetData.headerIcon?.baseUrl+nuggetData.headerIcon?.key} alt="" width={10} height={10}/>
                   <h4>{nuggetData.headerTitle}</h4>
                 </div>
                 {(nuggetData.kind == "SCQ" || "MCQ") && (

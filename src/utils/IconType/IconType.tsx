@@ -21,7 +21,7 @@ interface OptionType {
 }
 
 export default function MyDropdown() {
-  const { icon, updateHeaderIcon, updateFileObj } = useContext(NuggetsContext);
+  const { nugget,icon, updateHeaderIcon, updateFileObj } = useContext(NuggetsContext);
   const [selectedOption, setSelectedOption] = useState<OptionType | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [uploadedImage, setUploadedImage] = useState<FileObject>()
@@ -75,7 +75,7 @@ export default function MyDropdown() {
             style={{ display: "flex", alignItems: "center" }}
           >
             <img
-              src={selectedOption.baseUrl + selectedOption.key}
+              src={nugget.headerIcon?.baseUrl+nugget.headerIcon?.key}
               alt={selectedOption._id}
               width={30}
               height={30}
