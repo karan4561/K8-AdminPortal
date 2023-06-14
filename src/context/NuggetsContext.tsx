@@ -36,8 +36,7 @@ const initialStateTest = {
     bilingual_options: {
       english: [
         {
-          text: "true",
-          isCorrect: true,
+          text: "",
         },
       ],
     },

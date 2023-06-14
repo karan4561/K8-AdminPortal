@@ -4,7 +4,6 @@ import { Nugget } from "@/interfaces/INugget";
 function SCQPrev({ nugget }: any) {
   // const { nugget } = useContext(NuggetsContext);
   const parse = require("html-react-parser");
-  let correctOption: string;
   return (
     <>
       <div className="image-width">
@@ -16,18 +15,17 @@ function SCQPrev({ nugget }: any) {
           />
         )}
         {
-          <div className="TFPrev">
+          <div className="SCQPrev">
             {nugget.question?.bilingual_options.english.map(
               (optionData, index) => {
-                // console.log(optionData.text,"optionData.text");
                 return (
                   <>
                     {!!optionData.text && (
-                      <div className="TFOptionPrev scq-option-prev">
+                      <div className="TFOptionPrev scq-option-prev" style={{backgroundColor: optionData.isCorrect?"#d5d7d6":"#fffaf7"}}>
                         <p>
                           {index + 1}. {parse(optionData.text)}
                         </p>
-                        <div></div>
+                        <div style={{backgroundColor: optionData.isCorrect?"gray":"white"}}></div>
                       </div>
                     )}
                   </>
