@@ -9,12 +9,12 @@ function TrueFalsePrev({ TFPrevData }) {
         <>
             {(!!TFPrevData.question?.content?.english) && <p>{parse(TFPrevData.question.content.english)}</p>}
             <div className='TFPrev'>
-                <div className='TFOptionPrev'>
-                    <div></div>
+                <div className='TFOptionPrev' style={{backgroundColor: (TFPrevData.question?.bilingual_options.english[0].text=="true")?"#d5d7d6":"#fffaf7"}}>
+                    <div style={{backgroundColor: (TFPrevData.question?.bilingual_options.english[0].text=="true")?"gray":"white"}}></div>
                     <p>True</p>
                 </div>
-                <div className='TFOptionPrev'>
-                    <div></div>
+                <div className='TFOptionPrev' style={{backgroundColor: (TFPrevData.question?.bilingual_options.english[0].text=="false")?"#d5d7d6":"#fffaf7"}}>
+                    <div style={{backgroundColor: (TFPrevData.question?.bilingual_options.english[0].text=="false")?"gray":"white"}}></div>
                     <p>False</p>
                 </div>
             </div>
