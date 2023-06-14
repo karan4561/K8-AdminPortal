@@ -3,6 +3,7 @@ import TrueFalsePrev from "./TrueFalsePrev";
 import ImagePrev from "./ImagePrev";
 import VideoPrev from "./VideoPrev";
 import SCQPrev from "./SCQPrev";
+import FIBPrev from "./FIBPrev";
 import { NuggetsContext } from "../../context/NuggetsContext";
 import { useContext,useEffect } from "react";
 import { log } from "console";
@@ -34,6 +35,8 @@ function Preview() {
           {nugget?.kind == "TRUEFALSE" && <TrueFalsePrev TFPrevData={nugget}/>}
           {nugget?.kind == "SCQ" && <SCQPrev nugget={nugget}/>}
           {nugget?.kind == "MCQ" && <SCQPrev nugget={nugget}/>}
+          {nugget?.kind == "FIBPrev" && <FIBPrev nugget={nugget}/>}
+
           {/* {(test?.kind=='Note') && <NoteNugget/>} */}
         </div>
       </div>
