@@ -35,8 +35,7 @@ function Preview() {
           {nugget?.kind == "TRUEFALSE" && <TrueFalsePrev TFPrevData={nugget}/>}
           {nugget?.kind == "SCQ" && <SCQPrev nugget={nugget}/>}
           {nugget?.kind == "MCQ" && <SCQPrev nugget={nugget}/>}
-          {nugget?.kind == "FIBPrev" && <FIBPrev nugget={nugget}/>}
-
+          {nugget?.kind == "FIB" && <FIBPrev nugget={nugget}/>}
           {/* {(test?.kind=='Note') && <NoteNugget/>} */}
         </div>
       </div>

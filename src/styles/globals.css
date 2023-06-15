@@ -639,3 +639,31 @@ h4 {
   flex-direction: column;
   margin-top: 12px;
 }
+
+.fib-header{
+  background-color: #FFFBEF;
+  display: flex;
+  flex-flow: wrap;
+  padding: 5px;
+}
+
+.fib-header>p{
+  margin-right: 9px;
+  margin-top: 5px;
+}
+
+.fib-blank-type{
+  background-color: #FFFFFF;
+  border-style: dashed;
+  border-color: #B28D72;
+}
+
+.fib-prev-header{
+  background-color: #FFFBEF;
+}
+
+.fib-prev-header>h2{
+  font-size: 17px;
+    margin: 5px 0;
+    line-height: 21px;
+}
