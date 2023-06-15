@@ -8,12 +8,8 @@ function SccNugget() {
   let indexTrue: number;
   const { nugget, updateQuestion, updateSolHint, updateCorrectOption } =
     useContext(NuggetsContext);
-  const [option, setOption] = useState<number>();
-  const [solContent, setSolContent] = useState<string>();
-  const [hintContent, setHintContent] = useState<string>();
 
   const OptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setOption(Number(event.target.value));
     updateCorrectOption({
       index: Number(event.target.value),
       isCorrect: true,
@@ -28,14 +24,6 @@ function SccNugget() {
     }
   };
 
-  const onUpdateHint = (content: string) => {
-    setHintContent(content);
-  };
-
-  const onUpdateSol = (content: string) => {
-    setSolContent(content);
-  };
-
   return (
     <>
       <div className="card-header NuggetId TrueFalseNugget">
@@ -48,7 +36,7 @@ function SccNugget() {
           <h4>Answers Options</h4>
         </div>
         <div>
-          <AddTextEditor/>
+          <AddTextEditor />
         </div>
         <h4>Hint</h4>
         <TextEditor

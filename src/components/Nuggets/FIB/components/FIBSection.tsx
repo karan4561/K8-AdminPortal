@@ -5,35 +5,40 @@ import { NuggetsContext } from "@/context/NuggetsContext";
 import TextInput from "../utils/TextInput";
 
 interface OptionType {
-  value: "TEXT" | "BLANK";
+  value: "text" | "blank";
   label: "TEXT" | "BLANK";
 }
 
 function FIBSection(props: any) {
-  const { nugget, updateFIBContent } = useContext(NuggetsContext);
+  const { nugget, updateFIBContentText, updateFIBContentType } =
+    useContext(NuggetsContext);
   const options: OptionType[] = [
-    { value: "TEXT", label: "TEXT" },
-    { value: "BLANK", label: "BLANK" },
+    { value: "text", label: "TEXT" },
+    { value: "blank", label: "BLANK" },
   ];
 
-  const [selectedOption, setSelectedOption] = useState<OptionType>(options[0]);
-  const [fibContent, setFibContent] = useState<string>("");
+  let selectedOption: OptionType;
+  if (nugget.question.fib.english[props.id].type == "blank") {
+    selectedOption = options[1];
+  } else {
+    selectedOption = options[0];
+  }
 
   const handleChange = (selectedOption: SingleValue<OptionType>) => {
-    setSelectedOption(selectedOption as OptionType);
+    if (updateFIBContentType && selectedOption)
+      updateFIBContentType({
+        index: props.id,
+        type: selectedOption.value,
+      });
   };
 
-  const updateSolHint = (content: string) => {
-    setFibContent(content);
+  const updateText = (content: string) => {
+    if (updateFIBContentText)
+      updateFIBContentText({
+        index: props.id,
+        text: content,
+      });
   };
-
-  useEffect(()=>{
-    updateFIBContent({
-      index:props.id,
-      text: fibContent,
-      type: selectedOption.value
-    })
-  },[fibContent,selectedOption.value,props.id])
 
   return (
     <>
@@ -41,12 +46,17 @@ function FIBSection(props: any) {
         <div className="fib-option-editor">
           <Select
             className="AddNuggetCategory "
-            value={selectedOption}
             onChange={handleChange}
             options={options}
-            placeholder="TEXT"
+            placeholder="Select"
+            value={selectedOption}
           />
-          <TextEditor  idx={props.id} value={nugget.question.fib.english[props.id].value} onUpdate={updateSolHint}  fibOption={"fibOption"}/>
+          <TextEditor
+            idx={props.id}
+            value={nugget.question.fib.english[props.id].value}
+            onUpdate={(content: string) => updateText(content)}
+            fibOption={"fibOption"}
+          />
         </div>
       </div>
     </>
