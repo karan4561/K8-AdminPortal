@@ -25,8 +25,7 @@ interface OptionType {
     | "IMG"
     | "AUDIOCLIP"
     | "LTI"
-    | "TRUEFALSE"
-    | "Audio";
+    | "TRUEFALSE";
   value: string;
 }
 
@@ -50,7 +49,6 @@ function NuggetsLanding({ nuggetId }: any) {
     { value: "AUDIOCLIP", label: "AUDIOCLIP" },
     { value: "LTI", label: "LTI" },
     { value: "TRUEFALSE", label: "TRUEFALSE" },
-    { value: "Audio", label: "Audio" },
   ];
 
   useEffect(() => {

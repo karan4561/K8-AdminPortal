@@ -4,9 +4,9 @@ import tinymce from "tinymce";
 import { useState, useContext } from "react";
 import { uploadImage } from "@/api/utils";
 // import { NuggetContext } from "../K-8ContextProvider";
-const TextEditor = (props) => {
+const TextEditor = (props: any) => {
   //   const { nugget,updateTFSolution } = useContext(NuggetContext);
-  let width:string
+  let width: string;
   const editorRef = useRef<any>(null);
   const [content, setContent] = useState("");
 
@@ -32,11 +32,10 @@ const TextEditor = (props) => {
       });
     }
   }, []);
-  if(props.fibOption || props.fibExtraOption){
-    width="40vw"
-  }
-  else{
-    width="60vw"
+  if (props.fibOption || props.fibExtraOption) {
+    width = "40vw";
+  } else {
+    width = "60vw";
   }
   return (
     <div className="text-editor">
@@ -85,7 +84,7 @@ const TextEditor = (props) => {
             "tex",
             "button",
             "image",
-            "code"
+            "code",
           ],
           selector: "textarea",
           contextmenu_avoid_overlap: ".mce-spelling-word",
