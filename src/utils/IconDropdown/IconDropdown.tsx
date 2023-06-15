@@ -1,7 +1,6 @@
 import { NuggetsContext } from "../../context/NuggetsContext";
 import React, { useContext, useState, useEffect } from "react";
 import { uploadImage, postImage, getHeaderIcons } from "@/api/utils";
-import { useAmp } from "next/amp";
 import { FileObject } from "@/interfaces/INugget";
 
 interface OptionType {
