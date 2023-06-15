@@ -221,7 +221,7 @@ h4 {
   justify-content: center;
   margin-left: 119px;
   width: 71%;
-  height: 182px;
+  height: 264px;
   border: 1px solid #cccccc;
 }
 
@@ -666,4 +666,16 @@ h4 {
   font-size: 17px;
     margin: 5px 0;
     line-height: 21px;
+}
+
+.img-input{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.image-upload>input{
+  visibility: hidden;
+  width: 0;
+  height: 0;
 }

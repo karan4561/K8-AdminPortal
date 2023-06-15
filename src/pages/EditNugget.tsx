@@ -4,7 +4,9 @@ import toast, { Toaster } from "react-hot-toast";
 import Select from "react-select";
 import { getCategory, getSubject, getChapters, getTopics } from "@/api/filter";
 import SCQPrev from "@/components/Preview/SCQPrev";
+import FIBPrev from "@/components/Preview/FIBPrev";
 import TrueFalsePrev from "@/components/Preview/TrueFalsePrev";
+import ImagePrev from "@/components/Preview/ImagePrev";
 
 import { deleteNugget, getNuggetList } from "@/api/utils";
 
@@ -189,15 +191,21 @@ function EditNugget() {
               </div>
               <div className="edit-nugget-prev">
                 <div className="headerimage-headertitle">
-                  <img src={nuggetData.headerIcon?.baseUrl+nuggetData.headerIcon?.key} alt="" width={10} height={10}/>
+                  <img src={nuggetData.headerIcon?.baseUrl + nuggetData.headerIcon?.key} alt="" width={10} height={10} />
                   <h4>{nuggetData.headerTitle}</h4>
                 </div>
-                {(nuggetData.kind == "SCQ" || "MCQ") && (
-                  <SCQPrev nugget={nuggetData} />
-                )}
-                {nuggetData.kind == "TRUEFALSE | TF" && (
-                  <TrueFalsePrev TFPrevData={nuggetData} />
-                )}
+                {(nuggetData.kind == "IMAGE") && (
+                  <ImagePrev nugget={nuggetData} />
+                  )}
+                {(nuggetData.kind == "TRUEFALSE") && (
+                  <TrueFalsePrev nugget={nuggetData} />
+                  )}
+                {(nuggetData.kind == "FIB") && (
+                  <FIBPrev nugget={nuggetData} />
+                  )}
+                  {(nuggetData.kind == "SCQ" || nuggetData.kind === "MCQ") && (
+                    <SCQPrev nugget={nuggetData} />
+                  )}
               </div>
               {/* {(nuggetData.kind == "SCQ" || "MCQ") && (
                   <SCQPrev nugget={nuggetData} />

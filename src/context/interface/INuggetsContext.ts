@@ -46,6 +46,8 @@ export interface INuggetContext extends FilterFunctions {
     addContentItem?: (note: ContentObject)=>void,
     addListItem?: (item: string)=>void,
     updateVideoNugget:(video: {videoURI?: string,videoCaption?:string})=>void
+    imageURI:(imageURI:{URI:FileObject})=>void
+    audioURI:(audioURI:{URI:FileObject}) =>void
     updateListItem?: (idi: number, item: string, kind: "H1" | "H2" | "Text" | "UL" | "OL" | "IMG", idj: number)=>void,
     submit:boolean,
     setSubmit:React.Dispatch<React.SetStateAction<boolean>>,

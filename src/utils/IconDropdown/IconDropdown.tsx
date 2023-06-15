@@ -41,7 +41,6 @@ export default function IconDropdown() {
     if (file) {
       const formData = new FormData();
       formData.append("file", file);
-      console.log(formData, "formData");
       uploadImage(formData).then((data) => setUploadedImage(data));
     }
   };

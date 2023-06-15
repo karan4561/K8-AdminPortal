@@ -8,8 +8,8 @@ export type Nugget = {
   headerIcon?: FileObject;
   timeToReward: number;
   thumbnail?: FileObject;
-  imageURI?: FileObject;
-  audioURI?: FileObject;
+  imageUri?: FileObject;
+  audioUri?: FileObject;
   videoURI?: string;
   caption?: string;
   status: "active" | "inactive";
