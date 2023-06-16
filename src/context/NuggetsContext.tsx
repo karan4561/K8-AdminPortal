@@ -11,7 +11,7 @@ interface OptionType {
     | "MCQ"
     | "NOTE"
     | "FIB"
-    | "IMG"
+    | "IMAGE"
     | "AUDIOCLIP"
     | "LTI"
     | "TRUEFALSE"
@@ -117,6 +117,21 @@ const NuggetProvider = (props: any) => {
       },
     }));
   }
+
+  function imageURI(imageURI:{URI:FileObject}){
+    setNugget((prev)=>({
+      ...prev,
+      imageUri: imageURI.URI
+    }))
+  }
+
+  function audioURI(audioURI:{URI:FileObject}){
+    setNugget((prev)=>({
+      ...prev,
+      audioUri: audioURI.URI
+    }))
+  }
+
   function updateNuggetKind(
     nuggetkind:
       | "Video"
@@ -124,7 +139,7 @@ const NuggetProvider = (props: any) => {
       | "MCQ"
       | "Note"
       | "FIB"
-      | "IMG"
+      | "IMAGE"
       | "AUDIOCLIP"
       | "LTI"
       | "TRUEFALSE"
@@ -223,18 +238,6 @@ const NuggetProvider = (props: any) => {
     //console.log("Here is list", list);
   }
 
-  // function addFIBItem(note: FIB) {
-  //   if (!ques?.fib)
-  //     setQues((prev) => ({ ...prev, fib: { ...prev?.fib, english: [note] } }));
-  //   else {
-  //     setQues((prev) => ({
-  //       ...prev,
-  //       fib: { ...prev?.fib, english: [...prev?.fib?.english, note] },
-  //     }));
-  //   }
-  //   //console.log("wuhoo");
-  // }
-
   function addFIBContent() {
     const newOption = {
       value: "",
@@ -263,32 +266,6 @@ const NuggetProvider = (props: any) => {
         },
       }));
   }
-
-  // english: nugget.question.bilingual_options!.english.map(
-  //           (option, i) => {
-  //             if (nugget.kind === "SCQ") {
-  //               console.log("scq");
-  //               if (i === Option.index) {
-  //                 return {
-  //                   ...option,
-  //                   isCorrect: Option.isCorrect,
-  //                 };
-  //               } else {
-  //                 return {
-  //                   ...option,
-  //                   isCorrect: false,
-  //                 };
-  //               }
-  //             } else {
-  //               if (i === Option.index) {
-  //                 return {
-  //                   ...option,
-  //                   isCorrect: Option.isCorrect,
-  //                 };
-  //               }
-  //               return option;
-  //             }
-  //           }
 
   function updateFIBContentType(Content: { index: number; type: string }) {
     setNugget((prev) => {
@@ -734,6 +711,8 @@ const NuggetProvider = (props: any) => {
           updateFIBContentText,
           deleteFIBContent,
           updateVideoNugget,
+          imageURI,
+          audioURI,
           submit,
           setSubmit,
           validateErrors,

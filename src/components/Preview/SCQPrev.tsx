@@ -16,36 +16,22 @@ function SCQPrev({ nugget }: any) {
         )}
         {
           <div className="SCQPrev">
-            {nugget.question?.bilingual_options &&
-              nugget.question?.bilingual_options.english.map(
-                (optionData, index) => {
-                  return (
-                    <>
-                      {!!optionData.text && (
-                        <div
-                          className="TFOptionPrev scq-option-prev"
-                          style={{
-                            backgroundColor: optionData.isCorrect
-                              ? "#d5d7d6"
-                              : "#fffaf7",
-                          }}
-                        >
-                          <p>
-                            {index + 1}. {parse(optionData.text)}
-                          </p>
-                          <div
-                            style={{
-                              backgroundColor: optionData.isCorrect
-                                ? "gray"
-                                : "white",
-                            }}
-                          ></div>
-                        </div>
-                      )}
-                    </>
-                  );
-                }
-              )}
+            {nugget.question?.bilingual_options?.english.map(
+              (optionData, index) => {
+                return (
+                  <>
+                    {!!optionData.text && (
+                      <div className="TFOptionPrev scq-option-prev" style={{backgroundColor: optionData.isCorrect?"#d5d7d6":"#fffaf7"}}>
+                        <p>
+                          {index + 1}. {parse(optionData.text)}
+                        </p>
+                        <div style={{backgroundColor: optionData.isCorrect?"gray":"white"}}></div>
+                      </div>
+                    )}
+                  </>
+                );
+              }
+            )}
           </div>
         }
         <div className="prev-buttons">
