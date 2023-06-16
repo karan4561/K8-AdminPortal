@@ -2,7 +2,6 @@ import React, { useState, useContext, useEffect } from "react";
 import Select, { SingleValue } from "react-select";
 import TextEditor from "../../TrueFalseNugget/TextEditor";
 import { NuggetsContext } from "@/context/NuggetsContext";
-import TextInput from "../utils/TextInput";
 
 interface OptionType {
   value: "text" | "blank";
@@ -20,7 +19,7 @@ function FIBSection(props: any) {
   let selectedOption: OptionType;
   if (nugget.question.fib.english[props.id].type == "blank") {
     selectedOption = options[1];
-  } else {
+  } else if (nugget.question.fib.english[props.id].type == "text") {
     selectedOption = options[0];
   }
 
