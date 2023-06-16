@@ -1,4 +1,13 @@
-import React from 'react'
+import React from "react";
+
+interface OptionType {
+  value: string;
+  type: string;
+}
+
+interface ExtraOptions {
+  text: string;
+}
 
 function FIBPrev({ nugget }: any) {
     return (
@@ -53,4 +62,4 @@ function FIBPrev({ nugget }: any) {
     )
 }
 
-export default FIBPrev
+export default FIBPrev;

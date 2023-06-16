@@ -12,6 +12,7 @@ import { deleteNugget, getNuggetList } from "@/api/utils";
 
 import { Nugget } from "@/interfaces/INugget";
 import Link from "next/link";
+import FIBPrev from "@/components/Preview/FIBPrev";
 
 interface Approve {
   value: string;
@@ -170,7 +171,7 @@ function EditNugget() {
           />
           <button onClick={onSubmit}>Search</button>
         </div>
-        {nuggetList.map((nuggetData, index) => {
+        {nuggetList.map((nuggetData) => {
           return (
             <div className="edit-label">
               <div className="edit-Nugget-div-label">
@@ -209,6 +210,7 @@ function EditNugget() {
                   {(nuggetData.kind == "AUDIOCLIP") && (
                     <AudioPrev nugget={nuggetData} />
                   )}
+
               </div>
             </div>
           );
