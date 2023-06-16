@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useState, useContext } from "react";
 import Image from "next/image";
 import { uploadImage, postImage } from "@/api/utils";
@@ -6,6 +6,7 @@ import { NuggetsContext } from "../../../context/NuggetsContext";
 import { FileObject } from "@/interfaces/INugget";
 
 function AudioNugget() {
+  const audioRef = useRef(null);
   const { updateCaption, nugget, audioURI } = useContext(NuggetsContext);
 
   const audioCaptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,17 +39,14 @@ function AudioNugget() {
     <div className="image-upload">
       <div>
         {nugget.audioUri && (
-          <audio
-            src={nugget.audioUri.baseUrl+nugget.audioUri.key}
-            // width={300}
-            // height={200}
-            // alt=""
-          />
+          <audio ref={audioRef} controls>
+          <source src={nugget.audioUri.baseUrl+nugget.audioUri.key} type="audio/mpeg" />
+      </audio>
         )}
       </div>
       <label htmlFor="file-input" className="img-input">
         <img src="/upload.png" width={20} height={20} />
-        <p>Upload Icon</p>
+        <p>Upload Audio file here</p>
       </label>
       <input
         id="file-input"

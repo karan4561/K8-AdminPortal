@@ -679,3 +679,7 @@ h4 {
   width: 0;
   height: 0;
 }
+
+.AudioPrev>audio{
+  width: 95%;
+}
