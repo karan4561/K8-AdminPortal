@@ -4,12 +4,15 @@ import toast, { Toaster } from "react-hot-toast";
 import Select from "react-select";
 import { getCategory, getSubject, getChapters, getTopics } from "@/api/filter";
 import SCQPrev from "@/components/Preview/SCQPrev";
+import FIBPrev from "@/components/Preview/FIBPrev";
 import TrueFalsePrev from "@/components/Preview/TrueFalsePrev";
-
+import ImagePrev from "@/components/Preview/ImagePrev";
+import AudioPrev from "@/components/Preview/AudioPrev";
 import { deleteNugget, getNuggetList } from "@/api/utils";
 
 import { Nugget } from "@/interfaces/INugget";
 import Link from "next/link";
+import FIBPrev from "@/components/Preview/FIBPrev";
 
 interface Approve {
   value: string;
@@ -168,7 +171,7 @@ function EditNugget() {
           />
           <button onClick={onSubmit}>Search</button>
         </div>
-        {nuggetList.map((nuggetData, index) => {
+        {nuggetList.map((nuggetData) => {
           return (
             <div className="edit-label">
               <div className="edit-Nugget-div-label">
@@ -189,19 +192,26 @@ function EditNugget() {
               </div>
               <div className="edit-nugget-prev">
                 <div className="headerimage-headertitle">
-                  <img src={nuggetData.headerIcon?.baseUrl+nuggetData.headerIcon?.key} alt="" width={10} height={10}/>
+                  {(!!nuggetData.headerIcon) && <img src={nuggetData.headerIcon?.baseUrl+nuggetData.headerIcon?.key} alt="" width={20} height={20} />}
                   <h4>{nuggetData.headerTitle}</h4>
                 </div>
-                {(nuggetData.kind == "SCQ" || "MCQ") && (
-                  <SCQPrev nugget={nuggetData} />
-                )}
-                {nuggetData.kind == "TRUEFALSE | TF" && (
-                  <TrueFalsePrev TFPrevData={nuggetData} />
-                )}
+                {(nuggetData.kind == "IMAGE") && (
+                  <ImagePrev nugget={nuggetData} />
+                  )}
+                {(nuggetData.kind == "TRUEFALSE") && (
+                  <TrueFalsePrev nugget={nuggetData} />
+                  )}
+                {(nuggetData.kind == "FIB") && (
+                  <FIBPrev nugget={nuggetData} />
+                  )}
+                  {(nuggetData.kind == "SCQ" || nuggetData.kind === "MCQ") && (
+                    <SCQPrev nugget={nuggetData} />
+                  )}
+                  {(nuggetData.kind == "AUDIOCLIP") && (
+                    <AudioPrev nugget={nuggetData} />
+                  )}
+
               </div>
-              {/* {(nuggetData.kind == "SCQ" || "MCQ") && (
-                  <SCQPrev nugget={nuggetData} />
-                )} */}
             </div>
           );
           // }

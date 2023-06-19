@@ -1,15 +1,14 @@
 import React from "react";
 import { useState, useContext } from "react";
 import Image from "next/image";
+import { uploadImage, postImage } from "@/api/utils";
 import { NuggetsContext } from "../../../context/NuggetsContext";
+import { FileObject } from "@/interfaces/INugget";
 
 function ImageNugget() {
-  const [ImageCaption, setImageCaption] = useState("");
-  const [selectedImage, setSelectedImage] = useState<File | null>(null);
-  const { updateCaption,nugget } = useContext(NuggetsContext);
+  const { updateCaption, nugget, imageURI } = useContext(NuggetsContext);
 
   const ImageCaptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setImageCaption(event.target.value);
     updateCaption({
       caption: event.target.value,
     });
@@ -18,7 +17,9 @@ function ImageNugget() {
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      setSelectedImage(file);
+      const formData = new FormData();
+      formData.append("file", file);
+      uploadImage(formData).then((data) => imageURI({URI:data}));
     }
   };
 
@@ -37,16 +38,25 @@ function ImageNugget() {
         </div>
         <div className="image-upload">
           <div>
-            {selectedImage && (
-              <Image
-                src={URL.createObjectURL(selectedImage)}
-                width={200}
-                height={100}
+            {nugget.imageUri && (
+              <img
+                src={nugget.imageUri.baseUrl+nugget.imageUri.key}
+                width={300}
+                height={200}
                 alt=""
               />
             )}
           </div>
-          <input type="file" accept="image/*" onChange={handleImageUpload} />
+          <label htmlFor="file-input" className="img-input">
+            <img src="/upload.png" width={20} height={20} />
+            <p>Upload Image here</p>
+          </label>
+          <input
+            id="file-input"
+            type="file"
+            accept="image/*"
+            onChange={handleImageUpload}
+          />
         </div>
       </div>
     </>

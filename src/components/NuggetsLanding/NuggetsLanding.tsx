@@ -13,6 +13,7 @@ import MCQNugget from "../Nuggets/MCQNugget/MCQNugget";
 import LTI from "../LTI/LTI";
 import NoteNugget from "../Nuggets/NoteNugget/NoteNugget";
 import FIBNugget from "../Nuggets/FIB/FIBNugget";
+import AudioNugget from "../Nuggets/AudioNugget/AudioNugget";
 import { submitNugget, updateNugget, getHeaderIcons } from "@/api/utils";
 
 interface OptionType {
@@ -22,11 +23,10 @@ interface OptionType {
     | "MCQ"
     | "Note"
     | "FIB"
-    | "IMG"
+    | "IMAGE"
     | "AUDIOCLIP"
     | "LTI"
-    | "TRUEFALSE"
-    | "Audio";
+    | "TRUEFALSE";
   value: string;
 }
 
@@ -46,11 +46,10 @@ function NuggetsLanding({ nuggetId }: any) {
     { value: "MCQ", label: "MCQ" },
     { value: "Note", label: "Note" },
     { value: "FIB", label: "FIB" },
-    { value: "IMG", label: "IMG" },
+    { value: "IMAGE", label: "IMAGE" },
     { value: "AUDIOCLIP", label: "AUDIOCLIP" },
     { value: "LTI", label: "LTI" },
     { value: "TRUEFALSE", label: "TRUEFALSE" },
-    { value: "Audio", label: "Audio" },
   ];
 
   useEffect(() => {
@@ -133,9 +132,10 @@ function NuggetsLanding({ nuggetId }: any) {
             <NuggetInfo />
             <XPTimer />
             {nugget.kind == "Note" && <NoteNugget />}
+            {nugget.kind == "AUDIOCLIP" && <AudioNugget />}
             {nugget.kind == "FIB" && <FIBNugget />}
             {nugget.kind == "TRUEFALSE" && <TrueFalse />}
-            {nugget.kind == "IMG" && <ImageNugget />}
+            {nugget.kind == "IMAGE" && <ImageNugget />}
             {nugget.kind == "Video" && <VideoNugget />}
             {nugget.kind == "SCQ" && <SccNugget />}
             {nugget.kind == "MCQ" && <MCQNugget />}

@@ -221,7 +221,7 @@ h4 {
   justify-content: center;
   margin-left: 119px;
   width: 71%;
-  height: 182px;
+  height: 264px;
   border: 1px solid #cccccc;
 }
 
@@ -631,11 +631,55 @@ h4 {
     display: block;
     height: 44px;
     color: #333333;
-    font-weight: bold;
+    padding-left: 10px;
 }
 
 .SCQPrev{
   display: flex;
   flex-direction: column;
   margin-top: 12px;
+}
+
+.fib-header{
+  background-color: #FFFBEF;
+  display: flex;
+  flex-flow: wrap;
+  padding: 5px;
+}
+
+.fib-header>p{
+  margin-right: 9px;
+  margin-top: 5px;
+}
+
+.fib-blank-type{
+  background-color: #FFFFFF;
+  border-style: dashed;
+  border-color: #B28D72;
+}
+
+.fib-prev-header{
+  background-color: #FFFBEF;
+}
+
+.fib-prev-header>h2{
+  font-size: 17px;
+    margin: 5px 0;
+    line-height: 21px;
+}
+
+.img-input{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.image-upload>input{
+  visibility: hidden;
+  width: 0;
+  height: 0;
+}
+
+.AudioPrev>audio{
+  width: 95%;
 }

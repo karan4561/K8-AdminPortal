@@ -3,12 +3,12 @@ import { NuggetsContext } from "../../context/NuggetsContext";
 import { useContext } from 'react';
 import Image from 'next/image';
 
-function ImagePrev() {
-    const {nugget} = useContext(NuggetsContext)
+function ImagePrev({nugget}:any) {
+    // const {nugget} = useContext(NuggetsContext)
     return (
         <>
             <div className='ImagePrev'>
-                <Image src='/pencil.png' width={30} height={250} alt='' />
+                {(!!nugget.imageUri) && <img src={nugget.imageUri.baseUrl+nugget.imageUri.key} width={30} height={250} alt='' />}
                 <p>{nugget?.caption}</p>
             </div>
         </>

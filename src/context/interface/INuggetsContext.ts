@@ -32,7 +32,8 @@ export interface INuggetContext extends FilterFunctions {
     updateSCQOption: (Option: {index:number; text:string})=>void,
     updateImageCaption?: (caption: {imgCaption:string})=>void
     updateHeaderIcon?: (iconObj: { _id?: string; name?: string; baseUrl: string; key: string; type?: | "CONTENT" | "TEST" | "SUBJECTIVE_TEST_SOLUTIONS" | "VIMEO" | "JWPLAYER"; organization?: string; size?: number; details?: string; }) => void,
-    updateFIBContent?: (Content: { index: number; text: string, type: string }) => void,
+    updateFIBContentType?: (Content: { index: number; type: string }) => void,
+    updateFIBContentText?: (Content: { index: number; text: string }) => void,
     addFIBContent?: () => void
     deleteFIBContent?: (Content: { index: number }) => void,
     updateFIBOption: (Option: { index: number; text: string }) =>void,
@@ -45,6 +46,8 @@ export interface INuggetContext extends FilterFunctions {
     addContentItem?: (note: ContentObject)=>void,
     addListItem?: (item: string)=>void,
     updateVideoNugget:(video: {videoURI?: string,videoCaption?:string})=>void
+    imageURI:(imageURI:{URI:FileObject})=>void
+    audioURI:(audioURI:{URI:FileObject}) =>void
     updateListItem?: (idi: number, item: string, kind: "H1" | "H2" | "Text" | "UL" | "OL" | "IMG", idj: number)=>void,
     submit:boolean,
     setSubmit:React.Dispatch<React.SetStateAction<boolean>>,

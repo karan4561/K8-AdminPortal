@@ -18,7 +18,6 @@ function NuggetFilters(props: any) {
     selectChapter,
   } = useContext(NuggetsContext);
   const category = nugget.categories[props.index];
-  console.log("******Nugget from Filter*****", category);
 
   const [categoryList, setCategoryList] = useState<OptionType[]>();
   const [subjectList, setSubjectList] = useState<OptionType[]>();

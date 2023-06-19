@@ -6,12 +6,12 @@ import * as _ from "lodash";
 
 interface OptionType {
   label:
-    | "Video"
+    | "VIDEO"
     | "SCQ"
     | "MCQ"
-    | "Note"
+    | "NOTE"
     | "FIB"
-    | "IMG"
+    | "IMAGE"
     | "AUDIOCLIP"
     | "LTI"
     | "TRUEFALSE"
@@ -26,30 +26,18 @@ import {
 } from "@/interfaces/INugget";
 import useFilters from "./filters";
 import { fetchNugget } from "@/api/utils";
+import {
+  initialStateFIB,
+  initialStateSCC,
+} from "@/utils/InitialStateNuggets/InitialStateNuggets";
+import {
+  ValidateFIB,
+  ValidateSCC,
+  validateFIB,
+  validateSCC,
+} from "@/utils/Validations/Validations";
 
 const initialState = {} as INuggetContext;
-
-const initialStateTest = {
-  categories: [],
-  kind: "SCQ",
-  question: {
-    bilingual_options: {
-      english: [
-        {
-          text: "",
-        },
-      ],
-    },
-    solutions: [
-      {
-        english: {
-          text: null,
-          hint: null,
-        },
-      },
-    ],
-  },
-} as any;
 
 interface FIB {
   value?: string;
@@ -59,7 +47,7 @@ interface FIB {
 export const NuggetsContext = React.createContext<INuggetContext>(initialState);
 
 const NuggetProvider = (props: any) => {
-  const [nugget, setNugget] = useState<Nugget>(_.cloneDeep(initialStateTest));
+  const [nugget, setNugget] = useState<Nugget>(_.cloneDeep(initialStateSCC));
   const [bullet, setBullet] = useState<BulletObject>();
   const [list, setList] = useState<Array<string>>([""]); //fib
   const [ques, setQues] = useState<QuestionObject>(); //fib
@@ -69,7 +57,6 @@ const NuggetProvider = (props: any) => {
   const { filters, ...filterFunctions } = useFilters();
 
   console.log("***This is Nugget***", nugget);
-  console.log("This is Nugget Id:", nuggetId);
 
   function updateFileObj(
     FileObj: {
@@ -130,6 +117,21 @@ const NuggetProvider = (props: any) => {
       },
     }));
   }
+
+  function imageURI(imageURI:{URI:FileObject}){
+    setNugget((prev)=>({
+      ...prev,
+      imageUri: imageURI.URI
+    }))
+  }
+
+  function audioURI(audioURI:{URI:FileObject}){
+    setNugget((prev)=>({
+      ...prev,
+      audioUri: audioURI.URI
+    }))
+  }
+
   function updateNuggetKind(
     nuggetkind:
       | "Video"
@@ -137,17 +139,33 @@ const NuggetProvider = (props: any) => {
       | "MCQ"
       | "Note"
       | "FIB"
-      | "IMG"
+      | "IMAGE"
       | "AUDIOCLIP"
       | "LTI"
       | "TRUEFALSE"
       | "Audio"
   ) {
-    setNugget({
-      ...initialStateTest,
-      kind: nuggetkind,
-      categories: nugget.categories,
-    } as Nugget);
+    if (nuggetkind == "FIB") {
+      setNugget({
+        ...initialStateFIB,
+        kind: nuggetkind,
+        categories: nugget.categories,
+        headerIcon: nugget.headerIcon,
+        sideNote: nugget.sideNote,
+        IsKnowledgeCap: nugget.IsKnowledgeCap,
+        headerTitle: nugget.headerTitle,
+      } as Nugget);
+    } else {
+      setNugget({
+        ...initialStateSCC,
+        kind: nuggetkind,
+        categories: nugget.categories,
+        headerIcon: nugget.headerIcon,
+        sideNote: nugget.sideNote,
+        IsKnowledgeCap: nugget.IsKnowledgeCap,
+        headerTitle: nugget.headerTitle,
+      } as Nugget);
+    }
   }
 
   function updateFilters(filter: CategoryObject[]) {
@@ -179,15 +197,15 @@ const NuggetProvider = (props: any) => {
     }));
   }
 
-  function updateVideoNugget(video: {videoURI?: string,videoCaption?:string}) {
+  function updateVideoNugget(video: {
+    videoURI?: string;
+    videoCaption?: string;
+  }) {
     setNugget((prev) => ({
       ...prev,
-      videoURI: video.videoURI !== undefined
-      ? video.videoURI
-      : prev.videoURI,
-      caption: video.videoCaption !== undefined
-      ? video.videoCaption
-      : prev.caption
+      videoURI: video.videoURI !== undefined ? video.videoURI : prev.videoURI,
+      caption:
+        video.videoCaption !== undefined ? video.videoCaption : prev.caption,
     }));
   }
 
@@ -220,18 +238,6 @@ const NuggetProvider = (props: any) => {
     //console.log("Here is list", list);
   }
 
-  // function addFIBItem(note: FIB) {
-  //   if (!ques?.fib)
-  //     setQues((prev) => ({ ...prev, fib: { ...prev?.fib, english: [note] } }));
-  //   else {
-  //     setQues((prev) => ({
-  //       ...prev,
-  //       fib: { ...prev?.fib, english: [...prev?.fib?.english, note] },
-  //     }));
-  //   }
-  //   //console.log("wuhoo");
-  // }
-
   function addFIBContent() {
     const newOption = {
       value: "",
@@ -261,26 +267,48 @@ const NuggetProvider = (props: any) => {
       }));
   }
 
-  function updateFIBContent(Content: {
-    index: number;
-    text: string;
-    type: string;
-  }) {
+  function updateFIBContentType(Content: { index: number; type: string }) {
     setNugget((prev) => {
-      const updatedOptions = prev.question.fib?.english
-        ? prev.question.fib.english
-        : [];
-      updatedOptions[Content.index] = {
-        value: Content.text,
-        type: Content.type,
-      };
       return {
         ...prev,
         question: {
           ...prev.question,
           fib: {
             ...prev.question.fib,
-            english: updatedOptions,
+            english: nugget.question.fib.english.map((option, i) => {
+              if (i === Content.index) {
+                return {
+                  ...option,
+                  type: Content.type,
+                };
+              } else {
+                return option;
+              }
+            }),
+          },
+        },
+      };
+    });
+  }
+
+  function updateFIBContentText(Content: { index: number; text: string }) {
+    setNugget((prev) => {
+      return {
+        ...prev,
+        question: {
+          ...prev.question,
+          fib: {
+            ...prev.question.fib,
+            english: nugget.question.fib.english.map((option, i) => {
+              if (i === Content.index) {
+                return {
+                  ...option,
+                  value: Content.text,
+                };
+              } else {
+                return option;
+              }
+            }),
           },
         },
       };
@@ -305,8 +333,6 @@ const NuggetProvider = (props: any) => {
   }
 
   function updateContentItem(idx: number, note: ContentObject) {
-    //console.log("..........idx..........", idx);
-    //console.log("..........note..........", note);
     if (nugget.content) nugget.content[idx] = note;
     setNugget({ ...nugget });
   }
@@ -401,9 +427,8 @@ const NuggetProvider = (props: any) => {
   //     : prev.caption
   //   }));
   // }
-  
-  function updateAnswer(Answer: { answer: boolean,text:string }) {
 
+  function updateAnswer(Answer: { answer: boolean; text: string }) {
     setNugget((prev) => ({
       ...prev,
       question: {
@@ -414,14 +439,15 @@ const NuggetProvider = (props: any) => {
               text: Answer.text,
               isCorrect: Answer.answer,
             },
-            Answer.answer === true ? 
-            {
-              text: "false",
-              isCorrect: !Answer.answer,
-            } : {
-              text: "true",
-            isCorrect: !Answer.answer
-          },
+            Answer.answer === true
+              ? {
+                  text: "false",
+                  isCorrect: !Answer.answer,
+                }
+              : {
+                  text: "true",
+                  isCorrect: !Answer.answer,
+                },
           ],
         },
       },
@@ -613,64 +639,29 @@ const NuggetProvider = (props: any) => {
   }
 
   function validateErrors(values: Nugget) {
-    const errors: any = {};
-    let flag = false;
-    let check = false;
-    // if (
-    //   !values.categories?.categoryId ||
-    //   !values.categories?.chapterId ||
-    //   !values.categories?.subjectId
-    // ) {
-    //   errors.categories = "Category Option is Empty";
-    // }
-
+    let errors: any = {};
     if (!values.kind) {
       errors.kind = "Nugget Kind is Empty!";
     }
-    if (nugget.kind == "SCQ" || nugget.kind == "MCQ") {
-      //console.log("This is question.content", values.question.content);
-      if (!values.question.content || values.question.content.english == "") {
-        errors.question = "Type Question is Empty";
-      }
 
-      values.question.bilingual_options?.english.map((opt) => {
-        //console.log("this is opt text", opt.text);
-        if (opt.text == "") {
-          //console.log("I have found an empty string");
-          check = true;
-        }
-      });
+    if (
+      nugget.kind == "SCQ" ||
+      nugget.kind == "MCQ" ||
+      nugget.kind == "TRUEFALSE"
+    )
+      errors = validateSCC(values);
+    else if (nugget.kind == "FIB") errors = validateFIB(values);
 
-      if (check) {
-        //console.log("......ENTRY ACCESS GIVEN!......");
-        errors.options = "Type Option is Empty";
-      }
-
-      //scq and mcq different
-
-      values.question.bilingual_options?.english.map((opt) => {
-        if (opt.isCorrect == true) {
-          flag = true;
-        }
-      });
-
-      if (!flag) {
-        errors.isCorrect = "Correct Option not defined";
-      }
-    }
     return errors;
   }
 
   function fetchNuggetContent(nuggetId: string) {
-    //console.log("***Nugget Info Dynamic - 1 ******", nugget);
     if (!nuggetId) return;
     else {
       fetchNugget([nuggetId]).then((data) => {
         console.log("***Nugget in FetchContent - step 1", data[0]);
         setNugget((prev: Nugget) => ({ ...prev, ...data[0] }));
         filterFunctions.setFilters(data[0].categories);
-        //console.log("****!!!!!****", data[0].categories);
-        //console.log("***Nugget Info Dynamic fetchContent ******", nugget);
       });
     }
   }
@@ -716,9 +707,12 @@ const NuggetProvider = (props: any) => {
           addFIBOption,
           updateFIBOption,
           deleteFIBOption,
-          updateFIBContent,
+          updateFIBContentType,
+          updateFIBContentText,
           deleteFIBContent,
           updateVideoNugget,
+          imageURI,
+          audioURI,
           submit,
           setSubmit,
           validateErrors,

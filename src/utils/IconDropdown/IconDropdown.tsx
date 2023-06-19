@@ -1,7 +1,6 @@
 import { NuggetsContext } from "../../context/NuggetsContext";
 import React, { useContext, useState, useEffect } from "react";
 import { uploadImage, postImage, getHeaderIcons } from "@/api/utils";
-import { useAmp } from "next/amp";
 import { FileObject } from "@/interfaces/INugget";
 
 interface OptionType {
@@ -42,7 +41,6 @@ export default function IconDropdown() {
     if (file) {
       const formData = new FormData();
       formData.append("file", file);
-      console.log(formData, "formData");
       uploadImage(formData).then((data) => setUploadedImage(data));
     }
   };
