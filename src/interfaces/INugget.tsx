@@ -14,14 +14,11 @@ export type Nugget = {
   caption?: string;
   status: "active" | "inactive";
   question: QuestionObject;
-  content?: Array<ContentObject>;
+  content: Array<ContentObject>;
   categories: Array<CategoryObject>;
   updatedAt: Date;
   createdAt: Date;
-  //error:
 };
-
-export interface ErrorObject {}
 
 export interface CategoryObject {
   categoryId?: string;
@@ -47,7 +44,7 @@ export interface ContentObject {
   imgUri?: FileObject;
   imgCaption?: string;
   bullet?: BulletObject;
-  list: Array<string>;
+  list: Array<ListItemObject>;
 }
 
 export interface FileObject {

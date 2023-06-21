@@ -2,22 +2,20 @@ import React, { useRef, useEffect } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { useState, useContext } from "react";
 import { NuggetsContext } from "../../../../context/NuggetsContext";
-import { listenerCount } from "process";
 
-const TinyMCE = (props: {
-  kind: {
-    kind: "H1" | "H2" | "Text" | "UL" | "OL" | "IMG";
-  };
-  idx: number;
-  idj?: number;
-}) => {
+const TinyMCE = (props: { kind: string; idx: number; idj?: number }) => {
   const { bullet, updateContentItem, updateListItem } =
     useContext(NuggetsContext);
   const editorRef = useRef(null);
-  const [content, setContent] = useState("");
 
-  const handleEditorChange = (content, editor) => {
-    setContent(content);
+  const handleEditorChange = (content) => {
+    if (props.kind == "OL" && props.idj) {
+      updateListItem && updateListItem(props.idx, content, "OL", props.idj);
+    } else if (props.kind == "UL" && props.idj) {
+      updateListItem && updateListItem(props.idx, content, "UL", props.idj);
+    } else {
+      updateContentItem && updateContentItem(props.idx, content, props.kind);
+    }
   };
 
   useEffect(() => {
@@ -37,21 +35,20 @@ const TinyMCE = (props: {
     }
   }, []);
 
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      if (props.kind == "OL") {
-        //console.log(".......ol it is......");
-        updateListItem(props.idx, content, "OL", props.idj);
-      } else if (props.kind == "UL") {
-        //console.log(".......ul it is......");
-        updateListItem(props.idx, content, "UL", props.idj);
-      } else {
-        //console.log(".......else it is......");
-        updateContentItem(props.idx, { kind: props.kind, list: content });
-      }
-    }, 1500);
-    return () => clearTimeout(timeoutId);
-  }, [content]);
+  // useEffect(() => {
+  //   const timeoutId = setTimeout(() => {
+  //     if (props.kind == "OL" && props.idj) {
+  //       updateListItem && updateListItem(props.idx, content, "OL", props.idj);
+  //     } else if (props.kind == "UL" && props.idj) {
+  //       //console.log(".......ul it is......");
+  //       updateListItem && updateListItem(props.idx, content, "UL", props.idj);
+  //     } else {
+  //       //console.log(".......else it is......");
+  //       updateContentItem && updateContentItem(props.idx, content, props.kind);
+  //     }
+  //   }, 500);
+  //   return () => clearTimeout(timeoutId);
+  // }, [content]);
   return (
     <div className="text-editor">
       <Editor

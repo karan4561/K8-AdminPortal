@@ -21,7 +21,7 @@ interface OptionType {
     | "Video"
     | "SCQ"
     | "MCQ"
-    | "Note"
+    | "NOTE"
     | "FIB"
     | "IMAGE"
     | "AUDIOCLIP"
@@ -44,7 +44,7 @@ function NuggetsLanding({ nuggetId }: any) {
     { value: "Video", label: "Video" },
     { value: "SCQ", label: "SCQ" },
     { value: "MCQ", label: "MCQ" },
-    { value: "Note", label: "Note" },
+    { value: "NOTE", label: "NOTE" },
     { value: "FIB", label: "FIB" },
     { value: "IMAGE", label: "IMAGE" },
     { value: "AUDIOCLIP", label: "AUDIOCLIP" },
@@ -131,7 +131,7 @@ function NuggetsLanding({ nuggetId }: any) {
             </div>
             <NuggetInfo />
             <XPTimer />
-            {nugget.kind == "Note" && <NoteNugget />}
+            {nugget.kind == "NOTE" && <NoteNugget />}
             {nugget.kind == "AUDIOCLIP" && <AudioNugget />}
             {nugget.kind == "FIB" && <FIBNugget />}
             {nugget.kind == "TRUEFALSE" && <TrueFalse />}
