@@ -10,7 +10,6 @@ interface FIB {
 }
 
 function FIBNugget() {
-  const initialFIBObject = { value: "", type: "text" } as FIB;
   const { nugget, addFIBContent, deleteFIBContent, updateSolHint } =
     useContext(NuggetsContext);
 

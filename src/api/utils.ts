@@ -30,7 +30,7 @@ export async function updateNugget(nugget: Nugget,nuggetId: string){
 export async function getNuggetList(pagination: number, experienceSearch: boolean, categoryId: string, subjectId: string, chapterId: string, topicId?: string, status?:boolean){
     const response = await get("/v3/admin/pitara/nuggets/search?",{
         params:{pagination, experienceSearch, categoryId, subjectId, chapterId, topicId, status},
-        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer 1f1a362c848a1424cd05256e0d4e8008cc5815a0bac5b5eaee51423ecd773050'}
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer bed8a7991d551ec0068227bcceb2319286c8f8a41a17e90121d3e239de12bf42'}
     });
     return response.data;
 }
@@ -38,14 +38,14 @@ export async function getNuggetList(pagination: number, experienceSearch: boolea
 export async function fetchNugget(list: string[]){
     const response = await get("/v3/admin/pitara/nuggets/metadata?",{
         params:{list},
-        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer 1f1a362c848a1424cd05256e0d4e8008cc5815a0bac5b5eaee51423ecd773050'}
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer bed8a7991d551ec0068227bcceb2319286c8f8a41a17e90121d3e239de12bf42'}
     })
     return response.data;
 }
 
 export async function deleteNugget(nuggetId: string){
     const response = await deleteApi("/v3/admin/pitara/nuggets/"+nuggetId,{
-        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer 1f1a362c848a1424cd05256e0d4e8008cc5815a0bac5b5eaee51423ecd773050'}
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer bed8a7991d551ec0068227bcceb2319286c8f8a41a17e90121d3e239de12bf42'}
     });
     //console.log("*******API Testing:************",nugget);
     return response.data;

@@ -12,7 +12,6 @@ import { deleteNugget, getNuggetList } from "@/api/utils";
 
 import { Nugget } from "@/interfaces/INugget";
 import Link from "next/link";
-import FIBPrev from "@/components/Preview/FIBPrev";
 
 interface Approve {
   value: string;
@@ -192,25 +191,32 @@ function EditNugget() {
               </div>
               <div className="edit-nugget-prev">
                 <div className="headerimage-headertitle">
-                  {(!!nuggetData.headerIcon) && <img src={nuggetData.headerIcon?.baseUrl+nuggetData.headerIcon?.key} alt="" width={20} height={20} />}
+                  {!!nuggetData.headerIcon && (
+                    <img
+                      src={
+                        nuggetData.headerIcon?.baseUrl +
+                        nuggetData.headerIcon?.key
+                      }
+                      alt=""
+                      width={20}
+                      height={20}
+                    />
+                  )}
                   <h4>{nuggetData.headerTitle}</h4>
                 </div>
-                {(nuggetData.kind == "IMAGE") && (
+                {nuggetData.kind == "IMAGE" && (
                   <ImagePrev nugget={nuggetData} />
-                  )}
-                {(nuggetData.kind == "TRUEFALSE") && (
+                )}
+                {nuggetData.kind == "TRUEFALSE" && (
                   <TrueFalsePrev nugget={nuggetData} />
-                  )}
-                {(nuggetData.kind == "FIB") && (
-                  <FIBPrev nugget={nuggetData} />
-                  )}
-                  {(nuggetData.kind == "SCQ" || nuggetData.kind === "MCQ") && (
-                    <SCQPrev nugget={nuggetData} />
-                  )}
-                  {(nuggetData.kind == "AUDIOCLIP") && (
-                    <AudioPrev nugget={nuggetData} />
-                  )}
-
+                )}
+                {nuggetData.kind == "FIB" && <FIBPrev nugget={nuggetData} />}
+                {(nuggetData.kind == "SCQ" || nuggetData.kind === "MCQ") && (
+                  <SCQPrev nugget={nuggetData} />
+                )}
+                {nuggetData.kind == "AUDIOCLIP" && (
+                  <AudioPrev nugget={nuggetData} />
+                )}
               </div>
             </div>
           );

@@ -8,10 +8,8 @@ const TextEditor = (props: any) => {
   //   const { nugget,updateTFSolution } = useContext(NuggetContext);
   let width: string;
   const editorRef = useRef<any>(null);
-  const [content, setContent] = useState("");
 
   const handleEditorChange = (content) => {
-    setContent(content);
     props.onUpdate(content, props.id);
   };
   //   console.log(props.onUpdate.name);

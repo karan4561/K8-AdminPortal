@@ -51,3 +51,11 @@ export function validateFIB(values: Nugget){
 
     return errors;
 }
+
+export function validateAudio(values: Nugget){
+  const errors: any = {};
+
+  if(!values.audioUri){
+    errors.isAudio = "AudioClip must have an Audio uploaded"
+  }
+}
