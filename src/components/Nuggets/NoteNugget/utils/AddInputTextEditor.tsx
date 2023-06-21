@@ -1,7 +1,7 @@
 import TinyMCE from "./Tinymce";
-import { useState, useContext, useEffect } from "react";
+import { useContext } from "react";
 import { NuggetsContext } from "../../../../context/NuggetsContext";
-// import { useState } from 'react';
+
 interface SectionProps {
   idi: number;
   idj: number;
@@ -32,23 +32,15 @@ function SectionList(props: {
   };
   idx: number;
 }) {
-  const { list, setList, addListItem } = useContext(NuggetsContext);
+  const { nugget, addListItem } = useContext(NuggetsContext);
 
   function addSection() {
-    addListItem("");
-  }
-
-  function handleDelete(idx: number) {
-    console.log("This is OL list before deleteing", list);
-
-    if (list) {
-      list.splice(idx, 1);
-      setList(list);
+    if (addListItem) {
+      addListItem(props.idx, { rtx: "" });
     }
   }
-
-  console.log("ths is list", list);
-  const sectionElements = list?.map((section, idj) => {
+  function handleDelete(idx: number) {}
+  const sectionElements = nugget.content[props.idx].list.map((section, idj) => {
     return (
       <Section
         key={idj}

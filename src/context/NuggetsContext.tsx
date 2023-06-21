@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { INuggetContext } from "./interface/INuggetsContext";
 
-import { CategoryObject, Nugget, FileObject } from "@/interfaces/INugget";
+import { Nugget, FileObject, ListItemObject } from "@/interfaces/INugget";
 import * as _ from "lodash";
 
 interface OptionType {
@@ -31,8 +31,7 @@ import {
   initialStateSCC,
 } from "@/utils/InitialStateNuggets/InitialStateNuggets";
 import {
-  ValidateFIB,
-  ValidateSCC,
+  validateAudio,
   validateFIB,
   validateSCC,
 } from "@/utils/Validations/Validations";
@@ -49,8 +48,6 @@ export const NuggetsContext = React.createContext<INuggetContext>(initialState);
 const NuggetProvider = (props: any) => {
   const [nugget, setNugget] = useState<Nugget>(_.cloneDeep(initialStateSCC));
   const [bullet, setBullet] = useState<BulletObject>();
-  const [list, setList] = useState<Array<string>>([""]); //fib
-  const [ques, setQues] = useState<QuestionObject>(); //fib
   const [submit, setSubmit] = useState<boolean>(false);
   const [icon, setIcon] = useState<FileObject[]>();
   const [nuggetId, setNuggetId] = useState<string>();
@@ -118,18 +115,18 @@ const NuggetProvider = (props: any) => {
     }));
   }
 
-  function imageURI(imageURI:{URI:FileObject}){
-    setNugget((prev)=>({
+  function imageURI(imageURI: { URI: FileObject }) {
+    setNugget((prev) => ({
       ...prev,
-      imageUri: imageURI.URI
-    }))
+      imageUri: imageURI.URI,
+    }));
   }
 
-  function audioURI(audioURI:{URI:FileObject}){
-    setNugget((prev)=>({
+  function audioURI(audioURI: { URI: FileObject }) {
+    setNugget((prev) => ({
       ...prev,
-      audioUri: audioURI.URI
-    }))
+      audioUri: audioURI.URI,
+    }));
   }
 
   function updateNuggetKind(
@@ -166,14 +163,6 @@ const NuggetProvider = (props: any) => {
         headerTitle: nugget.headerTitle,
       } as Nugget);
     }
-  }
-
-  function updateFilters(filter: CategoryObject[]) {
-    //console.log("*****This is being called******** step - 2", filter);
-    setNugget((prev) => ({
-      ...prev,
-      categories: filter,
-    }));
   }
 
   function updateNuggetInfoHeader(headerTitle: string) {
@@ -232,10 +221,40 @@ const NuggetProvider = (props: any) => {
     }
   }
 
-  function addListItem(item: string) {
-    //list.push(item);
-    setList((prev) => [...prev, item]);
-    //console.log("Here is list", list);
+  function addListItem(idx: number, list: ListItemObject) {
+    if (!nugget.content[idx].list) {
+      setNugget((prev) => {
+        return {
+          ...prev,
+          content: prev.content.map((option, i) => {
+            if (i == idx) {
+              return {
+                ...option,
+                list: [list],
+              };
+            } else {
+              return option;
+            }
+          }),
+        };
+      });
+    } else {
+      setNugget((prev) => {
+        return {
+          ...prev,
+          content: prev.content.map((option, i) => {
+            if (i == idx) {
+              return {
+                ...option,
+                list: [...option.list, list],
+              };
+            } else {
+              return option;
+            }
+          }),
+        };
+      });
+    }
   }
 
   function addFIBContent() {
@@ -299,7 +318,7 @@ const NuggetProvider = (props: any) => {
           ...prev.question,
           fib: {
             ...prev.question.fib,
-            english: nugget.question.fib.english.map((option, i) => {
+            english: prev.question.fib.english.map((option, i) => {
               if (i === Content.index) {
                 return {
                   ...option,
@@ -332,12 +351,58 @@ const NuggetProvider = (props: any) => {
     });
   }
 
-  function updateContentItem(idx: number, note: ContentObject) {
-    if (nugget.content) nugget.content[idx] = note;
-    setNugget({ ...nugget });
+  function updateContentItem(
+    idx: number,
+    item: string,
+    kind: "H1" | "H2" | "Text" | "UL" | "OL" | "IMG",
+    idj?: number,
+    bullet?: BulletObject
+  ) {
+    if (nugget.content && idj) {
+      console.log("idx:" + idx + "\nidj:" + idj);
+      setNugget((prev) => {
+        return {
+          ...prev,
+          // content: [
+          //   ...prev.content,
+          //   {
+          //     ...prev.content[idx],
+          //     kind: kind,
+          //     bullet: bullet,
+          //     list: [
+          //       ...prev.content[idx].list,
+          //       { ...prev.content[idx].list[idj], rtx: item },
+          //     ],
+          //   },
+          // ],
+          content: prev.content.map((option, i) => {
+            if (i == idx) {
+              return {
+                ...option,
+                kind: kind,
+                bullet: bullet,
+                list: option.list.map((opt, j) => {
+                  if (j == idj) {
+                    return {
+                      ...opt,
+                      rtx: item,
+                    };
+                  } else {
+                    return opt;
+                  }
+                }),
+              };
+            } else {
+              return option;
+            }
+          }),
+        };
+      });
+    } else if (nugget.content) {
+      nugget.content[idx] = { kind: kind, list: [{ rtx: item }] };
+      setNugget(nugget);
+    }
   }
-
-  //use alternate kind definition
 
   function updateListItem(
     idi: number,
@@ -345,29 +410,20 @@ const NuggetProvider = (props: any) => {
     kind: "H1" | "H2" | "Text" | "UL" | "OL" | "IMG",
     idj: number
   ) {
-    if (list) {
-      list[idj] = item;
-      setList(list);
-    }
     if (kind == "OL") {
-      updateContentItem(idi, { kind: kind, list: list, bullet: bullet });
+      updateContentItem(idi, item, kind, idj, bullet);
     } else if (kind == "UL") {
-      updateContentItem(idi, { kind: kind, list: list });
+      updateContentItem(idi, item, kind, idj);
     }
   }
 
-  // function updateFIBItem(idx: number, note: FIB) {
-  //   if (ques?.fib?.english) {
-  //     ques.fib.english[idx] = note;
-  //   }
-  //   setQues({ ...ques });
-  // }
-
   function handleDeleteNoteContent(id: number) {
-    if (nugget.content) {
-      nugget.content.splice(id, 1);
-    }
-    setNugget(nugget);
+    setNugget((prev) => {
+      return {
+        ...prev,
+        content: prev.content?.filter((_, i) => i !== id),
+      };
+    });
   }
 
   function updateSolHint(SolHint: { text?: string; hint?: string }) {
@@ -415,18 +471,6 @@ const NuggetProvider = (props: any) => {
       },
     }));
   }
-
-  // function updateVideoNugget(video: {videoURI?: string,videoCaption?:string}) {
-  //   setNugget((prev) => ({
-  //     ...prev,
-  //     videoURI: video.videoURI !== undefined
-  //     ? video.videoURI
-  //     : prev.videoURI,
-  //     caption: video.videoCaption !== undefined
-  //     ? video.videoCaption
-  //     : prev.caption
-  //   }));
-  // }
 
   function updateAnswer(Answer: { answer: boolean; text: string }) {
     setNugget((prev) => ({
@@ -651,8 +695,7 @@ const NuggetProvider = (props: any) => {
     )
       errors = validateSCC(values);
     else if (nugget.kind == "FIB") errors = validateFIB(values);
-
-    return errors;
+    else if (nugget.kind == "AUDIOCLIP") errors = validateAudio(values);
   }
 
   function fetchNuggetContent(nuggetId: string) {
@@ -675,13 +718,9 @@ const NuggetProvider = (props: any) => {
           setNugget: setNugget,
           updateNuggetKind,
           bullet,
-          list,
-          ques,
           icon,
           nuggetId,
           setNuggetId,
-          setQues,
-          setList,
           setBullet,
           updateNuggetInfoHeader,
           updateNuggetInfoKnowledgeCap,
@@ -700,7 +739,6 @@ const NuggetProvider = (props: any) => {
           updateContentKind,
           addContentItem,
           updateContentItem,
-          addListItem,
           updateListItem,
           handleDeleteNoteContent,
           addFIBContent,
@@ -717,6 +755,7 @@ const NuggetProvider = (props: any) => {
           setSubmit,
           validateErrors,
           fetchNuggetContent,
+          addListItem,
         }}
       >
         {props.children}
@@ -726,14 +765,3 @@ const NuggetProvider = (props: any) => {
 };
 
 export default NuggetProvider;
-
-//two way binding
-//preview
-//validations in UI
-// Error in UI
-
-//check on header title
-
-// two way binding
-//edit nugget functionality
-//not change in nugget kind

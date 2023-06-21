@@ -16,7 +16,11 @@ function FIBSection(props: any) {
     { value: "blank", label: "BLANK" },
   ];
 
-  let selectedOption: OptionType;
+  useEffect(() => {
+    handleChange(options[0]);
+  }, []);
+
+  let selectedOption: OptionType = options[0];
   if (nugget.question.fib.english[props.id].type == "blank") {
     selectedOption = options[1];
   } else if (nugget.question.fib.english[props.id].type == "text") {
@@ -39,6 +43,13 @@ function FIBSection(props: any) {
       });
   };
 
+  const blankFIBChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (updateFIBContentText)
+      updateFIBContentText({
+        index: props.id,
+        text: event.target.value,
+      });
+  };
   return (
     <>
       <div className="fib-card-header">
@@ -50,12 +61,21 @@ function FIBSection(props: any) {
             placeholder="Select"
             value={selectedOption}
           />
-          <TextEditor
-            idx={props.id}
-            value={nugget.question.fib.english[props.id].value}
-            onUpdate={(content: string) => updateText(content)}
-            fibOption={"fibOption"}
-          />
+          {selectedOption == options[0] ? (
+            <TextEditor
+              idx={props.id}
+              value={nugget.question.fib.english[props.id].value}
+              onUpdate={(content: string) => updateText(content)}
+              fibOption={"fibOption"}
+            />
+          ) : (
+            <input
+              id={props.id}
+              className="image-type-input"
+              value={nugget.question.fib.english[props.id].value}
+              onChange={blankFIBChange}
+            />
+          )}
         </div>
       </div>
     </>

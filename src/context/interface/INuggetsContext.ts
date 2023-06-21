@@ -12,8 +12,6 @@ export interface INuggetContext extends FilterFunctions {
     setNugget: any,
     bullet?: BulletObject,
     setBullet?: React.Dispatch<React.SetStateAction<BulletObject|undefined>>,
-    list:Array<string>,
-    setList?: any,
     ques?: QuestionObject 
     updateNuggetKind?: any,
     setQues?: React.Dispatch<React.SetStateAction<QuestionObject|undefined>>
@@ -42,9 +40,9 @@ export interface INuggetContext extends FilterFunctions {
     updateQuestion?: (question: { english: string })=>void,
     updateAnswer: (Answer:{ answer:boolean, text:string}) =>void,
     handleDeleteNoteContent?:(id: number)=>void,
-    updateContentItem?: (idx: number, note: ContentObject)=>void,
+    updateContentItem?: (idx: number, item: string, kind: "H1" | "H2" | "Text" | "UL" | "OL" | "IMG", idj?: number, bullet?: BulletObject)=>void,
     addContentItem?: (note: ContentObject)=>void,
-    addListItem?: (item: string)=>void,
+    addListItem?: (idx: number, list: ListItemObject)=>void,
     updateVideoNugget:(video: {videoURI?: string,videoCaption?:string})=>void
     imageURI:(imageURI:{URI:FileObject})=>void
     audioURI:(audioURI:{URI:FileObject}) =>void
