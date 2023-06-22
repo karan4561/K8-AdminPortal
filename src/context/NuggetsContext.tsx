@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { INuggetContext } from "./interface/INuggetsContext";
 
 import { Nugget, FileObject, ListItemObject } from "@/interfaces/INugget";
@@ -52,6 +52,10 @@ const NuggetProvider = (props: any) => {
   const [icon, setIcon] = useState<FileObject[]>();
   const [nuggetId, setNuggetId] = useState<string>();
   const { filters, ...filterFunctions } = useFilters();
+
+  useEffect(() => {
+    console.log("Nugget is being Updated", nugget.content);
+  }, [nugget]);
 
   console.log("***This is Nugget***", nugget);
 
@@ -363,18 +367,6 @@ const NuggetProvider = (props: any) => {
       setNugget((prev) => {
         return {
           ...prev,
-          // content: [
-          //   ...prev.content,
-          //   {
-          //     ...prev.content[idx],
-          //     kind: kind,
-          //     bullet: bullet,
-          //     list: [
-          //       ...prev.content[idx].list,
-          //       { ...prev.content[idx].list[idj], rtx: item },
-          //     ],
-          //   },
-          // ],
           content: prev.content.map((option, i) => {
             if (i == idx) {
               return {
@@ -399,8 +391,9 @@ const NuggetProvider = (props: any) => {
         };
       });
     } else if (nugget.content) {
-      nugget.content[idx] = { kind: kind, list: [{ rtx: item }] };
-      setNugget(nugget);
+      const obj = { ...nugget };
+      obj.content[idx] = { kind: kind, list: [{ rtx: item }] };
+      setNugget(obj);
     }
   }
 
@@ -422,6 +415,24 @@ const NuggetProvider = (props: any) => {
       return {
         ...prev,
         content: prev.content?.filter((_, i) => i !== id),
+      };
+    });
+  }
+
+  function handleDeleteNoteContentList(idx: number, id: number) {
+    setNugget((prev) => {
+      return {
+        ...prev,
+        content: prev.content.map((option, i) => {
+          if (i == idx) {
+            return {
+              ...option,
+              list: option.list.filter((_, i) => i !== id),
+            };
+          } else {
+            return option;
+          }
+        }),
       };
     });
   }
@@ -741,6 +752,7 @@ const NuggetProvider = (props: any) => {
           updateContentItem,
           updateListItem,
           handleDeleteNoteContent,
+          handleDeleteNoteContentList,
           addFIBContent,
           addFIBOption,
           updateFIBOption,

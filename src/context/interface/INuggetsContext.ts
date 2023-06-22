@@ -40,6 +40,7 @@ export interface INuggetContext extends FilterFunctions {
     updateQuestion?: (question: { english: string })=>void,
     updateAnswer: (Answer:{ answer:boolean, text:string}) =>void,
     handleDeleteNoteContent?:(id: number)=>void,
+    handleDeleteNoteContentList?:(idx: number, id: number)=>void,
     updateContentItem?: (idx: number, item: string, kind: "H1" | "H2" | "Text" | "UL" | "OL" | "IMG", idj?: number, bullet?: BulletObject)=>void,
     addContentItem?: (note: ContentObject)=>void,
     addListItem?: (idx: number, list: ListItemObject)=>void,

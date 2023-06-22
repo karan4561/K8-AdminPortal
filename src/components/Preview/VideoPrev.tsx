@@ -6,22 +6,15 @@ import { useContext } from "react";
 function VideoPrev() {
   const { nugget } = useContext(NuggetsContext);
   const playerUrl = useMemo(() => {
-    return "blob:https://admin-video.penpencil.xyz/41cfb779-a6aa-4c35-afd6-889c198cf339";
+    return "https://d1d34p8vz63oiq.cloudfront.net/c7e9a2d6-328a-42cb-b879-b00b0db4cc4a/master.mpd";
   }, []);
 
   return (
     <>
       <div className="ImagePrev">
-        <video
-          width="320"
-          height="240"
-          preload="auto"
-          controls
-          autoPlay
-          src={playerUrl}
-        >
-          Your browser does not support the video tag.
-        </video>
+        <iframe
+          src={`https://pw-video-player-stage.penpencil.co?url=${playerUrl}&type=MPD&default_muted=false&default_paused=true&video_details=eyJ2aWRlb0RldGFpbHMiOnsidHlwZXMiOlsiREFTSCJdfX0=`}
+        />
         <p>{nugget?.caption}</p>
       </div>
     </>

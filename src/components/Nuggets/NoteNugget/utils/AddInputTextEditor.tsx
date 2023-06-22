@@ -5,15 +5,18 @@ import { NuggetsContext } from "../../../../context/NuggetsContext";
 interface SectionProps {
   idi: number;
   idj: number;
-  onDelete: (id: number) => void;
+  //onDelete: (id: number) => void;
   kind: {
     kind: "H1" | "H2" | "Text" | "UL" | "OL" | "IMG";
   };
 }
 
 function Section(props: SectionProps) {
+  const { handleDeleteNoteContentList } = useContext(NuggetsContext);
   function handleDelete() {
-    props.onDelete(props.idj);
+    if (handleDeleteNoteContentList) {
+      handleDeleteNoteContentList(props.idi, props.idj);
+    }
   }
 
   return (
@@ -32,24 +35,16 @@ function SectionList(props: {
   };
   idx: number;
 }) {
-  const { nugget, addListItem } = useContext(NuggetsContext);
+  const { nugget, addListItem, handleDeleteNoteContentList } =
+    useContext(NuggetsContext);
 
   function addSection() {
     if (addListItem) {
       addListItem(props.idx, { rtx: "" });
     }
   }
-  function handleDelete(idx: number) {}
   const sectionElements = nugget.content[props.idx].list.map((section, idj) => {
-    return (
-      <Section
-        key={idj}
-        idj={idj}
-        idi={props.idx}
-        kind={props.kind}
-        onDelete={handleDelete}
-      />
-    );
+    return <Section key={idj} idj={idj} idi={props.idx} kind={props.kind} />;
   });
 
   return (

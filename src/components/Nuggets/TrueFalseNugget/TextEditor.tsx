@@ -32,6 +32,8 @@ const TextEditor = (props: any) => {
   }, []);
   if (props.fibOption || props.fibExtraOption) {
     width = "40vw";
+  } else if (!!props.NOTE) {
+    width = "30vw";
   } else {
     width = "60vw";
   }
