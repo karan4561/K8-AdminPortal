@@ -5,9 +5,11 @@ import Image from "next/image";
 import parse from "html-react-parser";
 import { before } from "node:test";
 import { colors } from "react-select/dist/declarations/src/theme";
-function NoteNuggetPrev() {
+function NoteNuggetPrev({nugget}:any) {
   const parse = require("html-react-parser");
-  const { nugget } = useContext(NuggetsContext);
+  // const { nugget } = useContext(NuggetsContext);
+  console.log(nugget,"noteprev");
+  
   return (
     <>
       {nugget.content?.map((contentData) => {
@@ -20,7 +22,7 @@ function NoteNuggetPrev() {
                   if (!!listData) {
                     return (
                       <>
-                        <h1 key={index}>{parse(listData)}</h1>
+                        <h1 key={index}>{parse(listData.rtx)}</h1>
                       </>
                     );
                   }
@@ -35,7 +37,7 @@ function NoteNuggetPrev() {
                     <>
                       {!!listData && (
                         <h2 key={index} className="h2Prev">
-                          {parse(listData)}
+                          {parse(listData.rtx)}
                         </h2>
                       )}
                     </>
@@ -60,7 +62,7 @@ function NoteNuggetPrev() {
                         </p>
                         <p>{contentData.bullet?.suffix}</p>
                         <p className="OL-text" key={index}>
-                          {parse(listData)}
+                          {parse(listData.rtx)}
                         </p>
                       </div>
                     </>
@@ -72,7 +74,7 @@ function NoteNuggetPrev() {
               <div className="text-prev">
                 {contentData.list?.map((listData, index) => {
                   return (
-                    <>{!!listData && <p key={index}>{parse(listData)}</p>}</>
+                    <>{!!listData && <p key={index}>{parse(listData.rtx)}</p>}</>
                   );
                 })}
               </div>
@@ -83,7 +85,7 @@ function NoteNuggetPrev() {
                   {contentData.list?.map((listData, index) => {
                     return (
                       <>
-                        {!!listData && <li key={index}>{parse(listData)}</li>}
+                        {!!listData && <li key={index}>{parse(listData.rtx)}</li>}
                       </>
                     );
                   })}

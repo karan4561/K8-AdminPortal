@@ -4,6 +4,7 @@ import ImagePrev from "./ImagePrev";
 import VideoPrev from "./VideoPrev";
 import SCQPrev from "./SCQPrev";
 import FIBPrev from "./FIBPrev";
+import NotePrev from "../Preview/components/NoteNuggetPrev";
 import AudioPrev from "./AudioPrev";
 import { NuggetsContext } from "../../context/NuggetsContext";
 import { useContext, useEffect } from "react";
@@ -38,7 +39,7 @@ function Preview() {
           {nugget?.kind == "SCQ" && <SCQPrev nugget={nugget} />}
           {nugget?.kind == "MCQ" && <SCQPrev nugget={nugget} />}
           {nugget?.kind == "FIB" && <FIBPrev nugget={nugget} />}
-          {/* {(test?.kind=='Note') && <NoteNugget/>} */}
+          {(nugget?.kind=='NOTE') && <NotePrev nugget={nugget}/>}
         </div>
       </div>
     </>

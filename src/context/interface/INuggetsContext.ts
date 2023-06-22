@@ -43,6 +43,7 @@ export interface INuggetContext extends FilterFunctions {
     handleDeleteNoteContentList?:(idx: number, id: number)=>void,
     updateContentItem?: (idx: number, item: string, kind: "H1" | "H2" | "Text" | "UL" | "OL" | "IMG", idj?: number, bullet?: BulletObject)=>void,
     addContentItem?: (note: ContentObject)=>void,
+    contentIcon:(imageURI: { URI: FileObject, index: number }) =>void,
     addListItem?: (idx: number, list: ListItemObject)=>void,
     updateVideoNugget:(video: {videoURI?: string,videoCaption?:string})=>void
     imageURI:(imageURI:{URI:FileObject})=>void
