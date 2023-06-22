@@ -19,12 +19,11 @@ interface OptionType {
   details?: string;
 }
 
-export default function IconDropdown() {
+export default function IconDropdown({props}:any) {
   const { icon, updateHeaderIcon, updateFileObj } = useContext(NuggetsContext);
   const [selectedOption, setSelectedOption] = useState<OptionType | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [uploadedImage, setUploadedImage] = useState<FileObject>();
-
   const { nugget, nuggetId } = useContext(NuggetsContext);
 
   const toggleDropdown = () => {

@@ -221,6 +221,27 @@ const NuggetProvider = (props: any) => {
     }
   }
 
+  function contentIcon(imageURI: { URI: FileObject, index: number }) {
+    setNugget((prev) => {
+      const updatedContent = [...prev.content]; // Create a copy of the content array
+  
+      // Check if the specified index is within bounds
+      if (imageURI.index >= 0 && imageURI.index < updatedContent.length) {
+        // Update the icon property of the content item at the specified index
+        updatedContent[imageURI.index] = {
+          ...updatedContent[imageURI.index],
+          icon: imageURI.URI,
+        };
+      }
+  
+      return {
+        ...prev,
+        content: updatedContent, // Update the content array in the nugget object
+      };
+    });
+  }
+  
+
   function addListItem(idx: number, list: ListItemObject) {
     if (!nugget.content[idx].list) {
       setNugget((prev) => {
@@ -350,6 +371,7 @@ const NuggetProvider = (props: any) => {
       };
     });
   }
+
 
   function updateContentItem(
     idx: number,
@@ -720,6 +742,7 @@ const NuggetProvider = (props: any) => {
           bullet,
           icon,
           nuggetId,
+          contentIcon,
           setNuggetId,
           setBullet,
           updateNuggetInfoHeader,
