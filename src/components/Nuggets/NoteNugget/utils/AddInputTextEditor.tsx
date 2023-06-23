@@ -6,9 +6,9 @@ interface SectionProps {
   idi: number;
   idj: number;
   //onDelete: (id: number) => void;
-  kind: {
+  // kind: {
     kind: "H1" | "H2" | "Text" | "UL" | "OL" | "IMG";
-  };
+  // };
 }
 
 function Section(props: SectionProps) {
@@ -29,9 +29,9 @@ function Section(props: SectionProps) {
 }
 
 function SectionList(props: {
-  kind: {
+  // kind: {
     kind: "H1" | "H2" | "Text" | "UL" | "OL" | "IMG";
-  };
+  // };
   idx: number;
 }) {
   const { nugget, addListItem, handleDeleteNoteContentList } =

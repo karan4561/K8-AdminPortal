@@ -116,7 +116,6 @@ const NuggetProvider = (props: any) => {
       },
     }));
   }
-
   function imageURI(imageURI: { URI: FileObject }) {
     setNugget((prev) => ({
       ...prev,
@@ -241,6 +240,24 @@ const NuggetProvider = (props: any) => {
         content: updatedContent, // Update the content array in the nugget object
       };
     });
+  }
+
+  function contentImageUpload(contentImage:{URI:FileObject,index:number}){
+    setNugget((prev)=>{
+      const updateContentImage = [...prev.content] // Create a copy of the content array
+      if (contentImage.index >= 0 && contentImage.index < updateContentImage.length) {
+        // Update the icon property of the content item at the specified index
+        updateContentImage[contentImage.index] = {
+          ...updateContentImage[contentImage.index],
+          imgUri: contentImage.URI,
+          kind:"IMG",
+        };
+      }
+      return {
+        ...prev,
+        content: updateContentImage, // Update the content array in the nugget object
+      };
+  })
   }
 
   function addListItem(idx: number, list: ListItemObject) {
@@ -751,6 +768,7 @@ const NuggetProvider = (props: any) => {
           contentIcon,
           setNuggetId,
           setBullet,
+          contentImageUpload,
           updateNuggetInfoHeader,
           updateNuggetInfoKnowledgeCap,
           updateNuggetInfoSideNote,

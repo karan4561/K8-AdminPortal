@@ -55,7 +55,7 @@ export default function (props: Props) {
           {(selectedValue?.value == "IMG" ||
             selectedValue?.value == "H1" ||
             selectedValue?.value == "UL" ||
-            selectedValue?.value == "H2") && <Icon contentID={props.idx} />}
+            selectedValue?.value == "H2") && <Icon ContentID={props.idx} />}
           {(selectedValue?.value == "H1" ||
             selectedValue?.value == "H2" ||
             selectedValue?.value == "Text") && (
@@ -70,7 +70,7 @@ export default function (props: Props) {
             <Text kind={selectedValue.value} idx={props.idx} />
           )}
         </div>
-        {selectedValue?.value == "IMG" && <ImageType />}
+        {selectedValue?.value == "IMG" && <ImageType ContentID={props.idx}/>}
         {selectedValue?.value == "OL" && <BulletColor idx={props.idx} />}
       </div>
     </>
