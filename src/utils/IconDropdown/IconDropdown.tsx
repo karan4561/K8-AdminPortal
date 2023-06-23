@@ -19,7 +19,7 @@ interface OptionType {
   details?: string;
 }
 
-export default function IconDropdown({props}:any) {
+export default function IconDropdown({ContentID}:any) {
   const { icon, updateHeaderIcon, updateFileObj, contentIcon } = useContext(NuggetsContext);
   const [selectedOption, setSelectedOption] = useState<OptionType | null>(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -34,8 +34,10 @@ export default function IconDropdown({props}:any) {
     setSelectedOption(selectedOption);
     setIsOpen(false);
 
-    if (props?.contentID) {
-      contentIcon({URI:selectedOption,index:props.contentID});
+    console.log(ContentID,"props?.contentID");
+    
+    if (ContentID || ContentID==0) {
+      contentIcon({URI:selectedOption,index:ContentID});
     }else{
       if(updateHeaderIcon) updateHeaderIcon(selectedOption)
     }
@@ -62,7 +64,6 @@ export default function IconDropdown({props}:any) {
     }
     console.log("***This is selected Option****", selectedOption);
   }, [uploadedImage]);
-
   return (
     <div className="dropdown">
       <div className="dropdown-toggle" onClick={toggleDropdown}>

@@ -34,7 +34,10 @@ const TextEditor = (props: any) => {
     width = "40vw";
   } else if (!!props.NOTE) {
     width = "30vw";
-  } else {
+  }else if(props.List=="LIST"){
+    width = "30vw";
+  }
+   else {
     width = "60vw";
   }
   return (

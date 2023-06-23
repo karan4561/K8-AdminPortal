@@ -5,7 +5,7 @@ import { useContext } from "react";
 import { NuggetsContext } from "../../../../context/NuggetsContext";
 
 const TinyMCE = (props: { kind: string; idx: number; idj?: number }) => {
-  const { updateContentItem, updateListItem, bullet } =
+  const {nugget, updateContentItem, updateListItem, bullet } =
     useContext(NuggetsContext);
   const editorRef = useRef(null);
   const [content, setContent] = useState<string>("");
@@ -43,7 +43,7 @@ const TinyMCE = (props: { kind: string; idx: number; idj?: number }) => {
   return (
     <div className="text-editor">
       <Editor
-        //value={props.value}
+        value={content}
         // onInit={(evt, editor) => (editorRef.current = editor)}
         apiKey={"2gzhpfsdrqpzlgs2servolzz08ba2ww1vypt3mvwuc8x16an"}
         init={{

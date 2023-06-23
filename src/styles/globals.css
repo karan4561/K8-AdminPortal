@@ -683,3 +683,7 @@ h4 {
 .AudioPrev>audio{
   width: 95%;
 }
+
+.pre-suff-val-prev{
+  display: flex;
+}
