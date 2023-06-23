@@ -10,7 +10,7 @@ import ImageNugget from "../Nuggets/ImageNugget/ImageNugget";
 import VideoNugget from "../VideoNugget/VideoNugget";
 import SccNugget from "../Nuggets/SccNugget/SccNugget";
 import MCQNugget from "../Nuggets/MCQNugget/MCQNugget";
-import LTI from "../LTI/LTI";
+import LTI from "../Nuggets/LTI/LTI";
 import NoteNugget from "../Nuggets/NoteNugget/NoteNugget";
 import FIBNugget from "../Nuggets/FIB/FIBNugget";
 import AudioNugget from "../Nuggets/AudioNugget/AudioNugget";

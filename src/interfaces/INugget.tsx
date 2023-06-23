@@ -63,6 +63,11 @@ export interface FileObject {
   details?: string;
 }
 
+export interface Coordinates {
+  x: number;
+  y: number;
+}
+
 export interface QuestionObject {
   content: {
     english: string;
@@ -86,30 +91,21 @@ export interface QuestionObject {
       isCorrect: boolean;
     }[];
   };
-  lti?: {
+  lti: {
     english: {
       value: string;
-      id: string;
-      coordinates: {
-        x: number;
-        y: number;
-      };
+      id?: string;
+      coordinates: Coordinates;
     }[];
-    hindi: {
+    hindi?: {
       value: string;
       id: string;
-      coordinates: {
-        x: number;
-        y: number;
-      };
+      coordinates: Coordinates;
     }[];
-    default: {
+    default?: {
       value: string;
       id: string;
-      coordinates: {
-        x: number;
-        y: number;
-      };
+      coordinates: Coordinates;
     }[];
   };
   ltiImage?: FileObject;

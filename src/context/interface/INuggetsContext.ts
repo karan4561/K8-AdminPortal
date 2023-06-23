@@ -1,4 +1,4 @@
-import { Nugget, ContentObject, CategoryObject, BulletObject, ListItemObject, QuestionObject, FileObject } from "src/interfaces/INugget";
+import { Nugget, ContentObject, CategoryObject, BulletObject, ListItemObject, QuestionObject, FileObject, Coordinates } from "src/interfaces/INugget";
 interface FIB {
   value?: string;
   type: "TEXT" | "BLANK";
@@ -11,7 +11,7 @@ export interface INuggetContext extends FilterFunctions {
     nugget:Nugget,
     setNugget: any,
     bullet?: BulletObject[],
-    setBullet?: React.Dispatch<React.SetStateAction<BulletObject[]|undefined>>,
+    setBullet?: React.Dispatch<React.SetStateAction<BulletObject[]>>,
     ques?: QuestionObject 
     updateNuggetKind?: any,
     setQues?: React.Dispatch<React.SetStateAction<QuestionObject|undefined>>
@@ -57,6 +57,9 @@ export interface INuggetContext extends FilterFunctions {
     // formErrors:any,
     // setFormErrors:any
     validateErrors?: (values: Nugget)=>any,
+    updateLTI:(index: number, content: string, coordinates: Coordinates)=>void,
+    imageLTI: (imageURI: { URI: FileObject })=>void,
+    deleteLTI: (index: number)=> void,
     fetchNuggetContent: any
 }
 
