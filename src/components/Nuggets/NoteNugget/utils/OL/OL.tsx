@@ -5,18 +5,20 @@ interface OptionType {
   value: string;
   label: string;
 }
-export default function () {
+
+interface Props {
+  idx: number;
+}
+export default function (props: Props) {
   const { bullet, setBullet } = useContext(NuggetsContext);
   const [prefixValue, setPrefixValue] = useState("");
   const [suffixValue, setSuffixValue] = useState("");
 
   const prefixChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPrefixValue(event.target.value);
-    //console.log("Prefix VALUE:", prefixValue);
   };
   const suffixChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSuffixValue(event.target.value);
-    //console.log("Suffix Value", suffixValue);
   };
   const optionsXP = [
     { label: "1", value: "1" },
@@ -29,14 +31,16 @@ export default function () {
     setOLType(selectedOption);
   };
   useEffect(() => {
-    if (setBullet) {
-      setBullet({
+    if (bullet && setBullet) {
+      const obj = [...bullet];
+      obj[props.idx] = {
+        ...obj[props.idx],
         value: OLType.value,
         prefix: prefixValue,
         suffix: suffixValue,
-      });
+      };
+      setBullet(obj);
     }
-    //console.log("The Value of Bullet is here:", bullet);
   }, [OLType.value, prefixValue, suffixValue]);
 
   return (

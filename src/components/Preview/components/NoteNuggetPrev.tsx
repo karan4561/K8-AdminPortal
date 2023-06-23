@@ -5,11 +5,11 @@ import Image from "next/image";
 import parse from "html-react-parser";
 import { before } from "node:test";
 import { colors } from "react-select/dist/declarations/src/theme";
-function NoteNuggetPrev({nugget}:any) {
+function NoteNuggetPrev({ nugget }: any) {
   const parse = require("html-react-parser");
   // const { nugget } = useContext(NuggetsContext);
-  console.log(nugget,"noteprev");
-  
+  // console.log(nugget,"noteprev");
+
   return (
     <>
       {nugget.content?.map((contentData) => {
@@ -74,7 +74,9 @@ function NoteNuggetPrev({nugget}:any) {
               <div className="text-prev">
                 {contentData.list?.map((listData, index) => {
                   return (
-                    <>{!!listData && <p key={index}>{parse(listData.rtx)}</p>}</>
+                    <>
+                      {!!listData && <p key={index}>{parse(listData.rtx)}</p>}
+                    </>
                   );
                 })}
               </div>
@@ -85,7 +87,9 @@ function NoteNuggetPrev({nugget}:any) {
                   {contentData.list?.map((listData, index) => {
                     return (
                       <>
-                        {!!listData && <li key={index}>{parse(listData.rtx)}</li>}
+                        {!!listData && (
+                          <li key={index}>{parse(listData.rtx)}</li>
+                        )}
                       </>
                     );
                   })}

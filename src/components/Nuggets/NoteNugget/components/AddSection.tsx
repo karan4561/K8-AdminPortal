@@ -13,7 +13,11 @@ interface OptionType {
   value: "H1" | "H2" | "Text" | "UL" | "OL" | "IMG";
   label: "H1" | "H2" | "Text" | "UL" | "OL" | "Image";
 }
-export default function (props: any) {
+interface Props {
+  idx: number;
+}
+
+export default function (props: Props) {
   const { nugget, updateContentItem, updateListItem } =
     useContext(NuggetsContext);
   const options: OptionType[] = [
@@ -32,7 +36,7 @@ export default function (props: any) {
 
   const onUpdateSol = (content: string) => {
     if (updateContentItem) {
-      updateContentItem(props.id, content, selectedValue.value);
+      updateContentItem(props.idx, content, selectedValue.value);
     }
   };
 
@@ -51,23 +55,23 @@ export default function (props: any) {
           {(selectedValue?.value == "IMG" ||
             selectedValue?.value == "H1" ||
             selectedValue?.value == "UL" ||
-            selectedValue?.value == "H2") && <Icon contentID={props.id}/>}
+            selectedValue?.value == "H2") && <Icon contentID={props.idx} />}
           {(selectedValue?.value == "H1" ||
             selectedValue?.value == "H2" ||
             selectedValue?.value == "Text") && (
             <TextEditor2
               NOTE={selectedValue.value} // to be changed
-              value={nugget.content[props.id]?.list[0]?.rtx}
+              value={nugget.content[props.idx]?.list[0]?.rtx}
               onUpdate={onUpdateSol}
             />
           )}
-          {selectedValue?.value == "OL" && <OL />}
+          {selectedValue?.value == "OL" && <OL idx={props.idx} />}
           {(selectedValue?.value == "OL" || selectedValue?.value == "UL") && (
-            <Text kind={selectedValue.value} idx={props.id} />
+            <Text kind={selectedValue.value} idx={props.idx} />
           )}
         </div>
         {selectedValue?.value == "IMG" && <ImageType />}
-        {selectedValue?.value == "OL" && <BulletColor />}
+        {selectedValue?.value == "OL" && <BulletColor idx={props.idx} />}
       </div>
     </>
   );

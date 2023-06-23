@@ -5,33 +5,23 @@ import { useContext } from "react";
 import { NuggetsContext } from "../../../../context/NuggetsContext";
 
 const TinyMCE = (props: { kind: string; idx: number; idj?: number }) => {
-  const { bullet, updateContentItem, updateListItem } =
+  const { updateContentItem, updateListItem, bullet } =
     useContext(NuggetsContext);
   const editorRef = useRef(null);
   const [content, setContent] = useState<string>("");
 
   const handleEditorChange = (content: any) => {
     setContent(content);
-    // if (props.kind == "OL" && props.idj) {
-    //   updateListItem && updateListItem(props.idx, content, "OL", props.idj);
-    // } else if (props.kind == "UL" && props.idj) {
-    //   updateListItem && updateListItem(props.idx, content, "UL", props.idj);
-    // } else {
-    //   updateContentItem && updateContentItem(props.idx, content, props.kind);
-    // }
   };
 
   useEffect(() => {
-    if (props.kind == "OL" && props.idj) {
-      updateListItem && updateListItem(props.idx, content, "OL", props.idj);
-    } else if (props.kind == "UL" && props.idj) {
-      //console.log(".......ul it is......");
-      updateListItem && updateListItem(props.idx, content, "UL", props.idj);
+    if (props.idj != undefined) {
+      updateListItem &&
+        updateListItem(props.idx, content, props.kind, props.idj);
     } else {
-      //console.log(".......else it is......");
       updateContentItem && updateContentItem(props.idx, content, props.kind);
     }
-  }, [content]);
+  }, [content, bullet]);
 
   useEffect(() => {
     if (editorRef.current) {
