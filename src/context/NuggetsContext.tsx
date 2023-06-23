@@ -37,6 +37,7 @@ import {
 } from "@/utils/Validations/Validations";
 
 const initialState = {} as INuggetContext;
+const initialBullet = {} as BulletObject;
 
 interface FIB {
   value?: string;
@@ -47,17 +48,14 @@ export const NuggetsContext = React.createContext<INuggetContext>(initialState);
 
 const NuggetProvider = (props: any) => {
   const [nugget, setNugget] = useState<Nugget>(_.cloneDeep(initialStateSCC));
-  const [bullet, setBullet] = useState<BulletObject>();
+  const [bullet, setBullet] = useState<BulletObject[]>([initialBullet]);
   const [submit, setSubmit] = useState<boolean>(false);
   const [icon, setIcon] = useState<FileObject[]>();
   const [nuggetId, setNuggetId] = useState<string>();
   const { filters, ...filterFunctions } = useFilters();
 
-  useEffect(() => {
-    console.log("Nugget is being Updated", nugget.content);
-  }, [nugget]);
-
   console.log("***This is Nugget***", nugget);
+  console.log("***This is Bullet***", bullet);
 
   function updateFileObj(
     FileObj: {
@@ -225,10 +223,10 @@ const NuggetProvider = (props: any) => {
     }
   }
 
-  function contentIcon(imageURI: { URI: FileObject, index: number }) {
+  function contentIcon(imageURI: { URI: FileObject; index: number }) {
     setNugget((prev) => {
       const updatedContent = [...prev.content]; // Create a copy of the content array
-  
+
       // Check if the specified index is within bounds
       if (imageURI.index >= 0 && imageURI.index < updatedContent.length) {
         // Update the icon property of the content item at the specified index
@@ -237,14 +235,13 @@ const NuggetProvider = (props: any) => {
           icon: imageURI.URI,
         };
       }
-  
+
       return {
         ...prev,
         content: updatedContent, // Update the content array in the nugget object
       };
     });
   }
-  
 
   function addListItem(idx: number, list: ListItemObject) {
     if (!nugget.content[idx].list) {
@@ -376,7 +373,6 @@ const NuggetProvider = (props: any) => {
     });
   }
 
-
   function updateContentItem(
     idx: number,
     item: string,
@@ -384,8 +380,7 @@ const NuggetProvider = (props: any) => {
     idj?: number,
     bullet?: BulletObject
   ) {
-    if (nugget.content && idj) {
-      console.log("idx:" + idx + "\nidj:" + idj);
+    if (nugget.content && idj != undefined) {
       setNugget((prev) => {
         return {
           ...prev,
@@ -426,7 +421,7 @@ const NuggetProvider = (props: any) => {
     idj: number
   ) {
     if (kind == "OL") {
-      updateContentItem(idi, item, kind, idj, bullet);
+      updateContentItem(idi, item, kind, idj, bullet[idi]);
     } else if (kind == "UL") {
       updateContentItem(idi, item, kind, idj);
     }

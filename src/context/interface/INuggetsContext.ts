@@ -10,8 +10,8 @@ export interface INuggetContext extends FilterFunctions {
     icon: FileObject[] | undefined,
     nugget:Nugget,
     setNugget: any,
-    bullet?: BulletObject,
-    setBullet?: React.Dispatch<React.SetStateAction<BulletObject|undefined>>,
+    bullet?: BulletObject[],
+    setBullet?: React.Dispatch<React.SetStateAction<BulletObject[]|undefined>>,
     ques?: QuestionObject 
     updateNuggetKind?: any,
     setQues?: React.Dispatch<React.SetStateAction<QuestionObject|undefined>>

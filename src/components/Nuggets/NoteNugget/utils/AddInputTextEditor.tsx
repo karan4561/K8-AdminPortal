@@ -18,7 +18,6 @@ function Section(props: SectionProps) {
       handleDeleteNoteContentList(props.idi, props.idj);
     }
   }
-
   return (
     <>
       <div>

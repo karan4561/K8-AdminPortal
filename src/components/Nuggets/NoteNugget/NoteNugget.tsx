@@ -15,7 +15,7 @@ function NoteNugget() {
   const sectionElements = nugget.content?.map((section, idx) => {
     return (
       <section key={idx}>
-        <AddSection id={idx} />
+        <AddSection idx={idx} />
         {handleDeleteNoteContent && (
           <button onClick={() => handleDeleteNoteContent(idx)}>Delete</button>
         )}
