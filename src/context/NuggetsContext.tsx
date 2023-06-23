@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { INuggetContext } from "./interface/INuggetsContext";
 
-import { Nugget, FileObject, ListItemObject } from "@/interfaces/INugget";
+import {
+  Nugget,
+  FileObject,
+  ListItemObject,
+  Coordinates,
+} from "@/interfaces/INugget";
 import * as _ from "lodash";
 
 interface OptionType {
@@ -55,7 +60,6 @@ const NuggetProvider = (props: any) => {
   const { filters, ...filterFunctions } = useFilters();
 
   console.log("***This is Nugget***", nugget);
-  console.log("***This is Bullet***", bullet);
 
   function updateFileObj(
     FileObj: {
@@ -737,6 +741,53 @@ const NuggetProvider = (props: any) => {
     }
   }
 
+  function updateLTI(index: number, content: string, coordinates: Coordinates) {
+    setNugget((prev) => {
+      const updatedLTI = prev.question.lti?.english
+        ? prev.question.lti?.english
+        : [];
+      updatedLTI[index] = {
+        value: content,
+        coordinates: coordinates,
+      };
+      return {
+        ...prev,
+        question: {
+          ...prev.question,
+          lti: {
+            ...prev.question.lti,
+            english: updatedLTI,
+          },
+        },
+      };
+    });
+  }
+
+  function imageLTI(imageURI: { URI: FileObject }) {
+    setNugget((prev) => ({
+      ...prev,
+      question: {
+        ...prev.question,
+        ltiImage: imageURI.URI,
+      },
+    }));
+  }
+
+  function deleteLTI(index: number) {
+    setNugget((prev) => {
+      return {
+        ...prev,
+        question: {
+          ...prev.question,
+          lti: {
+            ...prev.question.lti,
+            english: prev.question.lti?.english.filter((_, i) => i !== index),
+          },
+        },
+      };
+    });
+  }
+
   return (
     <div>
       <NuggetsContext.Provider
@@ -786,6 +837,9 @@ const NuggetProvider = (props: any) => {
           validateErrors,
           fetchNuggetContent,
           addListItem,
+          updateLTI,
+          imageLTI,
+          deleteLTI,
         }}
       >
         {props.children}
