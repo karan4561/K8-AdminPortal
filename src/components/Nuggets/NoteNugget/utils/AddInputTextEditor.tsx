@@ -1,4 +1,5 @@
 import TinyMCE from "./Tinymce";
+import TextEditor from "@/components/Nuggets/TrueFalseNugget/TextEditor";
 import { useContext } from "react";
 import { NuggetsContext } from "../../../../context/NuggetsContext";
 
@@ -34,7 +35,7 @@ function SectionList(props: {
   // };
   idx: number;
 }) {
-  const { nugget, addListItem, handleDeleteNoteContentList } =
+  const { nugget, addListItem, handleDeleteNoteContentList,updateContentItem, updateListItem, bullet } =
     useContext(NuggetsContext);
 
   function addSection() {
@@ -42,8 +43,31 @@ function SectionList(props: {
       addListItem(props.idx, { rtx: "" });
     }
   }
+
+  function updateAnswerOption(content: string,idj:number) {
+    updateListItem(props.idx, content, props.kind, idj);
+  }
+
+  function handleDelete(index:number) {
+    if (handleDeleteNoteContentList) {
+      handleDeleteNoteContentList(props.idx, index);
+    }
+  }
+
   const sectionElements = nugget.content[props.idx].list.map((section, idj) => {
-    return <Section key={idj} idj={idj} idi={props.idx} kind={props.kind} />;
+    // return <Section key={idj} idj={idj} idi={props.idx} kind={props.kind} />;
+    return (
+      <>
+        <div>
+          <TextEditor
+            value={section.rtx}
+            onUpdate={(content: string) => updateAnswerOption(content,idj)}
+            List={"LIST"}
+          />
+          <button onClick={() => handleDelete(idj)}>Delete</button>
+        </div>
+      </>
+    );
   });
 
   return (
