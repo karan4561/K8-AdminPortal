@@ -1,7 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { INuggetContext } from "./interface/INuggetsContext";
 
-import { Nugget, FileObject, ListItemObject } from "@/interfaces/INugget";
+import {
+  Nugget,
+  FileObject,
+  ListItemObject,
+  Coordinates,
+} from "@/interfaces/INugget";
 import * as _ from "lodash";
 
 interface OptionType {
@@ -37,6 +42,7 @@ import {
 } from "@/utils/Validations/Validations";
 
 const initialState = {} as INuggetContext;
+const initialBullet = {} as BulletObject;
 
 interface FIB {
   value?: string;
@@ -47,7 +53,7 @@ export const NuggetsContext = React.createContext<INuggetContext>(initialState);
 
 const NuggetProvider = (props: any) => {
   const [nugget, setNugget] = useState<Nugget>(_.cloneDeep(initialStateSCC));
-  const [bullet, setBullet] = useState<BulletObject>();
+  const [bullet, setBullet] = useState<BulletObject[]>([initialBullet]);
   const [submit, setSubmit] = useState<boolean>(false);
   const [icon, setIcon] = useState<FileObject[]>();
   const [nuggetId, setNuggetId] = useState<string>();
@@ -114,7 +120,6 @@ const NuggetProvider = (props: any) => {
       },
     }));
   }
-
   function imageURI(imageURI: { URI: FileObject }) {
     setNugget((prev) => ({
       ...prev,
@@ -221,10 +226,10 @@ const NuggetProvider = (props: any) => {
     }
   }
 
-  function contentIcon(imageURI: { URI: FileObject, index: number }) {
+  function contentIcon(imageURI: { URI: FileObject; index: number }) {
     setNugget((prev) => {
       const updatedContent = [...prev.content]; // Create a copy of the content array
-  
+
       // Check if the specified index is within bounds
       if (imageURI.index >= 0 && imageURI.index < updatedContent.length) {
         // Update the icon property of the content item at the specified index
@@ -233,14 +238,31 @@ const NuggetProvider = (props: any) => {
           icon: imageURI.URI,
         };
       }
-  
+
       return {
         ...prev,
         content: updatedContent, // Update the content array in the nugget object
       };
     });
   }
-  
+
+  function contentImageUpload(contentImage:{URI:FileObject,index:number}){
+    setNugget((prev)=>{
+      const updateContentImage = [...prev.content] // Create a copy of the content array
+      if (contentImage.index >= 0 && contentImage.index < updateContentImage.length) {
+        // Update the icon property of the content item at the specified index
+        updateContentImage[contentImage.index] = {
+          ...updateContentImage[contentImage.index],
+          imgUri: contentImage.URI,
+          kind:"IMG",
+        };
+      }
+      return {
+        ...prev,
+        content: updateContentImage, // Update the content array in the nugget object
+      };
+  })
+  }
 
   function addListItem(idx: number, list: ListItemObject) {
     if (!nugget.content[idx].list) {
@@ -372,7 +394,6 @@ const NuggetProvider = (props: any) => {
     });
   }
 
-
   function updateContentItem(
     idx: number,
     item: string,
@@ -380,23 +401,10 @@ const NuggetProvider = (props: any) => {
     idj?: number,
     bullet?: BulletObject
   ) {
-    if (nugget.content && idj) {
-      console.log("idx:" + idx + "\nidj:" + idj);
+    if (nugget.content && idj != undefined) {
       setNugget((prev) => {
         return {
           ...prev,
-          // content: [
-          //   ...prev.content,
-          //   {
-          //     ...prev.content[idx],
-          //     kind: kind,
-          //     bullet: bullet,
-          //     list: [
-          //       ...prev.content[idx].list,
-          //       { ...prev.content[idx].list[idj], rtx: item },
-          //     ],
-          //   },
-          // ],
           content: prev.content.map((option, i) => {
             if (i == idx) {
               return {
@@ -421,8 +429,9 @@ const NuggetProvider = (props: any) => {
         };
       });
     } else if (nugget.content) {
-      nugget.content[idx] = { kind: kind, list: [{ rtx: item }] };
-      setNugget(nugget);
+      const obj = { ...nugget };
+      obj.content[idx] = { kind: kind, list: [{ rtx: item }] };
+      setNugget(obj);
     }
   }
 
@@ -433,7 +442,7 @@ const NuggetProvider = (props: any) => {
     idj: number
   ) {
     if (kind == "OL") {
-      updateContentItem(idi, item, kind, idj, bullet);
+      updateContentItem(idi, item, kind, idj, bullet[idi]);
     } else if (kind == "UL") {
       updateContentItem(idi, item, kind, idj);
     }
@@ -444,6 +453,24 @@ const NuggetProvider = (props: any) => {
       return {
         ...prev,
         content: prev.content?.filter((_, i) => i !== id),
+      };
+    });
+  }
+
+  function handleDeleteNoteContentList(idx: number, id: number) {
+    setNugget((prev) => {
+      return {
+        ...prev,
+        content: prev.content.map((option, i) => {
+          if (i == idx) {
+            return {
+              ...option,
+              list: option.list.filter((_, i) => i !== id),
+            };
+          } else {
+            return option;
+          }
+        }),
       };
     });
   }
@@ -731,6 +758,53 @@ const NuggetProvider = (props: any) => {
     }
   }
 
+  function updateLTI(index: number, content: string, coordinates: Coordinates) {
+    setNugget((prev) => {
+      const updatedLTI = prev.question.lti?.english
+        ? prev.question.lti?.english
+        : [];
+      updatedLTI[index] = {
+        value: content,
+        coordinates: coordinates,
+      };
+      return {
+        ...prev,
+        question: {
+          ...prev.question,
+          lti: {
+            ...prev.question.lti,
+            english: updatedLTI,
+          },
+        },
+      };
+    });
+  }
+
+  function imageLTI(imageURI: { URI: FileObject }) {
+    setNugget((prev) => ({
+      ...prev,
+      question: {
+        ...prev.question,
+        ltiImage: imageURI.URI,
+      },
+    }));
+  }
+
+  function deleteLTI(index: number) {
+    setNugget((prev) => {
+      return {
+        ...prev,
+        question: {
+          ...prev.question,
+          lti: {
+            ...prev.question.lti,
+            english: prev.question.lti?.english.filter((_, i) => i !== index),
+          },
+        },
+      };
+    });
+  }
+
   return (
     <div>
       <NuggetsContext.Provider
@@ -745,6 +819,7 @@ const NuggetProvider = (props: any) => {
           contentIcon,
           setNuggetId,
           setBullet,
+          contentImageUpload,
           updateNuggetInfoHeader,
           updateNuggetInfoKnowledgeCap,
           updateNuggetInfoSideNote,
@@ -764,6 +839,7 @@ const NuggetProvider = (props: any) => {
           updateContentItem,
           updateListItem,
           handleDeleteNoteContent,
+          handleDeleteNoteContentList,
           addFIBContent,
           addFIBOption,
           updateFIBOption,
@@ -779,6 +855,9 @@ const NuggetProvider = (props: any) => {
           validateErrors,
           fetchNuggetContent,
           addListItem,
+          updateLTI,
+          imageLTI,
+          deleteLTI,
         }}
       >
         {props.children}

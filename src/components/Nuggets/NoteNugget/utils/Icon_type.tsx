@@ -10,7 +10,7 @@ interface OptionType {
   image: string;
 }
 
-export default function MyDropdown() {
+export default function MyDropdown(idx: any) {
   const [selectedOption, setSelectedOption] = useState<OptionType | null>(null);
   const [isOpen, setIsOpen] = useState(false);
 

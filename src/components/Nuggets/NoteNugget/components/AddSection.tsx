@@ -6,12 +6,20 @@ import ImageType from "../utils/Image-kind/ImageHeader";
 import Icon from "@/utils/IconDropdown/IconDropdown";
 import Text from "../utils/AddInputTextEditor";
 import TextEditor from "../utils/Tinymce";
+import TextEditor2 from "../../TrueFalseNugget/TextEditor";
+import { NuggetsContext } from "@/context/NuggetsContext";
 import BulletColor from "../utils/OL/BulletColor";
 interface OptionType {
   value: "H1" | "H2" | "Text" | "UL" | "OL" | "IMG";
   label: "H1" | "H2" | "Text" | "UL" | "OL" | "Image";
 }
-export default function (props: any) {
+interface Props {
+  idx: number;
+}
+
+export default function (props: Props) {
+  const { nugget, updateContentItem, updateListItem } =
+    useContext(NuggetsContext);
   const options: OptionType[] = [
     { value: "H1", label: "H1" },
     { value: "H2", label: "H2" },
@@ -26,7 +34,13 @@ export default function (props: any) {
     setSelectedValue(selectedOption as OptionType);
   };
 
-  console.log("........addsectios-id......", props.id);
+  const onUpdateSol = (content: string) => {
+    if (updateContentItem) {
+      updateContentItem(props.idx, content, selectedValue.value);
+    }
+  };
+
+  //console.log("........addsectios-id......", props.id);
   return (
     <>
       <div className="card-header add-section">
@@ -41,19 +55,23 @@ export default function (props: any) {
           {(selectedValue?.value == "IMG" ||
             selectedValue?.value == "H1" ||
             selectedValue?.value == "UL" ||
-            selectedValue?.value == "H2") && <Icon contentID={props.id}/>}
+            selectedValue?.value == "H2") && <Icon ContentID={props.idx} />}
           {(selectedValue?.value == "H1" ||
             selectedValue?.value == "H2" ||
             selectedValue?.value == "Text") && (
-            <TextEditor kind={selectedValue.value} idx={props.id} />
+            <TextEditor2
+              NOTE={selectedValue.value} // to be changed
+              value={nugget.content[props.idx]?.list[0]?.rtx}
+              onUpdate={onUpdateSol}
+            />
           )}
-          {selectedValue?.value == "OL" && <OL />}
+          {selectedValue?.value == "OL" && <OL idx={props.idx} />}
           {(selectedValue?.value == "OL" || selectedValue?.value == "UL") && (
-            <Text kind={selectedValue.value} idx={props.id} />
+            <Text kind={selectedValue.value} idx={props.idx} />
           )}
         </div>
-        {selectedValue?.value == "IMG" && <ImageType />}
-        {selectedValue?.value == "OL" && <BulletColor />}
+        {selectedValue?.value == "IMG" && <ImageType ContentID={props.idx}/>}
+        {selectedValue?.value == "OL" && <BulletColor idx={props.idx} />}
       </div>
     </>
   );

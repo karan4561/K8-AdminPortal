@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useContext } from "react";
 import Image from "next/image";
-import { uploadImage, postImage } from "@/api/utils";
+import { uploadImage} from "@/api/utils";
 import { NuggetsContext } from "../../../context/NuggetsContext";
 import { FileObject } from "@/interfaces/INugget";
 

@@ -1,4 +1,4 @@
-import { Nugget, ContentObject, CategoryObject, BulletObject, ListItemObject, QuestionObject, FileObject } from "src/interfaces/INugget";
+import { Nugget, ContentObject, CategoryObject, BulletObject, ListItemObject, QuestionObject, FileObject, Coordinates } from "src/interfaces/INugget";
 interface FIB {
   value?: string;
   type: "TEXT" | "BLANK";
@@ -10,8 +10,8 @@ export interface INuggetContext extends FilterFunctions {
     icon: FileObject[] | undefined,
     nugget:Nugget,
     setNugget: any,
-    bullet?: BulletObject,
-    setBullet?: React.Dispatch<React.SetStateAction<BulletObject|undefined>>,
+    bullet?: BulletObject[],
+    setBullet?: React.Dispatch<React.SetStateAction<BulletObject[]>>,
     ques?: QuestionObject 
     updateNuggetKind?: any,
     setQues?: React.Dispatch<React.SetStateAction<QuestionObject|undefined>>
@@ -40,6 +40,8 @@ export interface INuggetContext extends FilterFunctions {
     updateQuestion?: (question: { english: string })=>void,
     updateAnswer: (Answer:{ answer:boolean, text:string}) =>void,
     handleDeleteNoteContent?:(id: number)=>void,
+    contentImageUpload:(contentImage:{URI:FileObject,index:number})=>void,
+    handleDeleteNoteContentList?:(idx: number, id: number)=>void,
     updateContentItem?: (idx: number, item: string, kind: "H1" | "H2" | "Text" | "UL" | "OL" | "IMG", idj?: number, bullet?: BulletObject)=>void,
     addContentItem?: (note: ContentObject)=>void,
     contentIcon:(imageURI: { URI: FileObject, index: number }) =>void,
@@ -55,6 +57,9 @@ export interface INuggetContext extends FilterFunctions {
     // formErrors:any,
     // setFormErrors:any
     validateErrors?: (values: Nugget)=>any,
+    updateLTI:(index: number, content: string, coordinates: Coordinates)=>void,
+    imageLTI: (imageURI: { URI: FileObject })=>void,
+    deleteLTI: (index: number)=> void,
     fetchNuggetContent: any
 }
 

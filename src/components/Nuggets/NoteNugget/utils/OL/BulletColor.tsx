@@ -1,20 +1,28 @@
 import { useState, useContext, useEffect } from "react";
 import { NuggetsContext } from "../../../../../context/NuggetsContext";
-export default function BulletColor() {
-  const { setBullet } = useContext(NuggetsContext);
+
+interface Props {
+  idx: number;
+}
+
+export default function BulletColor(props: Props) {
+  const { bullet, setBullet } = useContext(NuggetsContext);
 
   const [selectedColor, setSelectedColor] = useState("#000000");
 
   function handleColorChange(event: React.ChangeEvent<HTMLInputElement>) {
     setSelectedColor(event.target.value);
   }
-  // console.log(selectedColor,"color");
   useEffect(() => {
-    if (setBullet) {
-      setBullet({ color: selectedColor });
+    if (setBullet && bullet) {
+      const obj = [...bullet];
+      obj[props.idx] = {
+        ...obj[props.idx],
+        color: selectedColor,
+      };
+      setBullet(obj);
     }
   }, [selectedColor]);
-  // console.log(nugget);
 
   return (
     <>

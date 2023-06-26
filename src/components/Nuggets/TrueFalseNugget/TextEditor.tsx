@@ -32,7 +32,12 @@ const TextEditor = (props: any) => {
   }, []);
   if (props.fibOption || props.fibExtraOption) {
     width = "40vw";
-  } else {
+  } else if (!!props.NOTE) {
+    width = "30vw";
+  }else if(props.List=="LIST"){
+    width = "30vw";
+  }
+   else {
     width = "60vw";
   }
   return (
