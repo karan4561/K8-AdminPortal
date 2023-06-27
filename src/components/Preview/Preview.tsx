@@ -4,7 +4,7 @@ import ImagePrev from "./ImagePrev";
 import VideoPrev from "./VideoPrev";
 import SCQPrev from "./SCQPrev";
 import FIBPrev from "./FIBPrev";
-import NotePrev from "../Preview/components/NoteNuggetPrev";
+import NotePrev from "./NoteNuggetPrev";
 import AudioPrev from "./AudioPrev";
 import { NuggetsContext } from "../../context/NuggetsContext";
 import { useContext, useEffect } from "react";
@@ -17,29 +17,35 @@ function Preview() {
   // let color
   useEffect(() => {
     if (nugget.IsKnowledgeCap) {
-      setColor("#de0e100a")
+      setColor("#de0e100a");
+    } else {
+      setColor("#d9d7ec");
     }
-    else {
-      setColor("#d9d7ec")
-    }
-  }, [nugget.IsKnowledgeCap])
+  }, [nugget.IsKnowledgeCap]);
   return (
     <>
       <div className="preview" style={{ backgroundColor: color }}>
         <div className="prev-sticky">
           <h2>Preview</h2>
           <div className="headerimage-headertitle">
-            {(!!nugget?.headerIcon) && <img src={nugget.headerIcon.baseUrl + nugget.headerIcon.key} alt='' height={18.33} width={18.33} />}
+            {!!nugget?.headerIcon && (
+              <img
+                src={nugget.headerIcon.baseUrl + nugget.headerIcon.key}
+                alt=""
+                height={18.33}
+                width={18.33}
+              />
+            )}
             <h4>{nugget?.headerTitle}</h4>
           </div>
-          {(nugget?.kind == 'IMAGE') && <ImagePrev nugget={nugget} />}
-          {(nugget?.kind == 'Video') && <VideoPrev/>}
-          {(nugget?.kind == 'AUDIOCLIP') && <AudioPrev nugget={nugget}  />}
+          {nugget?.kind == "IMAGE" && <ImagePrev nugget={nugget} />}
+          {nugget?.kind == "Video" && <VideoPrev />}
+          {nugget?.kind == "AUDIOCLIP" && <AudioPrev nugget={nugget} />}
           {nugget?.kind == "TRUEFALSE" && <TrueFalsePrev nugget={nugget} />}
           {nugget?.kind == "SCQ" && <SCQPrev nugget={nugget} />}
           {nugget?.kind == "MCQ" && <SCQPrev nugget={nugget} />}
           {nugget?.kind == "FIB" && <FIBPrev nugget={nugget} />}
-          {(nugget?.kind=='NOTE') && <NotePrev nugget={nugget}/>}
+          {nugget?.kind == "NOTE" && <NotePrev nugget={nugget} />}
         </div>
       </div>
     </>
