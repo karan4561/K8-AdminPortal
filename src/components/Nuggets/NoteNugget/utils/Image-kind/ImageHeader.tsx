@@ -9,10 +9,10 @@ interface Props {
 }
 
 export default function (ContentID: Props) {
-  const { contentImageUpload, nugget } = useContext(NuggetsContext);
-  const [titleValue, setTitleValue] = useState("");
+  const { contentImageUpload, addNoteCaption, nugget } =
+    useContext(NuggetsContext);
   const titleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTitleValue(event.target.value);
+    if (addNoteCaption) addNoteCaption(ContentID.idx, event.target.value);
   };
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,23 +34,12 @@ export default function (ContentID: Props) {
 
   return (
     <>
-      {/* <div className='aa'> */}
       <div className="title-input">
         <p>Title (Optional)</p>
         <input
           className="image-type-input"
           type="text"
-          value={titleValue}
-          onChange={titleChange}
-          placeholder="Prefix"
-        />
-      </div>
-      <div className="title-input">
-        <p>Title (Optional)</p>
-        <input
-          className="image-type-input"
-          type="text"
-          value={titleValue}
+          value={nugget.content?.[ContentID.idx]?.imgCaption}
           onChange={titleChange}
           placeholder="Prefix"
         />
