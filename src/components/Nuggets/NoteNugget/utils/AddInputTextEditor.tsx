@@ -1,6 +1,6 @@
 import TinyMCE from "./Tinymce";
 import TextEditor from "@/components/Nuggets/TrueFalseNugget/TextEditor";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { NuggetsContext } from "../../../../context/NuggetsContext";
 
 interface SectionProps {
@@ -13,7 +13,7 @@ interface SectionProps {
 }
 
 function Section(props: SectionProps) {
-  const { handleDeleteNoteContentList } = useContext(NuggetsContext);
+  const { handleDeleteNoteContentList, bullet } = useContext(NuggetsContext);
   function handleDelete() {
     if (handleDeleteNoteContentList) {
       handleDeleteNoteContentList(props.idi, props.idj);
@@ -48,6 +48,9 @@ function SectionList(props: {
     updateListItem(props.idx, content, props.kind, idj);
   }
 
+  // useEffect(()=>{
+  //   updateAnswerOption(content,number)
+  // },[bullet])
   function handleDelete(index:number) {
     if (handleDeleteNoteContentList) {
       handleDeleteNoteContentList(props.idx, index);

@@ -6,6 +6,7 @@ import SCQPrev from "./SCQPrev";
 import FIBPrev from "./FIBPrev";
 import NotePrev from "../Preview/components/NoteNuggetPrev";
 import AudioPrev from "./AudioPrev";
+import LTIPrev from "./LTIPrev";
 import { NuggetsContext } from "../../context/NuggetsContext";
 import { useContext, useEffect } from "react";
 import { log } from "console";
@@ -40,6 +41,7 @@ function Preview() {
           {nugget?.kind == "MCQ" && <SCQPrev nugget={nugget} />}
           {nugget?.kind == "FIB" && <FIBPrev nugget={nugget} />}
           {(nugget?.kind=='NOTE') && <NotePrev nugget={nugget}/>}
+          {(nugget?.kind=='LTI') && <LTIPrev nugget={nugget}/>}
         </div>
       </div>
     </>
