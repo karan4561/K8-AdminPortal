@@ -10,9 +10,9 @@ import TrueFalsePrev from "@/components/Preview/TrueFalsePrev";
 import ImagePrev from "@/components/Preview/ImagePrev";
 import AudioPrev from "@/components/Preview/AudioPrev";
 import { deleteNugget, getNuggetList } from "@/api/utils";
-
 import { Nugget } from "@/interfaces/INugget";
 import Link from "next/link";
+import LTIPrev from "@/components/Preview/LTIPrev";
 
 interface Approve {
   value: string;
@@ -220,7 +220,8 @@ function EditNugget() {
                 )}
                 {nuggetData.kind == "NOTE" && (
                   <NoteNuggetPrev nugget={nuggetData} />
-                )}{" "}
+                )}
+                {nuggetData.kind == "LTI" && <LTIPrev nugget={nuggetData} />}
               </div>
             </div>
           );

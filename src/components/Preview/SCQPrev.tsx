@@ -42,16 +42,16 @@ function SCQPrev({ nugget }: any) {
         {!!nugget.question?.solutions?.[0].english.text && (
           <div className="Hint-Prev-box">
             <h4>Solution</h4>
-            {!!nugget.question?.solutions[0]?.english.text && (
-              <p>{parse(nugget.question.solutions[0]?.english.text)}</p>
+            {!!nugget.question?.solutions?.[0]?.english.text && (
+              <p dangerouslySetInnerHTML={{ __html: nugget.question.solutions?.[0]?.english.text }} />
             )}
           </div>
         )}
         {!!nugget?.question?.solutions?.[0].english.hint && (
           <div className="Hint-Prev-box">
             <h4>Hint</h4>
-            {!!nugget?.question?.solutions[0]?.english.hint && (
-              <p>{parse(nugget?.question.solutions[0]?.english.hint)}</p>
+            {!!nugget?.question?.solutions?.[0]?.english.hint && (
+              <p dangerouslySetInnerHTML={{ __html: nugget?.question.solutions?.[0]?.english.hint }} />
             )}
           </div>
         )}

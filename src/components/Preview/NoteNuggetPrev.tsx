@@ -35,7 +35,6 @@ function convertToRoman(num) {
 
 function NoteNuggetPrev({ nugget }: any) {
   var value = 10;
-  const parse = require("html-react-parser");
   // const { nugget } = useContext(NuggetsContext);
   // console.log(nugget,"noteprev");
 
@@ -61,7 +60,10 @@ function NoteNuggetPrev({ nugget }: any) {
                   if (!!listData) {
                     return (
                       <>
-                        <h1 key={index}>{parse(listData.rtx)}</h1>
+                        <h1
+                          key={index}
+                          dangerouslySetInnerHTML={{ __html: listData.rtx }}
+                        />
                       </>
                     );
                   }
@@ -85,9 +87,11 @@ function NoteNuggetPrev({ nugget }: any) {
                   return (
                     <>
                       {!!listData && (
-                        <h2 key={index} className="h2Prev">
-                          {parse(listData.rtx)}
-                        </h2>
+                        <h2
+                          key={index}
+                          className="h2Prev"
+                          dangerouslySetInnerHTML={{ __html: listData.rtx }}
+                        />
                       )}
                     </>
                   );
@@ -116,9 +120,11 @@ function NoteNuggetPrev({ nugget }: any) {
                             (index + 10).toString(36).toLowerCase()}
                         </p>
                         <p>{contentData.bullet?.suffix}</p>
-                        <p className="OL-text" key={index}>
-                          {parse(listData.rtx)}
-                        </p>
+                        <p
+                          className="OL-text"
+                          key={index}
+                          dangerouslySetInnerHTML={{ __html: listData.rtx }}
+                        />
                       </div>
                     </>
                   );
@@ -130,7 +136,12 @@ function NoteNuggetPrev({ nugget }: any) {
                 {contentData.list?.map((listData, index) => {
                   return (
                     <>
-                      {!!listData && <p key={index}>{parse(listData.rtx)}</p>}
+                      {!!listData && (
+                        <p
+                          key={index}
+                          dangerouslySetInnerHTML={{ __html: listData.rtx }}
+                        />
+                      )}
                     </>
                   );
                 })}
@@ -138,28 +149,31 @@ function NoteNuggetPrev({ nugget }: any) {
             )}
             {contentData.kind == "UL" && (
               <div className="text-prev">
-                {nugget.content[index].icon && (
-                  <img
-                    src={
-                      nugget.content[index].icon?.baseUrl +
-                      nugget.content[index].icon?.key
-                    }
-                    alt=""
-                    height={25}
-                    width={25}
-                  />
-                )}
-                <ul>
-                  {contentData.list?.map((listData, index) => {
-                    return (
-                      <>
-                        {!!listData && (
-                          <li key={index}>{parse(listData.rtx)}</li>
+                {contentData.list?.map((listData, ulIndex) => {
+                  return (
+                    <>
+                      <div className="ul-ls-item">
+                        {!!nugget.content[index]?.icon && (
+                          <img
+                            src={
+                              nugget.content[index].icon?.baseUrl +
+                              nugget.content[index].icon?.key
+                            }
+                            alt=""
+                            height={25}
+                            width={25}
+                          />
                         )}
-                      </>
-                    );
-                  })}
-                </ul>
+                        {!!listData && (
+                          <p
+                            key={ulIndex}
+                            dangerouslySetInnerHTML={{ __html: listData.rtx }}
+                          />
+                        )}
+                      </div>
+                    </>
+                  );
+                })}
               </div>
             )}
           </>

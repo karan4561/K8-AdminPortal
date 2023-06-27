@@ -37,6 +37,9 @@ const TextEditor = (props: any) => {
   }else if(props.List=="LIST"){
     width = "30vw";
   }
+  else if(props.ltiOption){
+    width="20vw"
+  }
    else {
     width = "60vw";
   }
