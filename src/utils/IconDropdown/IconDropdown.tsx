@@ -19,7 +19,7 @@ interface OptionType {
   details?: string;
 }
 
-export default function IconDropdown({ContentID}:any) {
+export default function IconDropdown({ value, ContentID }: any) {
   const { icon, updateHeaderIcon, updateFileObj, contentIcon } = useContext(NuggetsContext);
   const [selectedOption, setSelectedOption] = useState<OptionType | null>(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -76,23 +76,33 @@ export default function IconDropdown({ContentID}:any) {
             height={30}
             alt=""
           />
-        ) : selectedOption ? (
+        ) : (selectedOption && (value=="nuggetInfo"))? (
           <div
             className="dropdownHeader"
             style={{ display: "flex", alignItems: "center" }}
           >
             <img
               src={nugget.headerIcon?.baseUrl + nugget.headerIcon?.key}
-              alt={selectedOption._id}
+              alt={nugget.headerIcon?._id}
               width={30}
               height={30}
             />
           </div>
-        ) : (
-          <div className="dropdownText" style={{ color: "#999" }}>
-            Select
+        ) : (selectedOption && (value=="Content"))?(
+          <div
+            className="dropdownHeader"
+            style={{ display: "flex", alignItems: "center" }}
+          >
+            <img
+              src={nugget.content[ContentID].icon?.baseUrl+ nugget.content[ContentID].icon?.key}
+              alt={nugget.content[ContentID].imgUri?._id}
+              width={30}
+              height={30}
+            />
           </div>
-        )}
+        ) : <div className="dropdownText" style={{ color: "#999" }}>
+            Select
+          </div>}
         <div>&#x25BE;</div>
       </div>
       {isOpen && (

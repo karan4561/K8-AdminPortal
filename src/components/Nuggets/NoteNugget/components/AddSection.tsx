@@ -3,7 +3,7 @@ import { useEffect, useState, useContext } from "react";
 import H1 from "../utils/H1/H1Header";
 import OL from "../utils/OL/OL";
 import ImageType from "../utils/Image-kind/ImageHeader";
-import Icon from "@/utils/IconDropdown/IconDropdown";
+import IconDropdown from "@/utils/IconDropdown/IconDropdown";
 import Text from "../utils/AddInputTextEditor";
 import TextEditor from "../utils/Tinymce";
 import TextEditor2 from "../../TrueFalseNugget/TextEditor";
@@ -55,7 +55,7 @@ export default function (props: Props) {
           {(selectedValue?.value == "IMG" ||
             selectedValue?.value == "H1" ||
             selectedValue?.value == "UL" ||
-            selectedValue?.value == "H2") && <Icon ContentID={props.idx} />}
+            selectedValue?.value == "H2") && <IconDropdown value="Content" ContentID={props.idx} />}
           {(selectedValue?.value == "H1" ||
             selectedValue?.value == "H2" ||
             selectedValue?.value == "Text") && (
