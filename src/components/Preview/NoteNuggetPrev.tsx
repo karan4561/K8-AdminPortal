@@ -1,5 +1,5 @@
 import React from "react";
-import { NuggetsContext } from "../../../context/NuggetsContext";
+import { NuggetsContext } from "../../context/NuggetsContext";
 import { useState, useContext } from "react";
 import Image from "next/image";
 import parse from "html-react-parser";
@@ -20,9 +20,9 @@ function convertToRoman(num) {
     IX: 9,
     V: 5,
     IV: 4,
-    I: 1
+    I: 1,
   };
-  var str = '';
+  var str = "";
 
   for (var i of Object.keys(roman)) {
     var q = Math.floor(num / roman[i]);
@@ -45,12 +45,25 @@ function NoteNuggetPrev({ nugget }: any) {
           <>
             {contentData.kind == "H1" && (
               <div className="h1-title">
-                {(nugget.content[index].icon) && <img src={nugget.content[index].icon?.baseUrl + nugget.content[index].icon?.key} alt="" height={25} width={25} />}
+                {nugget.content[index].icon && (
+                  <img
+                    src={
+                      nugget.content[index].icon?.baseUrl +
+                      nugget.content[index].icon?.key
+                    }
+                    alt=""
+                    height={25}
+                    width={25}
+                  />
+                )}
                 {contentData.list?.map((listData, index) => {
                   if (!!listData) {
                     return (
                       <>
-                        <h1 key={index} dangerouslySetInnerHTML={{ __html: listData.rtx }} />
+                        <h1
+                          key={index}
+                          dangerouslySetInnerHTML={{ __html: listData.rtx }}
+                        />
                       </>
                     );
                   }
@@ -59,12 +72,26 @@ function NoteNuggetPrev({ nugget }: any) {
             )}
             {contentData.kind == "H2" && (
               <div className="h1-title">
-                {(nugget.content[index].icon) && <img src={nugget.content[index].icon?.baseUrl + nugget.content[index].icon?.key} alt="" height={25} width={25} />}
+                {nugget.content[index].icon && (
+                  <img
+                    src={
+                      nugget.content[index].icon?.baseUrl +
+                      nugget.content[index].icon?.key
+                    }
+                    alt=""
+                    height={25}
+                    width={25}
+                  />
+                )}
                 {contentData.list?.map((listData, index) => {
                   return (
                     <>
                       {!!listData && (
-                        <h2 key={index} className="h2Prev" dangerouslySetInnerHTML={{ __html: listData.rtx }} />
+                        <h2
+                          key={index}
+                          className="h2Prev"
+                          dangerouslySetInnerHTML={{ __html: listData.rtx }}
+                        />
                       )}
                     </>
                   );
@@ -84,13 +111,20 @@ function NoteNuggetPrev({ nugget }: any) {
                             margin: "0px 2px",
                           }}
                         >
-                          {contentData.bullet?.value == "1" && (index + 1)}
-                          {contentData.bullet?.value === "I" && (convertToRoman(index + 1))}
-                          {contentData.bullet?.value === "I" && (convertToRoman(index + 1))}
-                          {contentData.bullet?.value === "a" && (index + 10).toString(36).toLowerCase()}
+                          {contentData.bullet?.value == "1" && index + 1}
+                          {contentData.bullet?.value === "I" &&
+                            convertToRoman(index + 1)}
+                          {contentData.bullet?.value === "I" &&
+                            convertToRoman(index + 1)}
+                          {contentData.bullet?.value === "a" &&
+                            (index + 10).toString(36).toLowerCase()}
                         </p>
                         <p>{contentData.bullet?.suffix}</p>
-                        <p className="OL-text" key={index} dangerouslySetInnerHTML={{ __html: listData.rtx }} />
+                        <p
+                          className="OL-text"
+                          key={index}
+                          dangerouslySetInnerHTML={{ __html: listData.rtx }}
+                        />
                       </div>
                     </>
                   );
@@ -102,7 +136,12 @@ function NoteNuggetPrev({ nugget }: any) {
                 {contentData.list?.map((listData, index) => {
                   return (
                     <>
-                      {!!listData && <p key={index} dangerouslySetInnerHTML={{ __html: listData.rtx }} />}
+                      {!!listData && (
+                        <p
+                          key={index}
+                          dangerouslySetInnerHTML={{ __html: listData.rtx }}
+                        />
+                      )}
                     </>
                   );
                 })}
@@ -114,9 +153,22 @@ function NoteNuggetPrev({ nugget }: any) {
                   return (
                     <>
                       <div className="ul-ls-item">
-                        {(!!nugget.content[index]?.icon) && <img src={nugget.content[index].icon?.baseUrl + nugget.content[index].icon?.key} alt="" height={25} width={25} />}
+                        {!!nugget.content[index]?.icon && (
+                          <img
+                            src={
+                              nugget.content[index].icon?.baseUrl +
+                              nugget.content[index].icon?.key
+                            }
+                            alt=""
+                            height={25}
+                            width={25}
+                          />
+                        )}
                         {!!listData && (
-                          <p key={ulIndex} dangerouslySetInnerHTML={{ __html: listData.rtx }} />
+                          <p
+                            key={ulIndex}
+                            dangerouslySetInnerHTML={{ __html: listData.rtx }}
+                          />
                         )}
                       </div>
                     </>

@@ -5,10 +5,10 @@ import Select from "react-select";
 import { getCategory, getSubject, getChapters, getTopics } from "@/api/filter";
 import SCQPrev from "@/components/Preview/SCQPrev";
 import FIBPrev from "@/components/Preview/FIBPrev";
+import NoteNuggetPrev from "@/components/Preview/NoteNuggetPrev";
 import TrueFalsePrev from "@/components/Preview/TrueFalsePrev";
 import ImagePrev from "@/components/Preview/ImagePrev";
 import AudioPrev from "@/components/Preview/AudioPrev";
-import NoteNuggetPrev from "@/components/Preview/components/NoteNuggetPrev";
 import { deleteNugget, getNuggetList } from "@/api/utils";
 import { Nugget } from "@/interfaces/INugget";
 import Link from "next/link";
@@ -208,9 +208,9 @@ function EditNugget() {
                 {nuggetData.kind == "IMAGE" && (
                   <ImagePrev nugget={nuggetData} />
                 )}
-                {nuggetData.kind == "TRUEFALSE" && (
+                {/* {nuggetData.kind == "TRUEFALSE" && (
                   <TrueFalsePrev nugget={nuggetData} />
-                )}
+                )} */}
                 {nuggetData.kind == "FIB" && <FIBPrev nugget={nuggetData} />}
                 {(nuggetData.kind == "SCQ" || nuggetData.kind === "MCQ") && (
                   <SCQPrev nugget={nuggetData} />
@@ -221,9 +221,7 @@ function EditNugget() {
                 {nuggetData.kind == "NOTE" && (
                   <NoteNuggetPrev nugget={nuggetData} />
                 )}
-                {nuggetData.kind == "LTI" && (
-                  <LTIPrev nugget={nuggetData} />
-                )}
+                {nuggetData.kind == "LTI" && <LTIPrev nugget={nuggetData} />}
               </div>
             </div>
           );

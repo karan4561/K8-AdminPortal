@@ -9,8 +9,9 @@ import TextEditor from "../utils/Tinymce";
 import TextEditor2 from "../../TrueFalseNugget/TextEditor";
 import { NuggetsContext } from "@/context/NuggetsContext";
 import BulletColor from "../utils/OL/BulletColor";
+import { textChangeRangeIsUnchanged } from "typescript";
 interface OptionType {
-  value: "H1" | "H2" | "Text" | "UL" | "OL" | "IMG";
+  value: "H1" | "H2" | "P" | "UL" | "OL" | "IMG";
   label: "H1" | "H2" | "Text" | "UL" | "OL" | "Image";
 }
 interface Props {
@@ -23,7 +24,7 @@ export default function (props: Props) {
   const options: OptionType[] = [
     { value: "H1", label: "H1" },
     { value: "H2", label: "H2" },
-    { value: "Text", label: "Text" },
+    { value: "P", label: "Text" },
     { value: "OL", label: "OL" },
     { value: "IMG", label: "Image" },
     { value: "UL", label: "UL" },
@@ -36,7 +37,7 @@ export default function (props: Props) {
 
   const onUpdateSol = (content: string) => {
     if (updateContentItem) {
-      updateContentItem(props.idx, content, selectedValue.value);
+      updateContentItem(props.idx, selectedValue.value, content);
     }
   };
 
@@ -58,10 +59,10 @@ export default function (props: Props) {
             selectedValue?.value == "H2") && <IconDropdown value="Content" ContentID={props.idx} />}
           {(selectedValue?.value == "H1" ||
             selectedValue?.value == "H2" ||
-            selectedValue?.value == "Text") && (
+            selectedValue?.value == "P") && (
             <TextEditor2
               NOTE={selectedValue.value} // to be changed
-              value={nugget.content[props.idx]?.list[0]?.rtx}
+              value={nugget.content[props.idx]?.list?.[0]?.rtx}
               onUpdate={onUpdateSol}
             />
           )}
@@ -70,7 +71,7 @@ export default function (props: Props) {
             <Text kind={selectedValue.value} idx={props.idx} />
           )}
         </div>
-        {selectedValue?.value == "IMG" && <ImageType ContentID={props.idx}/>}
+        {selectedValue?.value == "IMG" && <ImageType idx={props.idx} />}
         {selectedValue?.value == "OL" && <BulletColor idx={props.idx} />}
       </div>
     </>
