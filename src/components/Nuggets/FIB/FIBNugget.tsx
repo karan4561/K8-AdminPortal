@@ -37,7 +37,7 @@ function FIBNugget() {
         </div>
         <div className="fib-card">
           <h4>Add Other options</h4>
-          <AddOptionSection />
+          <AddOptionSection value="fib"/>
         </div>
         <h4>Hint</h4>
         <TextEditor

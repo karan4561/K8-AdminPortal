@@ -39,12 +39,12 @@ export type BulletObject = {
 };
 
 export interface ContentObject {
-  kind: "H1" | "H2" | "Text" | "UL" | "OL" | "IMG";
+  kind: "H1" | "H2" | "P" | "UL" | "OL" | "IMG";
   icon?: FileObject;
   imgUri?: FileObject;
   imgCaption?: string;
   bullet?: BulletObject;
-  list: Array<ListItemObject>;
+  list?: Array<ListItemObject>;
 }
 
 export interface FileObject {
