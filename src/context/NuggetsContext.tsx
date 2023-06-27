@@ -246,22 +246,45 @@ const NuggetProvider = (props: any) => {
     });
   }
 
-  function contentImageUpload(contentImage:{URI:FileObject,index:number}){
-    setNugget((prev)=>{
-      const updateContentImage = [...prev.content] // Create a copy of the content array
-      if (contentImage.index >= 0 && contentImage.index < updateContentImage.length) {
-        // Update the icon property of the content item at the specified index
-        updateContentImage[contentImage.index] = {
-          ...updateContentImage[contentImage.index],
-          imgUri: contentImage.URI,
-          kind:"IMG",
-        };
-      }
+  function contentImageUpload(contentImage: {
+    URI: FileObject;
+    index: number;
+  }) {
+    console.log(contentImage.index);
+
+    const obj = [...nugget.content];
+    obj[contentImage.index] = { kind: "IMG", imgUri: contentImage.URI };
+
+    setNugget((prev) => {
       return {
         ...prev,
-        content: updateContentImage, // Update the content array in the nugget object
+        content: [...obj],
       };
-  })
+    });
+
+    // setNugget((prev) => {
+    //   let updateContentImage = [...prev.content]; // Create a copy of the content array
+    //   if (
+    //     contentImage.index >= 0 &&
+    //     contentImage.index < updateContentImage.length
+    //   ) {
+    //     // Update the icon property of the content item at the specified index
+    //     updateContentImage[contentImage.index] = {
+    //       ...updateContentImage[contentImage.index],
+    //       imgUri: contentImage.URI,
+    //       kind: "IMG",
+    //     };
+    //   } else {
+    //     updateContentImage = [
+    //       ...updateContentImage,
+    //       { kind: "IMG", imgUri: contentImage.URI },
+    //     ];
+    //   }
+    //   return {
+    //     ...prev,
+    //     content: updateContentImage, // Update the content array in the nugget object
+    //   };
+    // });
   }
 
   function addListItem(idx: number, list: ListItemObject) {
@@ -286,7 +309,7 @@ const NuggetProvider = (props: any) => {
         return {
           ...prev,
           content: prev.content.map((option, i) => {
-            if (i == idx) {
+            if (i == idx && option.list) {
               return {
                 ...option,
                 list: [...option.list, list],
@@ -396,8 +419,8 @@ const NuggetProvider = (props: any) => {
 
   function updateContentItem(
     idx: number,
+    kind: "H1" | "H2" | "P" | "UL" | "OL" | "IMG",
     item: string,
-    kind: "H1" | "H2" | "Text" | "UL" | "OL" | "IMG",
     idj?: number,
     bullet?: BulletObject
   ) {
@@ -411,7 +434,7 @@ const NuggetProvider = (props: any) => {
                 ...option,
                 kind: kind,
                 bullet: bullet,
-                list: option.list.map((opt, j) => {
+                list: option.list?.map((opt, j) => {
                   if (j == idj) {
                     return {
                       ...opt,
@@ -430,21 +453,43 @@ const NuggetProvider = (props: any) => {
       });
     } else if (nugget.content) {
       const obj = { ...nugget };
-      obj.content[idx] = { kind: kind, list: [{ rtx: item }] };
+      if (item) obj.content[idx] = { kind: kind, list: [{ rtx: item }] };
       setNugget(obj);
     }
+  }
+
+  function updateListBullet(
+    idx: number,
+    //kind: "H1" | "H2" | "P" | "UL" | "OL" | "IMG",
+    bullet: BulletObject
+  ) {
+    setNugget((prev) => {
+      return {
+        ...prev,
+        content: prev.content.map((option, i) => {
+          if (i == idx) {
+            return {
+              ...option,
+              bullet: bullet,
+            };
+          } else {
+            return option;
+          }
+        }),
+      };
+    });
   }
 
   function updateListItem(
     idi: number,
     item: string,
-    kind: "H1" | "H2" | "Text" | "UL" | "OL" | "IMG",
-    idj: number
+    kind: "H1" | "H2" | "P" | "UL" | "OL" | "IMG",
+    idj?: number
   ) {
     if (kind == "OL") {
-      updateContentItem(idi, item, kind, idj, bullet[idi]);
+      updateContentItem(idi, kind, item, idj);
     } else if (kind == "UL") {
-      updateContentItem(idi, item, kind, idj);
+      updateContentItem(idi, kind, item, idj);
     }
   }
 
@@ -465,7 +510,7 @@ const NuggetProvider = (props: any) => {
           if (i == idx) {
             return {
               ...option,
-              list: option.list.filter((_, i) => i !== id),
+              list: option.list?.filter((_, i) => i !== id),
             };
           } else {
             return option;
@@ -837,6 +882,7 @@ const NuggetProvider = (props: any) => {
           updateContentKind,
           addContentItem,
           updateContentItem,
+          updateListBullet,
           updateListItem,
           handleDeleteNoteContent,
           handleDeleteNoteContentList,

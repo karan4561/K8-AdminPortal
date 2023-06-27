@@ -5,7 +5,7 @@ import { useContext } from "react";
 import { NuggetsContext } from "../../../../context/NuggetsContext";
 
 const TinyMCE = (props: { kind: string; idx: number; idj?: number }) => {
-  const {nugget, updateContentItem, updateListItem, bullet } =
+  const { nugget, updateContentItem, updateListItem, bullet } =
     useContext(NuggetsContext);
   const editorRef = useRef(null);
   const [content, setContent] = useState<string>("");
@@ -19,7 +19,7 @@ const TinyMCE = (props: { kind: string; idx: number; idj?: number }) => {
       updateListItem &&
         updateListItem(props.idx, content, props.kind, props.idj);
     } else {
-      updateContentItem && updateContentItem(props.idx, content, props.kind);
+      updateContentItem && updateContentItem(props.idx, props.kind, content);
     }
   }, [content, bullet]);
 
