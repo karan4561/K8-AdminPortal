@@ -46,11 +46,11 @@ function SectionList(props: {
     bullet,
   } = useContext(NuggetsContext);
 
-  useEffect(() => {
-    if (updateListBullet && bullet) {
-      updateListBullet(props.idx, bullet[props.idx]);
-    }
-  }, [bullet]);
+  // useEffect(() => {
+  //   if (updateListBullet && bullet) {
+  //     updateListBullet(props.idx, bullet[props.idx]);
+  //   }
+  // }, [bullet]);
 
   function addSection() {
     if (addListItem) {

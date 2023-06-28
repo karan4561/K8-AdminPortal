@@ -502,16 +502,21 @@ const NuggetProvider = (props: any) => {
     });
   }
 
-  function updateListBullet(idx: number, bullet: BulletObject) {
-    if (nugget.content[idx].kind == "OL") {
+  function updateListBullet(bulletObj:{idx: number, prefix?:string,suffix?:string,color?:string,value?:string}) {
+    if (nugget.content[bulletObj.idx].kind == "OL") {
       setNugget((prev) => {
         return {
           ...prev,
           content: prev.content.map((option, i) => {
-            if (i == idx) {
+            if (i == bulletObj.idx) {
               return {
                 ...option,
-                bullet: bullet,
+                bullet: {
+                  value: (bulletObj.value==undefined)?nugget.content[i].bullet?.value : bulletObj.value,
+                  prefix: (bulletObj.prefix==undefined)?nugget.content[i].bullet?.prefix : bulletObj.prefix,
+                  suffix: (bulletObj.suffix==undefined)?nugget.content[i].bullet?.suffix : bulletObj.suffix,
+                  color: (bulletObj.color==undefined)?nugget.content[i].bullet?.color : bulletObj.color
+                },
               };
             } else {
               return option;

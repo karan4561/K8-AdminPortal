@@ -70,14 +70,13 @@ export default function (props: Props) {
             options={options}
             placeholder="Select"
           />
-          {(selectedValue?.value == "IMG" ||
-            selectedValue?.value == "H1" ||
-            selectedValue?.value == "UL" ||
-            selectedValue?.value == "H2") && <IconDropdown value="Content" ContentID={props.idx} />}
-          {(selectedValue?.value == "H1" ||
-            selectedValue?.value == "H2" ||
-            selectedValue?.value == "P") && (
-
+          {(selectedOption?.value == "IMG" ||
+            selectedOption?.value == "H1" ||
+            selectedOption?.value == "UL" ||
+            selectedOption?.value == "H2") && <IconDropdown value="Content" ContentID={props.idx} />}
+          {(selectedOption?.value == "H1" ||
+            selectedOption?.value == "H2" ||
+            selectedOption?.value == "P") && (
             <TextEditor2
               NOTE={selectedOption.value} // to be changed
               value={nugget.content[props.idx]?.list?.[0]?.rtx}
