@@ -29,6 +29,7 @@ export interface INuggetContext extends FilterFunctions {
     deleteSCQOption: (Option: {index:number})=>void,
     updateSCQOption: (Option: {index:number; text:string})=>void,
     updateImageCaption?: (caption: {imgCaption:string})=>void
+    addNoteCaption?: (idx: number, caption: string) => void,
     updateHeaderIcon?: (iconObj: { _id?: string; name?: string; baseUrl: string; key: string; type?: | "CONTENT" | "TEST" | "SUBJECTIVE_TEST_SOLUTIONS" | "VIMEO" | "JWPLAYER"; organization?: string; size?: number; details?: string; }) => void,
     updateFIBContentType?: (Content: { index: number; type: string }) => void,
     updateFIBContentText?: (Content: { index: number; text: string }) => void,

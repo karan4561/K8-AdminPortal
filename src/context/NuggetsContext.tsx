@@ -33,6 +33,7 @@ import useFilters from "./filters";
 import { fetchNugget } from "@/api/utils";
 import {
   initialStateFIB,
+  initialStateNOTE,
   initialStateSCC,
 } from "@/utils/InitialStateNuggets/InitialStateNuggets";
 import {
@@ -43,11 +44,6 @@ import {
 
 const initialState = {} as INuggetContext;
 const initialBullet = {} as BulletObject;
-
-interface FIB {
-  value?: string;
-  type: "TEXT" | "BLANK";
-}
 
 export const NuggetsContext = React.createContext<INuggetContext>(initialState);
 
@@ -139,7 +135,7 @@ const NuggetProvider = (props: any) => {
       | "Video"
       | "SCQ"
       | "MCQ"
-      | "Note"
+      | "NOTE"
       | "FIB"
       | "IMAGE"
       | "AUDIOCLIP"
@@ -150,6 +146,16 @@ const NuggetProvider = (props: any) => {
     if (nuggetkind == "FIB") {
       setNugget({
         ...initialStateFIB,
+        kind: nuggetkind,
+        categories: nugget.categories,
+        headerIcon: nugget.headerIcon,
+        sideNote: nugget.sideNote,
+        IsKnowledgeCap: nugget.IsKnowledgeCap,
+        headerTitle: nugget.headerTitle,
+      } as Nugget);
+    } else if (nuggetkind == "NOTE") {
+      setNugget({
+        ...initialStateNOTE,
         kind: nuggetkind,
         categories: nugget.categories,
         headerIcon: nugget.headerIcon,
@@ -323,6 +329,24 @@ const NuggetProvider = (props: any) => {
     }
   }
 
+  function addNoteCaption(idx: number, caption: string) {
+    setNugget((prev) => {
+      return {
+        ...prev,
+        content: prev.content.map((option, i) => {
+          if (i == idx) {
+            return {
+              ...option,
+              imgCaption: caption,
+            };
+          } else {
+            return option;
+          }
+        }),
+      };
+    });
+  }
+
   function addFIBContent() {
     const newOption = {
       value: "",
@@ -421,8 +445,7 @@ const NuggetProvider = (props: any) => {
     idx: number,
     kind: "H1" | "H2" | "P" | "UL" | "OL" | "IMG",
     item: string,
-    idj?: number,
-    bullet?: BulletObject
+    idj?: number
   ) {
     if (nugget.content && idj != undefined) {
       setNugget((prev) => {
@@ -433,7 +456,6 @@ const NuggetProvider = (props: any) => {
               return {
                 ...option,
                 kind: kind,
-                bullet: bullet,
                 list: option.list?.map((opt, j) => {
                   if (j == idj) {
                     return {
@@ -798,7 +820,7 @@ const NuggetProvider = (props: any) => {
       fetchNugget([nuggetId]).then((data) => {
         console.log("***Nugget in FetchContent - step 1", data[0]);
         setNugget((prev: Nugget) => ({ ...prev, ...data[0] }));
-        filterFunctions.setFilters(data[0].categories);
+        filterFunctions.setFilters(data?.[0]?.categories);
       });
     }
   }
@@ -884,6 +906,7 @@ const NuggetProvider = (props: any) => {
           updateContentItem,
           updateListBullet,
           updateListItem,
+          addNoteCaption,
           handleDeleteNoteContent,
           handleDeleteNoteContentList,
           addFIBContent,
