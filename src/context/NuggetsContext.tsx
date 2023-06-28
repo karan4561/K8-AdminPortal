@@ -444,10 +444,11 @@ const NuggetProvider = (props: any) => {
 
   function updateContentItem(
     idx: number,
-    kind: "H1" | "H2" | "P" | "UL" | "OL" | "IMG",
+    //kind: "H1" | "H2" | "P" | "UL" | "OL" | "IMG",
     item: string,
     idj?: number
   ) {
+    console.log("This is being called");
     if (nugget.content && idj != undefined) {
       setNugget((prev) => {
         return {
@@ -456,7 +457,7 @@ const NuggetProvider = (props: any) => {
             if (i == idx) {
               return {
                 ...option,
-                kind: kind,
+                //kind: kind,
                 list: option.list?.map((opt, j) => {
                   if (j == idj) {
                     return {
@@ -476,15 +477,15 @@ const NuggetProvider = (props: any) => {
       });
     } else if (nugget.content) {
       const obj = { ...nugget };
-      if (item) obj.content[idx] = { ...nugget.content[idx],kind: kind, list: [{ rtx: item }] };
+      if (item)
+        obj.content[idx] = { ...obj.content[idx], list: [{ rtx: item }] };
       setNugget(obj);
     }
   }
 
-  function updateListBullet(
+  function updateNoteKind(
     idx: number,
-    //kind: "H1" | "H2" | "P" | "UL" | "OL" | "IMG",
-    bullet: BulletObject
+    kind: "H1" | "H2" | "P" | "UL" | "OL" | "IMG"
   ) {
     setNugget((prev) => {
       return {
@@ -493,27 +494,41 @@ const NuggetProvider = (props: any) => {
           if (i == idx) {
             return {
               ...option,
-              bullet: bullet,
+              kind: kind,
             };
-          } else {
-            return option;
-          }
+          } else return option;
         }),
       };
     });
   }
 
+  function updateListBullet(idx: number, bullet: BulletObject) {
+    if (nugget.content[idx].kind == "OL") {
+      setNugget((prev) => {
+        return {
+          ...prev,
+          content: prev.content.map((option, i) => {
+            if (i == idx) {
+              return {
+                ...option,
+                bullet: bullet,
+              };
+            } else {
+              return option;
+            }
+          }),
+        };
+      });
+    }
+  }
+
   function updateListItem(
     idi: number,
     item: string,
-    kind: "H1" | "H2" | "P" | "UL" | "OL" | "IMG",
+    //kind: "H1" | "H2" | "P" | "UL" | "OL" | "IMG",
     idj?: number
   ) {
-    if (kind == "OL") {
-      updateContentItem(idi, kind, item, idj);
-    } else if (kind == "UL") {
-      updateContentItem(idi, kind, item, idj);
-    }
+    updateContentItem(idi, item, idj);
   }
 
   function handleDeleteNoteContent(id: number) {
@@ -819,7 +834,10 @@ const NuggetProvider = (props: any) => {
     if (!nuggetId) return;
     else {
       fetchNugget([nuggetId]).then((data) => {
-        console.log("***Nugget in FetchContent - step 1", data[0]);
+        console.log(
+          "***Nugget in FetchContent - step 1",
+          JSON.stringify(data[0])
+        );
         setNugget((prev: Nugget) => ({ ...prev, ...data[0] }));
         filterFunctions.setFilters(data?.[0]?.categories);
       });
@@ -903,6 +921,7 @@ const NuggetProvider = (props: any) => {
           deleteSCQOption,
           updateSCQOption,
           updateContentKind,
+          updateNoteKind,
           addContentItem,
           updateContentItem,
           updateListBullet,

@@ -55,7 +55,7 @@ function NuggetsLanding({ nuggetId }: any) {
   useEffect(() => {
     fetchNuggetContent(nuggetId);
     if (setNuggetId) setNuggetId(nuggetId);
-  }, [nuggetId]);
+  }, []);
 
   useEffect(() => {
     getHeaderIcons().then((data) => updateFileObj(data));
