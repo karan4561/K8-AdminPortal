@@ -44,7 +44,7 @@ export interface INuggetContext extends FilterFunctions {
     contentImageUpload:(contentImage:{URI:FileObject,index:number})=>void,
     handleDeleteNoteContentList?:(idx: number, id: number)=>void,
     updateContentItem?: (idx: number, item: string, idj?: number, bullet?: BulletObject)=>void,
-    updateListBullet?:(idx: number,bullet: BulletObject)=>void,
+    updateListBullet:(bulletObj:{idx: number, prefix?:string,suffix?:string,color?:string,value?:string})=>void,
     addContentItem?: (note: ContentObject)=>void,
     contentIcon:(imageURI: { URI: FileObject, index: number }) =>void,
     addListItem?: (idx: number, list: ListItemObject)=>void,

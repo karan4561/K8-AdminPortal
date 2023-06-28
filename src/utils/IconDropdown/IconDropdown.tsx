@@ -89,7 +89,19 @@ export default function IconDropdown({ value, ContentID }: any) {
               height={30}
             />
           </div>
-        ) : (selectedOption && (value=="Content"))?(
+        ) : nuggetId  && nugget.content?.[ContentID]?.icon? (
+          <div
+            className="dropdownHeader"
+            style={{ display: "flex", alignItems: "center" }}
+          >
+            <img
+              src={nugget.content[ContentID].icon?.baseUrl + nugget.content[ContentID].icon?.key}
+              alt={nugget.headerIcon?._id}
+              width={30}
+              height={30}
+            />
+          </div>
+        ): (selectedOption && (value=="Content"))?(
           <div
             className="dropdownHeader"
             style={{ display: "flex", alignItems: "center" }}
