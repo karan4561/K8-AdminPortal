@@ -112,8 +112,8 @@ function NoteNuggetPrev({ nugget }: any) {
                           }}
                         >
                           {contentData.bullet?.value == "1" && index + 1}
-                          {contentData.bullet?.value === "I" &&
-                            convertToRoman(index + 1)}
+                          {/* {contentData.bullet?.value === "I" &&
+                            convertToRoman(index + 1)} */}
                           {contentData.bullet?.value === "I" &&
                             convertToRoman(index + 1)}
                           {contentData.bullet?.value === "a" &&
@@ -145,6 +145,16 @@ function NoteNuggetPrev({ nugget }: any) {
                     </>
                   );
                 })}
+              </div>
+            )}
+            {contentData.kind == "IMG" && (
+              <div className="note-image-type-prev">
+                <div className="headerimage-headertitle">
+                {(!!contentData?.icon) && <img src={contentData?.icon?.baseUrl+contentData?.icon?.key} height={20}/>}
+                {(!!contentData.imgCaption) && <h4>{contentData.imgCaption}</h4>}
+                </div>
+                {(!!contentData.imgUri) && <img src={contentData.imgUri.baseUrl + contentData.imgUri.key} width={280} height={250} alt='' />}
+                {(contentData?.caption) && <p>{contentData?.caption}</p>}
               </div>
             )}
             {contentData.kind == "UL" && (

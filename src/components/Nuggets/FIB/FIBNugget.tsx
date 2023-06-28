@@ -41,12 +41,12 @@ function FIBNugget() {
         </div>
         <h4>Hint</h4>
         <TextEditor
-          value={nugget.question.solutions[0].english.hint}
+          value={nugget.question.solutions?.[0].english.hint}
           onUpdate={(content: string) => updateSolHint({ hint: content })}
         />
         <h4>Solution</h4>
         <TextEditor
-          value={nugget.question.solutions[0].english.text}
+          value={nugget.question.solutions?.[0].english.text}
           onUpdate={(content: string) => updateSolHint({ text: content })}
         />
       </div>
