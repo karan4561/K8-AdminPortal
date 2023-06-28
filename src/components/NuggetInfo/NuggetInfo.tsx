@@ -34,7 +34,7 @@ export default function NuggetInfo() {
         <h2>Nugget Info</h2>
         <h4>Header</h4>
         <div className="NuggetInfo-iconHeadertitle Info">
-          <IconDropdown/>
+          <IconDropdown value="nuggetInfo"/>
           <input
             className="image-type-input"
             type="text"

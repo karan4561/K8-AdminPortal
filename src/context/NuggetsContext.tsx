@@ -41,6 +41,7 @@ import {
   validateFIB,
   validateSCC,
 } from "@/utils/Validations/Validations";
+import index from "@/pages";
 
 const initialState = {} as INuggetContext;
 const initialBullet = {} as BulletObject;
@@ -259,7 +260,7 @@ const NuggetProvider = (props: any) => {
     console.log(contentImage.index);
 
     const obj = [...nugget.content];
-    obj[contentImage.index] = { kind: "IMG", imgUri: contentImage.URI };
+    obj[contentImage.index] = {...nugget.content[contentImage.index], kind: "IMG", imgUri: contentImage.URI };
 
     setNugget((prev) => {
       return {

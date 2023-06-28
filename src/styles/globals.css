@@ -397,6 +397,7 @@ h4 {
   display: flex;
   flex-direction: row;
   align-items: center;
+  margin-bottom: 14px;
 }
 
 .headerimage-headertitle > h4 {
@@ -795,4 +796,8 @@ h4 {
 
 .lti-option-text{
   color: #b4b0b0;
+}
+
+.note-image-type-prev>img{
+  border-radius: 5px;
 }
