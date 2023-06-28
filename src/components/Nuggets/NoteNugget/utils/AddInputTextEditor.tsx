@@ -60,7 +60,7 @@ function SectionList(props: {
 
   function updateAnswerOption(content: string, idj: number) {
     setContent(content);
-    if (updateListItem) updateListItem(props.idx, content, props.kind, idj);
+    if (updateListItem) updateListItem(props.idx, content, idj);
   }
 
   function handleDelete(index: number) {

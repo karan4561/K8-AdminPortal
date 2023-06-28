@@ -13,7 +13,7 @@ function VideoPrev() {
     <>
       <div className="ImagePrev">
         <iframe
-          src={`https://pw-video-player-stage.penpencil.co?url=${playerUrl}&type=MPD&default_muted=false&default_paused=true&video_details=eyJ2aWRlb0RldGFpbHMiOnsidHlwZXMiOlsiREFTSCJdfX0=`}
+          src={`https://pw-video-player-stage.penpencil.co?url=${playerUrl}&type=PENPENCILVDO&default_muted=false&default_paused=true&video_details=eyJ2aWRlb0RldGFpbHMiOnsidHlwZXMiOlsiREFTSCJdfX0=`}
         />
         <p>{nugget?.caption}</p>
       </div>

@@ -43,7 +43,7 @@ export interface INuggetContext extends FilterFunctions {
     handleDeleteNoteContent?:(id: number)=>void,
     contentImageUpload:(contentImage:{URI:FileObject,index:number})=>void,
     handleDeleteNoteContentList?:(idx: number, id: number)=>void,
-    updateContentItem?: (idx: number, kind: "H1" | "H2" | "P" | "UL" | "OL" | "IMG", item: string, idj?: number, bullet?: BulletObject)=>void,
+    updateContentItem?: (idx: number, item: string, idj?: number, bullet?: BulletObject)=>void,
     updateListBullet?:(idx: number,bullet: BulletObject)=>void,
     addContentItem?: (note: ContentObject)=>void,
     contentIcon:(imageURI: { URI: FileObject, index: number }) =>void,
@@ -51,7 +51,8 @@ export interface INuggetContext extends FilterFunctions {
     updateVideoNugget:(video: {videoURI?: string,videoCaption?:string})=>void
     imageURI:(imageURI:{URI:FileObject})=>void
     audioURI:(audioURI:{URI:FileObject}) =>void
-    updateListItem?: (idi: number, item: string, kind: "H1" | "H2" | "P" | "UL" | "OL" | "IMG", idj?: number)=>void,
+    updateListItem?: (idi: number, item: string, idj?: number)=>void,
+    updateNoteKind?:(idx: number,kind: "H1" | "H2" | "P" | "UL" | "OL" | "IMG")=>void,
     submit:boolean,
     setSubmit:React.Dispatch<React.SetStateAction<boolean>>,
     nuggetId?:string,

@@ -19,8 +19,9 @@ interface OptionType {
   details?: string;
 }
 
-export default function IconDropdown({ContentID}:any) {
-  const { icon, updateHeaderIcon, updateFileObj, contentIcon } = useContext(NuggetsContext);
+export default function IconDropdown({ ContentID }: any) {
+  const { icon, updateHeaderIcon, updateFileObj, contentIcon } =
+    useContext(NuggetsContext);
   const [selectedOption, setSelectedOption] = useState<OptionType | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [uploadedImage, setUploadedImage] = useState<FileObject>();
@@ -34,12 +35,12 @@ export default function IconDropdown({ContentID}:any) {
     setSelectedOption(selectedOption);
     setIsOpen(false);
 
-    console.log(ContentID,"props?.contentID");
-    
-    if (ContentID || ContentID==0) {
-      contentIcon({URI:selectedOption,index:ContentID});
-    }else{
-      if(updateHeaderIcon) updateHeaderIcon(selectedOption)
+    //console.log(ContentID,"props?.contentID");
+
+    if (ContentID || ContentID == 0) {
+      contentIcon({ URI: selectedOption, index: ContentID });
+    } else {
+      if (updateHeaderIcon) updateHeaderIcon(selectedOption);
     }
   };
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,13 +57,13 @@ export default function IconDropdown({ContentID}:any) {
       baseUrl: uploadedImage.baseUrl,
       key: uploadedImage.key,
     });
-    getHeaderIcons().then((data) => updateFileObj(data))
+    getHeaderIcons().then((data) => updateFileObj(data));
   }
   useEffect(() => {
     if (uploadedImage) {
       uploadimage(uploadedImage);
     }
-    console.log("***This is selected Option****", selectedOption);
+    //console.log("***This is selected Option****", selectedOption);
   }, [uploadedImage]);
   return (
     <div className="dropdown">

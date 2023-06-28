@@ -19,7 +19,7 @@ interface Props {
 }
 
 export default function (props: Props) {
-  const { nugget, updateContentItem, updateListItem } =
+  const { nugget, updateContentItem, updateListItem, updateNoteKind } =
     useContext(NuggetsContext);
   const options: OptionType[] = [
     { value: "H1", label: "H1" },
@@ -29,50 +29,67 @@ export default function (props: Props) {
     { value: "IMG", label: "Image" },
     { value: "UL", label: "UL" },
   ];
-  const [selectedValue, setSelectedValue] = useState<OptionType>(options[0]);
+  //const [selectedValue, setSelectedValue] = useState<OptionType>(options[0]);
+
+  let selectedOption: OptionType = options[0];
+  if (nugget.content[props.idx].kind == "H1") {
+    selectedOption = options[0];
+  } else if (nugget.content[props.idx].kind == "H2") {
+    selectedOption = options[1];
+  } else if (nugget.content[props.idx].kind == "P") {
+    selectedOption = options[2];
+  } else if (nugget.content[props.idx].kind == "OL") {
+    selectedOption = options[3];
+  } else if (nugget.content[props.idx].kind == "IMG") {
+    selectedOption = options[4];
+  } else if (nugget.content[props.idx].kind == "UL") {
+    selectedOption = options[5];
+  }
 
   const handleChange = (selectedOption: SingleValue<OptionType>) => {
-    setSelectedValue(selectedOption as OptionType);
+    //setSelectedValue(selectedOption as OptionType);
+    if (updateNoteKind && selectedOption)
+      updateNoteKind(props.idx, selectedOption?.value);
   };
 
   const onUpdateSol = (content: string) => {
     if (updateContentItem) {
-      updateContentItem(props.idx, selectedValue.value, content);
+      console.log("********HERE********", selectedOption.value);
+      updateContentItem(props.idx, content);
     }
   };
 
-  //console.log("........addsectios-id......", props.id);
   return (
     <>
       <div className="card-header add-section">
         <div className="HeadingOption-IconOption">
           <Select
             className="AddNuggetCategory"
-            value={selectedValue}
+            value={selectedOption}
             onChange={handleChange}
             options={options}
-            placeholder="H1"
+            placeholder="Select"
           />
-          {(selectedValue?.value == "IMG" ||
-            selectedValue?.value == "H1" ||
-            selectedValue?.value == "UL" ||
-            selectedValue?.value == "H2") && <Icon ContentID={props.idx} />}
-          {(selectedValue?.value == "H1" ||
-            selectedValue?.value == "H2" ||
-            selectedValue?.value == "P") && (
+          {(selectedOption?.value == "IMG" ||
+            selectedOption?.value == "H1" ||
+            selectedOption?.value == "UL" ||
+            selectedOption?.value == "H2") && <Icon ContentID={props.idx} />}
+          {(selectedOption?.value == "H1" ||
+            selectedOption?.value == "H2" ||
+            selectedOption?.value == "P") && (
             <TextEditor2
-              NOTE={selectedValue.value} // to be changed
+              NOTE={selectedOption.value} // to be changed
               value={nugget.content[props.idx]?.list?.[0]?.rtx}
               onUpdate={onUpdateSol}
             />
           )}
-          {selectedValue?.value == "OL" && <OL idx={props.idx} />}
-          {(selectedValue?.value == "OL" || selectedValue?.value == "UL") && (
-            <Text kind={selectedValue.value} idx={props.idx} />
+          {selectedOption?.value == "OL" && <OL idx={props.idx} />}
+          {(selectedOption?.value == "OL" || selectedOption?.value == "UL") && (
+            <Text kind={selectedOption.value} idx={props.idx} />
           )}
         </div>
-        {selectedValue?.value == "IMG" && <ImageType idx={props.idx} />}
-        {selectedValue?.value == "OL" && <BulletColor idx={props.idx} />}
+        {selectedOption?.value == "IMG" && <ImageType idx={props.idx} />}
+        {selectedOption?.value == "OL" && <BulletColor idx={props.idx} />}
       </div>
     </>
   );
