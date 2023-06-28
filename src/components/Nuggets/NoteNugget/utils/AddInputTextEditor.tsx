@@ -46,11 +46,11 @@ function SectionList(props: {
     bullet,
   } = useContext(NuggetsContext);
 
-  useEffect(() => {
-    if (updateListBullet && bullet) {
-      updateListBullet(props.idx, bullet[props.idx]);
-    }
-  }, [bullet]);
+  // useEffect(() => {
+  //   if (updateListBullet && bullet) {
+  //     updateListBullet(props.idx, bullet[props.idx]);
+  //   }
+  // }, [bullet]);
 
   function addSection() {
     if (addListItem) {
@@ -60,7 +60,7 @@ function SectionList(props: {
 
   function updateAnswerOption(content: string, idj: number) {
     setContent(content);
-    if (updateListItem) updateListItem(props.idx, content, props.kind, idj);
+    if (updateListItem) updateListItem(props.idx, content, idj);
   }
 
   function handleDelete(index: number) {

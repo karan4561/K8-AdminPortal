@@ -20,6 +20,15 @@ export const initialStateSCC = {
   },
 } as any;
 
+export const initialStateNOTE = {
+  categories: [],
+  kind: "NOTE",
+  content: [{
+    kind: "H1",
+    list: [{rtx: ""}]
+  }],
+} as any
+
 export const initialStateFIB = {
   categories: [],
   kind: "SCQ",

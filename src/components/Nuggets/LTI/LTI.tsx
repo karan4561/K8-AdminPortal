@@ -25,6 +25,16 @@ function LTI() {
   const canvasWidth = 300;
   const canvasHeight = Math.floor(canvasWidth * (9 / 16));
 
+  // useEffect(() => {
+  //   if (nugget._id) {
+  //     for (let i = 0; i < nugget.question.lti.english.length; i++) {
+  //       const coordinates = nugget.question.lti.english[i].coordinates;
+  //       setPoints((prevPoints) => [...prevPoints, coordinates]);
+  //     }
+  //   }
+  // }, []);
+  // console.log(points, "length");
+
   function handleImageUpload(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
     if (!file) return;
@@ -58,9 +68,15 @@ function LTI() {
     const y = event.clientY - rect.top;
     const newPoint = { x, y };
     setPoints([...points, newPoint]);
-    updateLTI(points.length, "", newPoint);
+    if (nugget.question.lti?.english.length == undefined) {
+      updateLTI(0, "", newPoint);
+    }
+    else {
+      updateLTI(nugget.question.lti?.english.length, "", newPoint);
+    }
     ctx.beginPath();
     ctx.arc(x, y, 5, 0, 2 * Math.PI);
+    // ctx.fillText(`${points.length + 1}`, x + 8, y - 8);
     ctx.fillStyle = "red";
     ctx.fill();
   }
@@ -106,8 +122,8 @@ function LTI() {
           ctx.beginPath();
           ctx.arc(x, y, 5, 0, 2 * Math.PI);
           ctx.fillStyle = 'red';
+          ctx.fillText(`${i+1}`, x + 8, y - 8);
           ctx.fill();
-          ctx.fillText(`${i + 1}`, x + 8, y - 8);
         }
       };
       image.src = nugget.question.ltiImage.baseUrl + nugget.question.ltiImage.key;
@@ -118,7 +134,7 @@ function LTI() {
     if (typeof window !== 'undefined') {
       redrawPoints();
     }
-  }, [nugget.question.ltiImage, points]);
+  }, [nugget.question.ltiImage, points, nugget.question.lti?.english]);
 
   // useEffect(() => {
   //   redrawPoints();
@@ -132,7 +148,7 @@ function LTI() {
           <input
             className="image-type-input"
             type="text"
-            value={ImageCaption}
+            value={nugget.caption}
             onChange={ImageCaptionChange}
             placeholder="Caption"
           />
@@ -180,7 +196,7 @@ function LTI() {
                       className="lti-textarea"
                       value={section.value}
                       onChange={(event) =>
-                        updateLTI(index, event.target.value, points[index])
+                        updateLTI(index, event.target.value, nugget.question.lti.english[index].coordinates)
                       }
                     />
                   </div>
@@ -192,7 +208,7 @@ function LTI() {
         </div>
         <div className="fib-card">
           <h4>Add Other options</h4>
-          <AddOptionSection value="lti"/>
+          <AddOptionSection value="lti" />
         </div>
         {/* </ul> */}
         <h4>Hint</h4>

@@ -19,8 +19,9 @@ interface OptionType {
   details?: string;
 }
 
-export default function IconDropdown({ContentID}:any) {
+export default function IconDropdown({ value, ContentID }: any) {
   const { icon, updateHeaderIcon, updateFileObj, contentIcon } = useContext(NuggetsContext);
+
   const [selectedOption, setSelectedOption] = useState<OptionType | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [uploadedImage, setUploadedImage] = useState<FileObject>();
@@ -34,12 +35,12 @@ export default function IconDropdown({ContentID}:any) {
     setSelectedOption(selectedOption);
     setIsOpen(false);
 
-    console.log(ContentID,"props?.contentID");
-    
-    if (ContentID || ContentID==0) {
-      contentIcon({URI:selectedOption,index:ContentID});
-    }else{
-      if(updateHeaderIcon) updateHeaderIcon(selectedOption)
+    //console.log(ContentID,"props?.contentID");
+
+    if (ContentID || ContentID == 0) {
+      contentIcon({ URI: selectedOption, index: ContentID });
+    } else {
+      if (updateHeaderIcon) updateHeaderIcon(selectedOption);
     }
   };
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,13 +57,13 @@ export default function IconDropdown({ContentID}:any) {
       baseUrl: uploadedImage.baseUrl,
       key: uploadedImage.key,
     });
-    getHeaderIcons().then((data) => updateFileObj(data))
+    getHeaderIcons().then((data) => updateFileObj(data));
   }
   useEffect(() => {
     if (uploadedImage) {
       uploadimage(uploadedImage);
     }
-    console.log("***This is selected Option****", selectedOption);
+    //console.log("***This is selected Option****", selectedOption);
   }, [uploadedImage]);
   return (
     <div className="dropdown">
@@ -76,23 +77,45 @@ export default function IconDropdown({ContentID}:any) {
             height={30}
             alt=""
           />
-        ) : selectedOption ? (
+        ) : (selectedOption && (value=="nuggetInfo"))? (
           <div
             className="dropdownHeader"
             style={{ display: "flex", alignItems: "center" }}
           >
             <img
               src={nugget.headerIcon?.baseUrl + nugget.headerIcon?.key}
-              alt={selectedOption._id}
+              alt={nugget.headerIcon?._id}
               width={30}
               height={30}
             />
           </div>
-        ) : (
-          <div className="dropdownText" style={{ color: "#999" }}>
-            Select
+        ) : nuggetId  && nugget.content?.[ContentID]?.icon? (
+          <div
+            className="dropdownHeader"
+            style={{ display: "flex", alignItems: "center" }}
+          >
+            <img
+              src={nugget.content[ContentID].icon?.baseUrl + nugget.content[ContentID].icon?.key}
+              alt={nugget.headerIcon?._id}
+              width={30}
+              height={30}
+            />
           </div>
-        )}
+        ): (selectedOption && (value=="Content"))?(
+          <div
+            className="dropdownHeader"
+            style={{ display: "flex", alignItems: "center" }}
+          >
+            <img
+              src={nugget.content[ContentID].icon?.baseUrl+ nugget.content[ContentID].icon?.key}
+              alt={nugget.content[ContentID].imgUri?._id}
+              width={30}
+              height={30}
+            />
+          </div>
+        ) : <div className="dropdownText" style={{ color: "#999" }}>
+            Select
+          </div>}
         <div>&#x25BE;</div>
       </div>
       {isOpen && (
